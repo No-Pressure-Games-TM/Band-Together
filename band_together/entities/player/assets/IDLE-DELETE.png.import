@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxoc5yttkjm6n"
-path="res://.godot/imported/DELETE_ME_TEMP_LEVEL_ASSETS.png-eca2bfd6da351bc083c49643e6ca7f58.ctex"
+uid="uid://b42mr8qq2k16h"
+path="res://.godot/imported/IDLE-DELETE.png-5a29a0702bed2cb4f313e1aaf1f0995c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DELETE_ME_TEMP_LEVEL_ASSETS.png"
-dest_files=["res://.godot/imported/DELETE_ME_TEMP_LEVEL_ASSETS.png-eca2bfd6da351bc083c49643e6ca7f58.ctex"]
+source_file="res://entities/player/assets/IDLE-DELETE.png"
+dest_files=["res://.godot/imported/IDLE-DELETE.png-5a29a0702bed2cb4f313e1aaf1f0995c.ctex"]
 
 [params]
 
