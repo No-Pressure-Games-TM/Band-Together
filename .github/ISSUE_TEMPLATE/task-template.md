@@ -1,7 +1,7 @@
 ---
-name: Task Template
+name: Task template
 about: Describe a task in full detail
-title: ''
+title: "[Scene]: Task"
 labels: ''
 assignees: ''
 
