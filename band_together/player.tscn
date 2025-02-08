@@ -2,9 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://c6ua5jevav6oy" path="res://DELETE_ME_TEMP_CHARACTER.png" id="1_flbtt"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_858wo"]
-radius = 27.0
-height = 118.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
+size = Vector2(5.64155, 25.6239)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_67m3p"]
 atlas = ExtResource("1_flbtt")
@@ -120,12 +119,11 @@ animations = [{
 [node name="Player" type="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -62)
-shape = SubResource("CapsuleShape2D_858wo")
+position = Vector2(1.78814e-07, -1.62854)
+scale = Vector2(1.77256, -0.653411)
+shape = SubResource("RectangleShape2D_kco12")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-3, -42)
-scale = Vector2(5.46687, 5.78471)
 sprite_frames = SubResource("SpriteFrames_evksa")
 animation = &"idle"
