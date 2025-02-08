@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpqf0r844psnb"
-path="res://.godot/imported/main_menu_bg.jpg-6ea18c70283a9828a9a8725e1b34c563.ctex"
+uid="uid://bsfqdcmwbmmql"
+path="res://.godot/imported/dead_heart.png-a5397e70b951c73bb1b741517ff81313.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://main_menu_bg.jpg"
-dest_files=["res://.godot/imported/main_menu_bg.jpg-6ea18c70283a9828a9a8725e1b34c563.ctex"]
+source_file="res://assets/health/dead_heart.png"
+dest_files=["res://.godot/imported/dead_heart.png-a5397e70b951c73bb1b741517ff81313.ctex"]
 
 [params]
 
