@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6ua5jevav6oy"
-path="res://.godot/imported/DELETE_ME_TEMP_CHARACTER.png-ea6a949234dbf13dedd4563f5112d501.ctex"
+uid="uid://da6a4a38e1tul"
+path="res://.godot/imported/Tiles-DELETE.png-33423d78ba96f95094381ab5c45158df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DELETE_ME_TEMP_CHARACTER.png"
-dest_files=["res://.godot/imported/DELETE_ME_TEMP_CHARACTER.png-ea6a949234dbf13dedd4563f5112d501.ctex"]
+source_file="res://Environment/Tiles-DELETE.png"
+dest_files=["res://.godot/imported/Tiles-DELETE.png-33423d78ba96f95094381ab5c45158df.ctex"]
 
 [params]
 
