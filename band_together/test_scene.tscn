@@ -7,7 +7,7 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="Test_Floor" parent="." instance=ExtResource("1_3r5ye")]
-position = Vector2(226, 542)
+position = Vector2(128, 576)
 
 [node name="Test_Floor2" parent="." instance=ExtResource("1_3r5ye")]
 position = Vector2(602, 543)
@@ -16,9 +16,10 @@ position = Vector2(602, 543)
 position = Vector2(892, 369)
 
 [node name="Test_Floor4" parent="." instance=ExtResource("1_3r5ye")]
-position = Vector2(572, 632)
+position = Vector2(288, 256)
 scale = Vector2(6.12, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_2r5x7")]
-position = Vector2(238, 211)
+position = Vector2(64, 128)
+scale = Vector2(0.68558, 0.601599)
 script = ExtResource("3_ydlj3")
