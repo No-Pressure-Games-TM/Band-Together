@@ -25,6 +25,10 @@ window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
+[gui]
+
+theme/custom_font="res://GrapeSoda.ttf"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
