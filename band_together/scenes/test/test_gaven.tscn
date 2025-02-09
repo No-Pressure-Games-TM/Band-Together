@@ -1,10 +1,12 @@
-[gd_scene load_steps=5 format=4 uid="uid://id0acxrk2y0w"]
+[gd_scene load_steps=7 format=4 uid="uid://dkdfb6onerdwb"]
 
-[ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_2r5x7"]
-[ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="3_nldc1"]
+[ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_6ka81"]
+[ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_xxy8b"]
+[ext_resource type="Script" path="res://entities/player/player.gd" id="3_t0cjs"]
+[ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="4_tyxpy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
-texture = ExtResource("3_nldc1")
+texture = ExtResource("1_6ka81")
 texture_region_size = Vector2i(32, 32)
 1:2/0 = 0
 1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -129,8 +131,53 @@ sources/1 = SubResource("TileSetAtlasSource_yw07a")
 tile_map_data = PackedByteArray("AAAAAAQAAQABAAAAAAAAAAUAAQABAAEAAAACAAQAAQACAAAAAAACAAUAAQACAAEAAAADAAQAAQACAAAAAAADAAUAAQACAAEAAAAEAAQAAQACAAAAAAAEAAUAAQACAAEAAAAFAAQAAQACAAAAAAAFAAUAAQACAAEAAAAGAAQAAQACAAAAAAAGAAUAAQACAAEAAAAHAAQAAQACAAAAAAAHAAUAAQACAAEAAAAIAAQAAQACAAAAAAAIAAUAAQACAAEAAAAJAAQAAQADAAAAAAAJAAUAAQADAAEAAAABAAQAAQACAAAAAAABAAUAAQACAAEAAAA=")
 tile_set = SubResource("TileSet_dcilm")
 
-[node name="Player" parent="." instance=ExtResource("2_2r5x7")]
+[node name="Player" parent="." instance=ExtResource("2_xxy8b")]
 position = Vector2(32, 135)
 scale = Vector2(0.68558, 0.601599)
 collision_layer = 2
 collision_mask = 12
+script = ExtResource("3_t0cjs")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Hearts" type="Panel" parent="UI"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_bottom = 24.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Hearts"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -8.0
+offset_right = 28.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="Heart" type="TextureRect" parent="UI/Hearts/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_tyxpy")
+expand_mode = 2
+
+[node name="Heart2" type="TextureRect" parent="UI/Hearts/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_tyxpy")
+expand_mode = 2
+
+[node name="Heart3" type="TextureRect" parent="UI/Hearts/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_tyxpy")
+expand_mode = 2
