@@ -1,0 +1,149 @@
+[gd_scene load_steps=20 format=3 uid="uid://bvur20x1mukp3"]
+
+[ext_resource type="Texture2D" uid="uid://d1bh4i3k1t845" path="res://entities/enemies/rocks/assets/Rock1_Idle (38x34).png" id="1_2m2mk"]
+[ext_resource type="Script" path="res://entities/enemies/rocks/rock_enemy.gd" id="1_2tmrt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcxnu"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(0, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pwny"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(38, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgwmf"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(76, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23x1v"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(114, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tsud"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(152, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7j6m"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(190, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ss0ck"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(228, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvla7"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(266, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iskyh"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(304, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dxwd"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(342, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jffyr"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(380, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqirh"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(418, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usj7d"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(456, 0, 38, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uvu8"]
+atlas = ExtResource("1_2m2mk")
+region = Rect2(494, 0, 38, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jdx7v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcxnu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pwny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lgwmf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23x1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tsud")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7j6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ss0ck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvla7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iskyh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dxwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jffyr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqirh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usj7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uvu8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n57rm"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0k27v"]
+
+[node name="Enemy" type="RigidBody2D"]
+position = Vector2(0, 2)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("1_2tmrt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 5
+visibility_layer = 5
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_jdx7v")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 5
+visibility_layer = 5
+texture_filter = 1
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_n57rm")
+
+[node name="Area2D" type="Area2D" parent="."]
+light_mask = 5
+visibility_layer = 5
+collision_layer = 5
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 5
+visibility_layer = 5
+shape = SubResource("CircleShape2D_0k27v")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
