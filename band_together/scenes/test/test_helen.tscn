@@ -147,10 +147,7 @@ script = ExtResource("3_yryur")
 
 [node name="Enemies" type="Node" parent="SceneObjects"]
 
-[node name="Enemy3" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
-position = Vector2(112, 154)
-
-[node name="Enemy" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
+[node name="Enemy1" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
 position = Vector2(80, 152)
 
 [node name="Enemy2" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
