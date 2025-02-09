@@ -31,17 +31,26 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Accept"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
+			recent_wall = null
+	
 		
 		elif attached_to_wall:
-			recent_wall = current_wall
+			
 			velocity.y = JUMP_VELOCITY
 			attached_to_wall = false
+			recent_wall = current_wall
+			current_wall = null
+		
 			
 		elif is_on_wall():
+			#print(position.x)
+			current_wall = int(position.x)
 			if recent_wall != current_wall:
 				#need to handle it so there can only be one wall jump on a single wall at a time
 				velocity.y = 0
 				#set current wall to the wall the player is currently on 
+				
+				print(current_wall)
 				attached_to_wall = true
 				
 		elif double_jump_count == 0:
