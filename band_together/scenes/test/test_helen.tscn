@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://drg6mhrnsd7kk"]
+[gd_scene load_steps=8 format=4 uid="uid://drg6mhrnsd7kk"]
 
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_7n6o4"]
 [ext_resource type="Script" path="res://entities/player/player.gd" id="3_yryur"]
 [ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="4_i46fv"]
+[ext_resource type="Script" path="res://scenes/test/pause.gd" id="5_si0ax"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
 texture = ExtResource("1_dorrl")
@@ -181,3 +182,62 @@ texture_filter = 1
 layout_mode = 2
 texture = ExtResource("4_i46fv")
 expand_mode = 2
+
+[node name="Pause" type="Node" parent="UI/Hearts"]
+script = ExtResource("5_si0ax")
+
+[node name="PausePanel" type="Panel" parent="UI/Hearts/Pause"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Hearts/Pause/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -70.0
+offset_right = 76.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_font_sizes/font_size = 32
+text = "Game Paused "
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Hearts/Pause/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = -20.0
+offset_right = 54.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Resume" type="Button" parent="UI/Hearts/Pause/PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+text = "Resume"
+
+[node name="MainMenu" type="Button" parent="UI/Hearts/Pause/PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+text = "Return to Main Menu"
+
+[connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/Resume" to="UI/Hearts/Pause" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/MainMenu" to="UI/Hearts/Pause" method="_on_main_menu_pressed"]
