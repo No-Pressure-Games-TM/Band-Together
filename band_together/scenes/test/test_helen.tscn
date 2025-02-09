@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=4 uid="uid://drg6mhrnsd7kk"]
+[gd_scene load_steps=11 format=4 uid="uid://drg6mhrnsd7kk"]
 
+[ext_resource type="Script" path="res://scenes/test/game_manager.gd" id="1_4bvth"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_7n6o4"]
 [ext_resource type="Script" path="res://entities/player/player.gd" id="3_yryur"]
@@ -131,12 +132,14 @@ sources/1 = SubResource("TileSetAtlasSource_yw07a")
 
 [node name="Node2D" type="Node2D"]
 
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_4bvth")
+
 [node name="SceneObjects" type="Node" parent="."]
 
 [node name="Ground" type="TileMapLayer" parent="SceneObjects"]
 tile_map_data = PackedByteArray("AAAAAAQAAQACAAAAAAAAAAUAAQACAAEAAAACAAUAAQACAAEAAAADAAUAAQACAAEAAAAEAAUAAQACAAEAAAAFAAQAAQACAAAAAAAFAAUAAQACAAEAAAAJAAUAAQACAAEAAAABAAQAAQACAAAAAAABAAUAAQACAAEAAAAGAAQAAQACAAAAAAAGAAUAAQACAAEAAAAEAAQAAQACAAAAAAAJAAQAAQACAAAAAAAKAAUAAQACAAEAAAAKAAQAAQACAAAAAAACAAQAAQACAAAAAAADAAQAAQACAAAAAAA=")
 tile_set = SubResource("TileSet_dcilm")
-collision_visibility_mode = 1
 
 [node name="Player" parent="SceneObjects" instance=ExtResource("2_7n6o4")]
 position = Vector2(32, 135)
