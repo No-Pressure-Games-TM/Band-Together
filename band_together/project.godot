@@ -25,6 +25,10 @@ window/size/window_height_override=1440
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
+[dotnet]
+
+project/assembly_name="Band Together"
+
 [file_customization]
 
 folder_colors={
