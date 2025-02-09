@@ -78,18 +78,9 @@ func _on_dash_charge_timer_timeout() -> void:
 	is_charging = false
 	is_dashing = true
 	$DashExecuteTimer.start()
-	print("dashing")
 	
-
-
 func _on_dash_execute_timer_timeout() -> void:
 	#dash over, return to normal movement and fall speeds
 	DASH_MULT = 1
 	GRAV_DIV = 1
 	is_dashing = false
-	print("dash over")
-	
-	
-	
-	
-	
