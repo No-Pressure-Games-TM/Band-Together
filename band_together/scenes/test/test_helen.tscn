@@ -132,8 +132,9 @@ sources/1 = SubResource("TileSetAtlasSource_yw07a")
 
 [node name="Node2D" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="."]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("hearts")]
 script = ExtResource("1_4bvth")
+hearts = [NodePath("../UI/Hearts/HBoxContainer/Heart"), NodePath("../UI/Hearts/HBoxContainer/Heart2"), NodePath("../UI/Hearts/HBoxContainer/Heart3")]
 
 [node name="SceneObjects" type="Node" parent="."]
 

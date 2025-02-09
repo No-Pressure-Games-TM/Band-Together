@@ -1,6 +1,7 @@
 extends Node
 
 var lives: int = 3 
+@export var hearts: Array[Node]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,6 +14,14 @@ func _process(delta: float) -> void:
 
 func decrease_health():
 	lives -= 1
+	
+	# Update hearts displayed
+	for current_hearts in 3:
+		if (current_hearts < lives):
+			hearts[current_hearts].show()
+		else: 
+			hearts[current_hearts].hide()
+	
 	if (lives == 0):
 		print("Game Over.\nReloading...\n")
 		get_tree().reload_current_scene()
