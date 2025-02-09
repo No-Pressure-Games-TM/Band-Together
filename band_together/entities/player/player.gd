@@ -6,12 +6,23 @@ const JUMP_VELOCITY: float = -300.0
 var double_jump_count: int = 0
 #region
 
+#keeps track of if the character has attached to the wall
+var attached_to_wall = false
+var used_walljump = 0 # ternary value, it is 0 if the user has not recently used a walljump, -1 if they have
+#recently jumped off a left facing wall, or 1 if they have recently jumped off a right facing wall 
+
+var current_wall = 1
+var recent_wall = 0
+#could also instead keep a variable for the most recently touched wall, so that the player could jump off 
+#of two different walls that face the same direction that are just adjacent to each other. 
+#yea i think im gonna go with that one
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 ## Use double hashtags for a "title comment", it looks a lil different!
 func _physics_process(delta):
 	# Add the gravity.
-	if not is_on_floor():
+	if not is_on_floor() and not attached_to_wall:
 		velocity += get_gravity() * delta
 	else:
 		double_jump_count = 0
@@ -20,9 +31,23 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Accept"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
+		
+		elif attached_to_wall:
+			recent_wall = current_wall
+			velocity.y = JUMP_VELOCITY
+			attached_to_wall = false
+			
+		elif is_on_wall():
+			if recent_wall != current_wall:
+				#need to handle it so there can only be one wall jump on a single wall at a time
+				velocity.y = 0
+				#set current wall to the wall the player is currently on 
+				attached_to_wall = true
+				
 		elif double_jump_count == 0:
 			velocity.y = JUMP_VELOCITY
 			double_jump_count += 1
+		
 	if Input.is_action_just_released("Accept") and velocity.y < -60:
 		velocity.y = - 60
 
