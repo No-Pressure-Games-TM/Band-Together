@@ -12,7 +12,6 @@ var GRAV_DIV = 1
 #region Dash bools
 var is_charging = false
 var is_dashing = false
-
 #region
 
 var direction = 0 
@@ -25,8 +24,8 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		#if the player is falling, and is either charging their dash or dashing, slow their descent
 		if velocity.y > 0 and (is_charging or is_dashing):
-			print("here?")
 			velocity.y /= GRAV_DIV
 	else:
 		double_jump_count = 0
@@ -42,19 +41,14 @@ func _physics_process(delta):
 		velocity.y = - 60
 		
 	# Handle Dash - Will eventually be associated with the saxophones movement ability
-	if Input.is_action_just_pressed("Dash"):
-		print("DASH BUTTON PRESSED")
-		# The dash has 2 phases at the moment, the charge up, and then the execution. They should last for about 0.5
-		# seconds, then 1 second, respectively. 
+	# Starts the charge up for the dash
+	if Input.is_action_just_pressed("Dash"): 
 		if !is_charging and !is_dashing: # prevents repeated dashing
-			#Im also gonna implement a slow fall for the dash if youre in the air cause why not 
-			
+			#Start charging up a dash, reduces fall speed
 			GRAV_DIV = 2
-			
 			is_charging = true
 			$DashChargeTimer.start()
-			print("Charging")
-
+		
 	# Get the input direction and handle the movement/deceleration.
 	direction = Input.get_axis("Left", "Right")
 	if direction:
@@ -79,21 +73,17 @@ func _physics_process(delta):
 
 
 func _on_dash_charge_timer_timeout() -> void:
-	
-	#start the dash
+	#start the dash, increase the speed of the player
 	DASH_MULT = 2
 	is_charging = false
 	is_dashing = true
 	$DashExecuteTimer.start()
 	print("dashing")
 	
-	
-	
-	#start the timer for the dash
 
 
 func _on_dash_execute_timer_timeout() -> void:
-	
+	#dash over, return to normal movement and fall speeds
 	DASH_MULT = 1
 	GRAV_DIV = 1
 	is_dashing = false
