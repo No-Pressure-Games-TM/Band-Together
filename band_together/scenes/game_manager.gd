@@ -9,7 +9,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func decrease_health():
@@ -24,6 +24,6 @@ func decrease_health():
 	
 	if (lives == 0):
 		print("Game Over.\n")
-		get_tree().change_scene_to_file("res://scenes/states/game_over/game_over.tscn")
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/states/game_over/game_over.tscn")
 	else: 
 		print("Lives: ", lives)
