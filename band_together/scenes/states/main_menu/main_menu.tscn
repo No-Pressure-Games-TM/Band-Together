@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://rkd3ltxd52lp"]
 
 [ext_resource type="Texture2D" uid="uid://cpqf0r844psnb" path="res://assets/backgrounds/main_menu_bg.jpg" id="1_3kv3e"]
-[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_35m0h"]
+[ext_resource type="Script" path="res://scenes/states/main_menu/main_menu.gd" id="1_35m0h"]
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="2_fewg4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ubkg"]
@@ -112,7 +112,6 @@ grow_vertical = 2
 theme_override_constants/separation = 4
 
 [node name="StartGame" type="Button" parent="VBoxContainer"]
->>>>>>> 27d2782 (feat: game over ui + button updates)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
@@ -129,7 +128,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Start Game"
 
 [node name="Settings" type="Button" parent="VBoxContainer"]
->>>>>>> 27d2782 (feat: game over ui + button updates)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
@@ -145,7 +143,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Settings"
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
->>>>>>> 27d2782 (feat: game over ui + button updates)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)

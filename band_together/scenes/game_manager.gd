@@ -23,7 +23,7 @@ func decrease_health():
 			hearts[current_hearts].hide()
 	
 	if (lives == 0):
-		print("Game Over.\nReloading...\n")
-		get_tree().reload_current_scene()
+		print("Game Over.\n")
+		get_tree().change_scene_to_file("res://scenes/states/game_over/game_over.tscn")
 	else: 
 		print("Lives: ", lives)

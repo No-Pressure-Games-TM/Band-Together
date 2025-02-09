@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://drg6mhrnsd7kk"]
+[gd_scene load_steps=11 format=4 uid="uid://drg6mhrnsd7kk"]
 
-[ext_resource type="Script" path="res://scenes/test/game_manager.gd" id="1_4bvth"]
+[ext_resource type="Script" path="res://scenes/game_manager.gd" id="1_4bvth"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_7n6o4"]
 [ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="4_i46fv"]
-[ext_resource type="Script" path="res://scenes/test/pause.gd" id="5_si0ax"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock_enemy.tscn" id="5_4utyy"]
+[ext_resource type="Script" path="res://scenes/states/pause.gd" id="5_si0ax"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="6_kxsmu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
@@ -264,6 +264,6 @@ process_mode = 3
 layout_mode = 2
 text = "Return to Main Menu"
 
+[connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
 [connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/Resume" to="UI/Hearts/Pause" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/MainMenu" to="UI/Hearts/Pause" method="_on_main_menu_pressed"]
-[connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
