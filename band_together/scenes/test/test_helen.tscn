@@ -166,6 +166,62 @@ shape = SubResource("WorldBoundaryShape2D_n4tob")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="Pause" type="Node" parent="UI"]
+script = ExtResource("5_si0ax")
+
+[node name="PausePanel" type="Panel" parent="UI/Pause"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Pause/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -70.0
+offset_right = 76.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_font_sizes/font_size = 32
+text = "Game Paused "
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = -20.0
+offset_right = 54.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Resume" type="Button" parent="UI/Pause/PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+text = "Resume"
+
+[node name="MainMenu" type="Button" parent="UI/Pause/PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+text = "Return to Main Menu"
+
 [node name="Hearts" type="Panel" parent="UI"]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 1
@@ -208,62 +264,6 @@ layout_mode = 2
 texture = ExtResource("4_i46fv")
 expand_mode = 2
 
-[node name="Pause" type="Node" parent="UI/Hearts"]
-script = ExtResource("5_si0ax")
-
-[node name="PausePanel" type="Panel" parent="UI/Hearts/Pause"]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="UI/Hearts/Pause/PausePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -76.0
-offset_top = -70.0
-offset_right = 76.0
-offset_bottom = -42.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 4
-theme_override_font_sizes/font_size = 32
-text = "Game Paused "
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Hearts/Pause/PausePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -54.0
-offset_top = -20.0
-offset_right = 54.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 4
-
-[node name="Resume" type="Button" parent="UI/Hearts/Pause/PausePanel/VBoxContainer"]
-process_mode = 3
-layout_mode = 2
-text = "Resume"
-
-[node name="MainMenu" type="Button" parent="UI/Hearts/Pause/PausePanel/VBoxContainer"]
-process_mode = 3
-layout_mode = 2
-text = "Return to Main Menu"
-
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
-[connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/Resume" to="UI/Hearts/Pause" method="_on_resume_pressed"]
-[connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/MainMenu" to="UI/Hearts/Pause" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="UI/Pause/PausePanel/VBoxContainer/Resume" to="UI/Pause" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/Pause/PausePanel/VBoxContainer/MainMenu" to="UI/Pause" method="_on_main_menu_pressed"]
