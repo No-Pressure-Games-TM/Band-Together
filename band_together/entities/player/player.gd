@@ -24,8 +24,16 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor() and not attached_to_wall:
 		velocity += get_gravity() * delta
-	else:
+	elif is_on_floor_only():
 		double_jump_count = 0
+		
+#double jumps currently reset when the player wall jumps, we can change that. 
+
+	#Handle down, so far only used if the player wants to detach from a wall
+	if Input.is_action_just_pressed("Down") and attached_to_wall:
+		attached_to_wall = false
+		recent_wall = current_wall
+		current_wall = null
 
 	# Handle jump.
 	if Input.is_action_just_pressed("Accept"):
@@ -62,7 +70,7 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction = Input.get_axis("Left", "Right")
-	if direction:
+	if direction and not attached_to_wall:
 		if sprite.animation != "walk":
 			sprite.play("walk")  # Play the running animation
 		velocity.x = direction * SPEED
