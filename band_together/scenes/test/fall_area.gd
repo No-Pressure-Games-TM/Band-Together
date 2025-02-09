@@ -10,7 +10,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
+# When player falls off scene, reload.
 func _on_body_entered(body: Node2D) -> void:
 	if (body.name == "Player"):
 		get_tree().reload_current_scene()
