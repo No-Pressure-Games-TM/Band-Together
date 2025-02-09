@@ -29,7 +29,9 @@ window/stretch/scale_mode="integer"
 
 folder_colors={
 "res://Environment/": "teal",
-"res://entities/": "yellow"
+"res://assets/": "pink",
+"res://entities/": "yellow",
+"res://scenes/": "blue"
 }
 
 [gui]
