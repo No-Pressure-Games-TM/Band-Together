@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://drg6mhrnsd7kk"]
+[gd_scene load_steps=7 format=4 uid="uid://drg6mhrnsd7kk"]
 
 [ext_resource type="Script" path="res://scenes/test/game_manager.gd" id="1_4bvth"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_7n6o4"]
-[ext_resource type="Script" path="res://entities/player/player.gd" id="3_yryur"]
 [ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="4_i46fv"]
 [ext_resource type="Script" path="res://scenes/test/pause.gd" id="5_si0ax"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock_enemy.tscn" id="5_4utyy"]
@@ -148,7 +147,6 @@ position = Vector2(32, 135)
 scale = Vector2(0.68558, 0.601599)
 collision_layer = 2
 collision_mask = 12
-script = ExtResource("3_yryur")
 
 [node name="Enemies" type="Node" parent="SceneObjects"]
 
