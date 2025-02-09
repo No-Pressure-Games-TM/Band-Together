@@ -1,10 +1,11 @@
-[gd_scene load_steps=23 format=4 uid="uid://drg6mhrnsd7kk"]
+[gd_scene load_steps=10 format=4 uid="uid://drg6mhrnsd7kk"]
 
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_7n6o4"]
 [ext_resource type="Script" path="res://entities/player/player.gd" id="3_yryur"]
 [ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="4_i46fv"]
-[ext_resource type="Texture2D" uid="uid://d1bh4i3k1t845" path="res://entities/enemies/rocks/Rock1_Idle (38x34).png" id="5_7a12c"]
+[ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock_enemy.tscn" id="5_4utyy"]
+[ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="6_kxsmu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
 texture = ExtResource("1_dorrl")
@@ -126,124 +127,42 @@ physics_layer_0/collision_layer = 4
 physics_layer_0/collision_mask = 0
 sources/1 = SubResource("TileSetAtlasSource_yw07a")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dcxnu"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(0, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3pwny"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(38, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lgwmf"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(76, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_23x1v"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(114, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2tsud"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(152, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p7j6m"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(190, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ss0ck"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(228, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xvla7"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(266, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iskyh"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(304, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3dxwd"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(342, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jffyr"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(380, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xqirh"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(418, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_usj7d"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(456, 0, 38, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7uvu8"]
-atlas = ExtResource("5_7a12c")
-region = Rect2(494, 0, 38, 34)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_jdx7v"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dcxnu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3pwny")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lgwmf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_23x1v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2tsud")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p7j6m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ss0ck")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xvla7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iskyh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3dxwd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jffyr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xqirh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_usj7d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7uvu8")
-}],
-"loop": true,
-"name": &"default",
-"speed": 20.0
-}]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4tob"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Ground" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAQAAQABAAAAAAAAAAUAAQABAAEAAAACAAQAAQACAAAAAAACAAUAAQACAAEAAAADAAQAAQACAAAAAAADAAUAAQACAAEAAAAEAAQAAQACAAAAAAAEAAUAAQACAAEAAAAFAAQAAQACAAAAAAAFAAUAAQACAAEAAAAGAAQAAQACAAAAAAAGAAUAAQACAAEAAAAHAAQAAQACAAAAAAAHAAUAAQACAAEAAAAIAAQAAQACAAAAAAAIAAUAAQACAAEAAAAJAAQAAQADAAAAAAAJAAUAAQADAAEAAAABAAQAAQACAAAAAAABAAUAAQACAAEAAAA=")
-tile_set = SubResource("TileSet_dcilm")
+[node name="SceneObjects" type="Node" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("2_7n6o4")]
+[node name="Ground" type="TileMapLayer" parent="SceneObjects"]
+tile_map_data = PackedByteArray("AAAAAAQAAQACAAAAAAAAAAUAAQACAAEAAAACAAUAAQACAAEAAAADAAUAAQACAAEAAAAEAAUAAQACAAEAAAAFAAQAAQACAAAAAAAFAAUAAQACAAEAAAAJAAUAAQACAAEAAAABAAQAAQACAAAAAAABAAUAAQACAAEAAAAGAAQAAQACAAAAAAAGAAUAAQACAAEAAAAEAAQAAQACAAAAAAAJAAQAAQACAAAAAAAKAAUAAQACAAEAAAAKAAQAAQACAAAAAAACAAQAAQACAAAAAAADAAQAAQACAAAAAAA=")
+tile_set = SubResource("TileSet_dcilm")
+collision_visibility_mode = 1
+
+[node name="Player" parent="SceneObjects" instance=ExtResource("2_7n6o4")]
 position = Vector2(32, 135)
 scale = Vector2(0.68558, 0.601599)
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("3_yryur")
+
+[node name="Enemies" type="Node" parent="SceneObjects"]
+
+[node name="Enemy3" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
+position = Vector2(112, 154)
+
+[node name="Enemy" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
+position = Vector2(80, 152)
+
+[node name="Enemy2" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
+position = Vector2(152, 152)
+
+[node name="Area2D" type="Area2D" parent="SceneObjects"]
+collision_mask = 3
+script = ExtResource("6_kxsmu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Area2D"]
+position = Vector2(256, 224)
+shape = SubResource("WorldBoundaryShape2D_n4tob")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -289,11 +208,4 @@ layout_mode = 2
 texture = ExtResource("4_i46fv")
 expand_mode = 2
 
-[node name="SceneObjects" type="Node" parent="."]
-
-[node name="RigidBody2D" type="RigidBody2D" parent="SceneObjects"]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SceneObjects/RigidBody2D"]
-position = Vector2(270.5, 152.5)
-scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_jdx7v")
+[connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]

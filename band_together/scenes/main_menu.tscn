@@ -71,6 +71,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -86,6 +87,7 @@ grow_vertical = 2
 theme_override_constants/separation = 4
 
 [node name="Button_StartGame" type="Button" parent="VBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
@@ -102,6 +104,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Start Game"
 
 [node name="Button_Settings" type="Button" parent="VBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
@@ -117,6 +120,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Settings"
 
 [node name="Button3_Exit" type="Button" parent="VBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
