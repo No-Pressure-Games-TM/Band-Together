@@ -1,6 +1,5 @@
-[gd_scene load_steps=21 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=20 format=3 uid="uid://chmdbpxvcc4i8"]
 
-[ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Texture2D" uid="uid://b42mr8qq2k16h" path="res://entities/player/assets/IDLE-DELETE.png" id="1_nnija"]
 [ext_resource type="Texture2D" uid="uid://d07sqbdwnhcg7" path="res://entities/player/assets/WALK-DELETE.png" id="2_0jp00"]
 
@@ -126,7 +125,6 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_mms2d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
@@ -138,12 +136,3 @@ sprite_frames = SubResource("SpriteFrames_2j7hi")
 animation = &"walk"
 frame = 5
 frame_progress = 0.629887
-
-[node name="DashChargeTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="DashExecuteTimer" type="Timer" parent="."]
-one_shot = true
-
-[connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
-[connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]
