@@ -111,10 +111,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
 
-<<<<<<< HEAD
-[node name="Button_StartGame" type="Button" parent="VBoxContainer"]
-texture_filter = 1
-=======
 [node name="StartGame" type="Button" parent="VBoxContainer"]
 >>>>>>> 27d2782 (feat: game over ui + button updates)
 layout_mode = 2
@@ -132,10 +128,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Start Game"
 
-<<<<<<< HEAD
-[node name="Button_Settings" type="Button" parent="VBoxContainer"]
-texture_filter = 1
-=======
 [node name="Settings" type="Button" parent="VBoxContainer"]
 >>>>>>> 27d2782 (feat: game over ui + button updates)
 layout_mode = 2
@@ -152,10 +144,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Settings"
 
-<<<<<<< HEAD
-[node name="Button3_Exit" type="Button" parent="VBoxContainer"]
-texture_filter = 1
-=======
 [node name="Quit" type="Button" parent="VBoxContainer"]
 >>>>>>> 27d2782 (feat: game over ui + button updates)
 layout_mode = 2
