@@ -17,13 +17,14 @@ func _physics_process(delta):
 		double_jump_count = 0
 		
 	if Input.is_action_just_pressed("Drum"):
-		$DrumAttack.disabled.set_deferred(false)
-		$DrumTimer.start()
+		$DrumArea/DrumAttack.disabled = false
+		$DrumArea/DrumAttack/DrumTimer.start()
 		
 		
 	if Input.is_action_just_pressed("Baton"):
-		$BatonAtack.disabled.set_deffered(false)
-		$BatonTimer.start()
+		$BatonArea/BatonAtack.disabled = false
+		
+		$BatonArea/BatonAtack/BatonTimer.start()
 
 	# Handle jump.
 	if Input.is_action_just_pressed("Accept"):
@@ -57,21 +58,21 @@ func _physics_process(delta):
 
 
 func _on_drum_timer_timeout() -> void:
-	$DrumAttack.disabled.set_deffered(true)
+	$DrumArea/DrumAttack.disabled = true
 
 
 func _on_baton_timer_timeout() -> void:
-	$BatonAtack.disabled.set_deffered(true)
+	$BatonArea/BatonAtack.disabled = true 
 
 
 func _on_drum_area_body_entered(body: Node2D) -> void:
 	if body.name != "Player":
-		pass
+		body.rotate(1)
 		
 
 
 func _on_baton_area_body_entered(body: Node2D) -> void:
 	if body.name != "Player":
-		pass
+		body.rotate(1)
 		
 	pass # Replace with function body.

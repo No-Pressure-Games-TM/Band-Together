@@ -126,7 +126,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2u0e4"]
-radius = 23.0868
+radius = 18.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
 size = Vector2(12, 36)
@@ -151,7 +151,7 @@ disabled = true
 debug_color = Color(0.772696, 0.354526, 0.685309, 0.42)
 
 [node name="DrumTimer" type="Timer" parent="DrumArea/DrumAttack"]
-wait_time = 0.25
+wait_time = 0.15
 one_shot = true
 
 [node name="BatonArea" type="Area2D" parent="."]
@@ -163,7 +163,7 @@ disabled = true
 debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
 
 [node name="BatonTimer" type="Timer" parent="BatonArea/BatonAtack"]
-wait_time = 0.25
+wait_time = 0.15
 one_shot = true
 
 [connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]
