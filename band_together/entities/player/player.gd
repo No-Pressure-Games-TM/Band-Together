@@ -16,14 +16,15 @@ func _physics_process(delta):
 	else:
 		double_jump_count = 0
 		
+	##When the player presses the drum button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds	
 	if Input.is_action_just_pressed("Drum"):
 		$DrumArea/DrumAttack.disabled = false
 		$DrumArea/DrumAttack/DrumTimer.start()
 		
-		
+			
+	##When the player presses the baton button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Baton"):
 		$BatonArea/BatonAtack.disabled = false
-		
 		$BatonArea/BatonAtack/BatonTimer.start()
 
 	# Handle jump.
@@ -56,23 +57,23 @@ func _physics_process(delta):
 		
 	move_and_slide()
 
-
+#Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
 	$DrumArea/DrumAttack.disabled = true
 
-
+#Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
 	$BatonArea/BatonAtack.disabled = true 
 
-
+##Consequence for enemies hitting the attack hitbox
+#Currently, as there is no health system for enemies, this rotates them :D
 func _on_drum_area_body_entered(body: Node2D) -> void:
 	if body.name != "Player":
 		body.rotate(1)
 		
 
-
+##Consequence for enemies hitting the attack hitbox
+#Currently, as there is no health system for enemies, this rotates them :D
 func _on_baton_area_body_entered(body: Node2D) -> void:
 	if body.name != "Player":
 		body.rotate(1)
-		
-	pass # Replace with function body.
