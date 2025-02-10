@@ -1,5 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://chmdbpxvcc4i8"]
 
+[gd_scene load_steps=24 format=3 uid="uid://chmdbpxvcc4i8"]
+
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Texture2D" uid="uid://b42mr8qq2k16h" path="res://entities/player/assets/IDLE-DELETE.png" id="1_nnija"]
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_nxl3l"]
 [ext_resource type="Texture2D" uid="uid://d07sqbdwnhcg7" path="res://entities/player/assets/WALK-DELETE.png" id="2_0jp00"]
@@ -132,7 +135,10 @@ radius = 18.0
 size = Vector2(12, 36)
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_nxl3l")
+
+safe_margin = 0.1
+script = ExtResource("1_mms2d")
+
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
@@ -141,6 +147,7 @@ shape = SubResource("RectangleShape2D_kco12")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2j7hi")
+
 animation = &"idle"
 
 [node name="DrumArea" type="Area2D" parent="."]
@@ -171,3 +178,17 @@ one_shot = true
 [connection signal="timeout" from="DrumArea/DrumAttack/DrumTimer" to="." method="_on_drum_timer_timeout"]
 [connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
 [connection signal="timeout" from="BatonArea/BatonAtack/BatonTimer" to="." method="_on_baton_timer_timeout"]
+
+animation = &"walk"
+frame = 5
+frame_progress = 0.629887
+
+[node name="DashChargeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DashExecuteTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
+[connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]
+
