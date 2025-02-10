@@ -29,6 +29,18 @@ var attached_to_wall: bool = false
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _physics_process(delta):
+
+	##When the player presses the drum button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds	
+	if Input.is_action_just_pressed("Drum"):
+		$DrumArea/DrumAttack.disabled = false
+		$DrumArea/DrumAttack/DrumTimer.start()
+		
+			
+	##When the player presses the baton button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds		
+	if Input.is_action_just_pressed("Baton"):
+		$BatonArea/BatonAtack.disabled = false
+		$BatonArea/BatonAtack/BatonTimer.start()
+
 	direction = Input.get_axis("Left", "Right")
 	wall_attach(direction)
 	gravity(delta)  # Wall slide, jump buffer, coyote time is also in here!
@@ -68,6 +80,28 @@ func _physics_process(delta):
 			sprite.play("idle")
 		
 	move_and_slide()
+
+
+#Re-disables the attack hitbox after the agreed upon duration
+func _on_drum_timer_timeout() -> void:
+	$DrumArea/DrumAttack.disabled = true
+
+#Re-disables the attack hitbox after the agreed upon duration
+func _on_baton_timer_timeout() -> void:
+	$BatonArea/BatonAtack.disabled = true 
+
+##Consequence for enemies hitting the attack hitbox
+#Currently, as there is no health system for enemies, this rotates them :D
+func _on_drum_area_body_entered(body: Node2D) -> void:
+	if body.name != "Player":
+		body.rotate(1)
+		
+
+##Consequence for enemies hitting the attack hitbox
+#Currently, as there is no health system for enemies, this rotates them :D
+func _on_baton_area_body_entered(body: Node2D) -> void:
+	if body.name != "Player":
+		body.rotate(1)
 
 func gravity(delta) -> void:
 	if is_on_floor():

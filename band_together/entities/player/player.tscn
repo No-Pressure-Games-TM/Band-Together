@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=23 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Texture2D" uid="uid://b42mr8qq2k16h" path="res://entities/player/assets/IDLE-DELETE.png" id="1_nnija"]
@@ -125,6 +125,12 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2u0e4"]
+radius = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
+size = Vector2(12, 36)
+
 [node name="Player" type="CharacterBody2D"]
 safe_margin = 0.1
 script = ExtResource("1_mms2d")
@@ -140,11 +146,39 @@ animation = &"walk"
 frame = 5
 frame_progress = 0.629887
 
+[node name="DrumArea" type="Area2D" parent="."]
+
+[node name="DrumAttack" type="CollisionShape2D" parent="DrumArea"]
+shape = SubResource("CircleShape2D_2u0e4")
+disabled = true
+debug_color = Color(0.772696, 0.354526, 0.685309, 0.42)
+
+[node name="DrumTimer" type="Timer" parent="DrumArea/DrumAttack"]
+wait_time = 0.15
+one_shot = true
+
+[node name="BatonArea" type="Area2D" parent="."]
+
+[node name="BatonAtack" type="CollisionShape2D" parent="BatonArea"]
+position = Vector2(11, 0)
+shape = SubResource("RectangleShape2D_b5c5w")
+disabled = true
+debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
+
+[node name="BatonTimer" type="Timer" parent="BatonArea/BatonAtack"]
+wait_time = 0.15
+one_shot = true
+
 [node name="DashChargeTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="DashExecuteTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]
+[connection signal="body_entered" from="DrumArea" to="." method="_on_drum_area_body_entered"]
+[connection signal="timeout" from="DrumArea/DrumAttack/DrumTimer" to="." method="_on_drum_timer_timeout"]
+[connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
+[connection signal="timeout" from="BatonArea/BatonAtack/BatonTimer" to="." method="_on_baton_timer_timeout"]
 [connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
 [connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]

@@ -16,3 +16,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	# Enemy collision detection
 	if (body.name == "Player"):
 		game_manager.decrease_health()
+
+func on_hit():
+	pass
+	
