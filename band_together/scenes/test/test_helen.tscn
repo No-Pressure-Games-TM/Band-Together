@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 [gd_scene load_steps=11 format=4 uid="uid://drg6mhrnsd7kk"]
+=======
+[gd_scene load_steps=20 format=4 uid="uid://drg6mhrnsd7kk"]
+>>>>>>> a4fd36ede1293abcbe2331a8c21f941ccd94ab6f
 
-[ext_resource type="Script" path="res://scenes/test/game_manager.gd" id="1_4bvth"]
+[ext_resource type="Script" path="res://scenes/game_manager.gd" id="1_4bvth"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_7n6o4"]
 [ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="4_i46fv"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock_enemy.tscn" id="5_4utyy"]
+<<<<<<< HEAD
 [ext_resource type="Script" path="res://scenes/test/pause.gd" id="5_si0ax"]
+=======
+[ext_resource type="Script" path="res://scenes/states/pause.gd" id="5_si0ax"]
+>>>>>>> a4fd36ede1293abcbe2331a8c21f941ccd94ab6f
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="6_kxsmu"]
+[ext_resource type="Texture2D" uid="uid://dnldkpuhl5sx6" path="res://assets/arrow-left.png" id="7_6m17q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
 texture = ExtResource("1_dorrl")
@@ -130,6 +139,106 @@ sources/1 = SubResource("TileSetAtlasSource_yw07a")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4tob"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hifjg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpt3e"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jw7hk"]
+bg_color = Color(0.161554, 0.258631, 0.0968004, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmoqt"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+anti_aliasing_size = 0.01
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yk6hg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbryl"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16yqa"]
+bg_color = Color(0.161554, 0.258631, 0.0968004, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1buh2"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+anti_aliasing_size = 0.01
+
 [node name="Node2D" type="Node2D"]
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("hearts")]
@@ -165,6 +274,84 @@ position = Vector2(256, 224)
 shape = SubResource("WorldBoundaryShape2D_n4tob")
 
 [node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Pause" type="Node" parent="UI"]
+script = ExtResource("5_si0ax")
+
+[node name="PausePanel" type="Panel" parent="UI/Pause"]
+unique_name_in_owner = true
+visible = false
+top_level = true
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Pause/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -70.0
+offset_right = 76.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_font_sizes/font_size = 32
+text = "Game Paused "
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -20.0
+offset_right = 51.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Resume" type="Button" parent="UI/Pause/PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hifjg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hpt3e")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jw7hk")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mmoqt")
+text = "Resume"
+
+[node name="MainMenu" type="Button" parent="UI/Pause/PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_constants/icon_max_width = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yk6hg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kbryl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_16yqa")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1buh2")
+text = "Main Menu"
+icon = ExtResource("7_6m17q")
+alignment = 0
+expand_icon = true
 
 [node name="Hearts" type="Panel" parent="UI"]
 self_modulate = Color(1, 1, 1, 0)
@@ -208,6 +395,7 @@ layout_mode = 2
 texture = ExtResource("4_i46fv")
 expand_mode = 2
 
+<<<<<<< HEAD
 [node name="Pause" type="Node" parent="UI/Hearts"]
 script = ExtResource("5_si0ax")
 
@@ -267,3 +455,8 @@ text = "Return to Main Menu"
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
 [connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/Resume" to="UI/Hearts/Pause" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/Hearts/Pause/PausePanel/VBoxContainer/MainMenu" to="UI/Hearts/Pause" method="_on_main_menu_pressed"]
+=======
+[connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
+[connection signal="pressed" from="UI/Pause/PausePanel/VBoxContainer/Resume" to="UI/Pause" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/Pause/PausePanel/VBoxContainer/MainMenu" to="UI/Pause" method="_on_main_menu_pressed"]
+>>>>>>> a4fd36ede1293abcbe2331a8c21f941ccd94ab6f

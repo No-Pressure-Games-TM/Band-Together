@@ -1,4 +1,4 @@
-extends Area2D
+extends CanvasLayer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -10,7 +10,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-# When player falls off scene, reload.
-func _on_body_entered(body: Node2D) -> void:
-	if (body.name == "Player"):
-		get_tree().reload_current_scene()
+func _on_retry_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/test/test_helen.tscn")
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()
