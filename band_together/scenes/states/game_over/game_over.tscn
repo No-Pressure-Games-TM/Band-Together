@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2o5bq8pwfgqk"]
+[gd_scene load_steps=8 format=3 uid="uid://c2o5bq8pwfgqk"]
 
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="1_2afko"]
 [ext_resource type="Script" path="res://scenes/states/game_over/game_over.gd" id="1_ljw15"]
@@ -8,8 +8,6 @@
 texture = ExtResource("2_o65wy")
 expand_margin_left = 20.0
 modulate_color = Color(0.460347, 0.460347, 0.460347, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uqf5g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qyqxv"]
 bg_color = Color(0.507384, 0.669107, 0.516096, 1)
@@ -103,10 +101,10 @@ texture_filter = 1
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_styles/focus = SubResource("StyleBoxEmpty_uqf5g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_qyqxv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_qyqxv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ugb36")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hkmke")
@@ -119,7 +117,7 @@ theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.988957, 0.988957, 0.988957, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_styles/focus = SubResource("StyleBoxEmpty_uqf5g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_qyqxv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_qyqxv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ugb36")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hkmke")

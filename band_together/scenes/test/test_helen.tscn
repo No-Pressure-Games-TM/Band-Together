@@ -131,7 +131,25 @@ sources/1 = SubResource("TileSetAtlasSource_yw07a")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4tob"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hifjg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6bfe"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpt3e"]
 content_margin_left = 0.0
@@ -181,7 +199,25 @@ shadow_size = 1
 shadow_offset = Vector2(0, 2)
 anti_aliasing_size = 0.01
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yk6hg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jn7e7"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbryl"]
 content_margin_left = 0.0
@@ -297,7 +333,7 @@ grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 4
 theme_override_font_sizes/font_size = 32
-text = "Game Paused "
+text = "Game Paused"
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause/PausePanel"]
@@ -320,9 +356,10 @@ process_mode = 3
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_styles/focus = SubResource("StyleBoxEmpty_hifjg")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s6bfe")
 theme_override_styles/hover = SubResource("StyleBoxFlat_hpt3e")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jw7hk")
 theme_override_styles/normal = SubResource("StyleBoxFlat_mmoqt")
@@ -333,10 +370,11 @@ process_mode = 3
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
 theme_override_constants/icon_max_width = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_yk6hg")
+theme_override_styles/focus = SubResource("StyleBoxFlat_jn7e7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kbryl")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_16yqa")
 theme_override_styles/normal = SubResource("StyleBoxFlat_1buh2")
