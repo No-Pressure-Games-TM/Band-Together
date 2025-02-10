@@ -169,4 +169,3 @@ func _on_dash_execute_timer_timeout() -> void:
 	dash_mult = 1
 	grav_div = 1
 	is_dashing = false
-
