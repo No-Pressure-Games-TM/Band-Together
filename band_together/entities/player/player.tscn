@@ -126,6 +126,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+safe_margin = 0.1
 script = ExtResource("1_mms2d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
