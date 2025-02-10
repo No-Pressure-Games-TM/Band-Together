@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rkd3ltxd52lp"]
+[gd_scene load_steps=8 format=3 uid="uid://rkd3ltxd52lp"]
 
 [ext_resource type="Texture2D" uid="uid://cpqf0r844psnb" path="res://assets/backgrounds/main_menu_bg.jpg" id="1_3kv3e"]
 [ext_resource type="Script" path="res://scenes/states/main_menu/main_menu.gd" id="1_35m0h"]
@@ -7,8 +7,6 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ubkg"]
 texture = ExtResource("1_3kv3e")
 modulate_color = Color(0.460347, 0.460347, 0.460347, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gx4f8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yywy"]
 content_margin_left = 0.0
@@ -31,11 +29,17 @@ shadow_offset = Vector2(0, 1)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f0yxt"]
-bg_color = Color(0.161554, 0.258631, 0.0968004, 1)
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0.176471, 0, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+corner_detail = 13
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fy76"]
 content_margin_left = 0.0
@@ -109,6 +113,7 @@ offset_right = 45.5
 offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 theme_override_constants/separation = 4
 
 [node name="StartGame" type="Button" parent="VBoxContainer"]
@@ -116,12 +121,12 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
 theme_override_fonts/font = ExtResource("2_fewg4")
 theme_override_font_sizes/font_size = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_gx4f8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
@@ -132,11 +137,11 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
 theme_override_fonts/font = ExtResource("2_fewg4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_gx4f8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
@@ -145,13 +150,14 @@ text = "Settings"
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_previous = NodePath("../Settings")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
 theme_override_fonts/font = ExtResource("2_fewg4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_gx4f8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
