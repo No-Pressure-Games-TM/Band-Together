@@ -71,7 +71,7 @@ func _physics_process(delta):
 
 func gravity(delta) -> void:
 	if is_on_floor():
-		double_jump_count = -1  # Reset double jump
+		double_jump_count = 0  # Reset double jump
 		attached_to_wall = false
 		coyote_time_counter = coyote_time
 	elif attached_to_wall:
