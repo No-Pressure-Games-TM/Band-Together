@@ -305,7 +305,7 @@ shape = SubResource("WorldBoundaryShape2D_n4tob")
 
 [node name="WinArea" type="Area2D" parent="SceneObjects"]
 collision_mask = 3
-script = ExtResource("6_kxsmu")
+script = ExtResource("1_4bvth")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/WinArea"]
 position = Vector2(323, 151)
