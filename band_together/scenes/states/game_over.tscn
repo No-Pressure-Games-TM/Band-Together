@@ -1,8 +1,28 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2o5bq8pwfgqk"]
+[gd_scene load_steps=9 format=3 uid="uid://cpo3yk52t70r1"]
 
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="1_2afko"]
-[ext_resource type="Script" path="res://scenes/states/game_over.gd" id="1_ljw15"]
 [ext_resource type="Texture2D" uid="uid://fq6qg6ww7bo5" path="res://assets/backgrounds/game_over.jpg" id="2_o65wy"]
+
+[sub_resource type="GDScript" id="GDScript_8lyjb"]
+script/source = "extends CanvasLayer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_retry_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/test/test_helen.tscn\")
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()
+"
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lng4i"]
 texture = ExtResource("2_o65wy")
@@ -58,7 +78,7 @@ shadow_offset = Vector2(0, 2)
 anti_aliasing = false
 
 [node name="GameOver" type="CanvasLayer"]
-script = ExtResource("1_ljw15")
+script = SubResource("GDScript_8lyjb")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
