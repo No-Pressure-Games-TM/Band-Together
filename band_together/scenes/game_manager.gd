@@ -29,6 +29,6 @@ func decrease_health():
 		print("Lives: ", lives)
 
 
-func _on_win_area_body_entered(body: Node2D) -> void:
+func _on_win_area_body_entered(_body: Node2D) -> void:
 	print("You Win!\n")
 	get_tree().call_deferred("change_scene_to_file", "res://scenes/states/win/win.tscn")
