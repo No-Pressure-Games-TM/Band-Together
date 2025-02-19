@@ -135,6 +135,13 @@ size = Vector2(12, 36)
 safe_margin = 0.1
 script = ExtResource("1_mms2d")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_speed = 3.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_right_margin = 0.1
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
 scale = Vector2(1.77256, -0.653411)
