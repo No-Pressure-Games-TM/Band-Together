@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://bnpo75dm0wp2n"]
+[gd_scene load_steps=21 format=4 uid="uid://bnpo75dm0wp2n"]
 
 [ext_resource type="Script" path="res://scenes/game_manager.gd" id="1_4bvth"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
@@ -130,6 +130,8 @@ physics_layer_0/collision_mask = 0
 sources/1 = SubResource("TileSetAtlasSource_yw07a")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4tob"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r1pu1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6bfe"]
 content_margin_left = 0.0
@@ -301,6 +303,14 @@ script = ExtResource("6_kxsmu")
 position = Vector2(256, 224)
 shape = SubResource("WorldBoundaryShape2D_n4tob")
 
+[node name="WinArea" type="Area2D" parent="SceneObjects"]
+collision_mask = 3
+script = ExtResource("1_4bvth")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/WinArea"]
+position = Vector2(323, 151)
+shape = SubResource("RectangleShape2D_r1pu1")
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Pause" type="Node" parent="UI"]
@@ -426,5 +436,6 @@ texture = ExtResource("4_i46fv")
 expand_mode = 2
 
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="SceneObjects/WinArea" to="GameManager" method="_on_win_area_body_entered"]
 [connection signal="pressed" from="UI/Pause/PausePanel/VBoxContainer/Resume" to="UI/Pause" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/Pause/PausePanel/VBoxContainer/MainMenu" to="UI/Pause" method="_on_main_menu_pressed"]
