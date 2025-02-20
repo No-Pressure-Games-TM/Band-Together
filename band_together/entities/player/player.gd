@@ -186,3 +186,7 @@ func _on_dash_execute_timer_timeout() -> void:
 	dash_mult = 1
 	grav_div = 1
 	is_dashing = false
+
+func _on_win_area_body_entered(_body: Node2D) -> void:
+	print("You Win!\n")
+	SceneTransition.change_scene("res://scenes/states/win/win.tscn")
