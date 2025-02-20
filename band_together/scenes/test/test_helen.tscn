@@ -212,7 +212,7 @@ tile_map_data = PackedByteArray("AAABAAoAAAADAAEAAAACAAoAAAADAAEAAAACAAsAAAADAAI
 tile_set = SubResource("TileSet_dcilm")
 
 [node name="Player" parent="SceneObjects" instance=ExtResource("2_7n6o4")]
-position = Vector2(-144, 150)
+position = Vector2(-132, 152)
 scale = Vector2(0.68558, 0.601599)
 collision_layer = 2
 collision_mask = 12
