@@ -1,10 +1,69 @@
-[gd_scene load_steps=10 format=4 uid="uid://bnpo75dm0wp2n"]
+[gd_scene load_steps=12 format=4 uid="uid://bnpo75dm0wp2n"]
 
 [ext_resource type="Script" path="res://scenes/game_manager.gd" id="1_4bvth"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_dorrl"]
+[ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="1_kga88"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_7n6o4"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock_enemy.tscn" id="5_4utyy"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="6_kxsmu"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tfm4j"]
+texture = ExtResource("1_kga88")
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+5:1/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+6:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+11:4/0 = 0
+10:4/0 = 0
+9:4/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+10:6/0 = 0
+9:6/0 = 0
+9:7/0 = 0
+8:6/0 = 0
+11:8/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+2:4/0 = 0
+2:3/0 = 0
+3:4/0 = 0
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+7:3/0 = 0
+8:3/0 = 0
+8:4/0 = 0
+7:4/0 = 0
+6:4/0 = 0
+8:1/0 = 0
+8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+10:1/0 = 0
+10:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
+4:4/0 = 0
+4:5/0 = 0
+3:5/0 = 0
+2:5/0 = 0
+9:8/0 = 0
+12:8/0 = 0
+13:8/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
 texture = ExtResource("1_dorrl")
@@ -119,12 +178,14 @@ texture_region_size = Vector2i(32, 32)
 3:0/0 = 0
 3:1/0 = 0
 3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+5:4/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_dcilm"]
-tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 4
 physics_layer_0/collision_mask = 0
+terrain_set_0/mode = 0
 sources/1 = SubResource("TileSetAtlasSource_yw07a")
+sources/0 = SubResource("TileSetAtlasSource_tfm4j")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4tob"]
 
@@ -135,29 +196,30 @@ sources/1 = SubResource("TileSetAtlasSource_yw07a")
 [node name="SceneObjects" type="Node" parent="."]
 
 [node name="Ground" type="TileMapLayer" parent="SceneObjects"]
-tile_map_data = PackedByteArray("AAAAAAQAAQACAAAAAAAAAAUAAQACAAEAAAACAAUAAQACAAEAAAADAAUAAQACAAEAAAAEAAUAAQACAAEAAAAFAAQAAQACAAAAAAAFAAUAAQACAAEAAAAJAAUAAQACAAEAAAABAAQAAQACAAAAAAAGAAQAAQACAAAAAAAGAAUAAQACAAEAAAAEAAQAAQACAAAAAAAJAAQAAQACAAAAAAAKAAUAAQACAAEAAAAKAAQAAQACAAAAAAACAAQAAQACAAAAAAADAAQAAQACAAAAAAABAAUAAQACAAEAAAA=")
+tile_map_data = PackedByteArray("AAABAAoAAAADAAEAAAACAAoAAAADAAEAAAACAAsAAAADAAIAAAACAAwAAAADAAIAAAABAAsAAAADAAIAAAABAAwAAAADAAIAAAD5/woAAAADAAEAAAD5/wsAAAADAAIAAAD6/woAAAADAAEAAAD6/wsAAAADAAIAAAD5/wwAAAADAAIAAAD5/w0AAAADAAIAAAD6/wwAAAADAAIAAAD6/w0AAAADAAIAAAD7/w0AAAADAAIAAAD7/woAAAADAAEAAAD7/wsAAAADAAIAAAD7/wwAAAADAAIAAAD8/woAAAADAAEAAAD8/wsAAAADAAIAAAD8/wwAAAADAAIAAAD9/woAAAADAAEAAAD9/wsAAAADAAIAAAD9/wwAAAADAAIAAAD+/woAAAADAAEAAAD+/wsAAAADAAIAAAD+/wwAAAADAAIAAAD//woAAAADAAEAAAD//wsAAAADAAIAAAD//wwAAAADAAIAAAAAAAoAAAADAAEAAAAAAAsAAAADAAIAAAAAAAwAAAADAAIAAAD+/w0AAAADAAIAAAD//w0AAAADAAIAAAAAAA0AAAADAAIAAAABAA0AAAADAAIAAAACAA0AAAADAAIAAAD8/w0AAAADAAIAAAD9/w0AAAADAAIAAAADAAoAAAADAAEAAAADAAsAAAADAAIAAAAEAAsAAAADAAIAAAAEAAwAAAADAAIAAAAEAA0AAAADAAIAAAADAA0AAAADAAIAAAADAAwAAAADAAIAAAAEAAoAAAADAAEAAAAFAA0AAAADAAIAAAAFAAwAAAAEAAQAAAAFAAsAAAAEAAQAAAAFAAoAAAAEAAEAAAAGAAoAAAAFAAEAAAAGAAsAAAAFAAIAAAAHAAoAAAAFAAEAAAAHAAsAAAAFAAIAAAAIAAoAAAAFAAEAAAAIAAsAAAAFAAIAAAAGAAwAAAAFAAIAAAAGAA0AAAAFAAIAAAAHAAwAAAAFAAIAAAAHAA0AAAAFAAIAAAAIAAwAAAAFAAIAAAAIAA0AAAAFAAIAAAAJAAoAAAADAAEAAAAJAAsAAAACAAQAAAAKAAoAAAADAAEAAAAKAAsAAAADAAIAAAAJAAwAAAADAAIAAAAJAA0AAAADAAIAAAAKAAwAAAADAAIAAAAKAA0AAAADAAIAAAALAAoAAAAEAAEAAAALAAsAAAADAAMAAAALAAwAAAADAAIAAAALAA0AAAAEAAQAAAD5/w4AAAADAAIAAAD6/w4AAAADAAMAAAD7/w4AAAADAAUAAAD8/w4AAAADAAUAAAD9/w4AAAADAAMAAAD+/w4AAAADAAMAAAD//w4AAAADAAMAAAAAAA4AAAADAAUAAAABAA4AAAADAAMAAAACAA4AAAADAAMAAAADAA4AAAADAAMAAAAEAA4AAAADAAUAAAAFAA4AAAADAAUAAAAJAA4AAAADAAUAAAAKAA4AAAADAAMAAAALAA4AAAADAAUAAAD4/woAAAADAAEAAAD4/wsAAAADAAIAAAD4/wwAAAADAAIAAAD4/w0AAAADAAIAAAD3/woAAAADAAEAAAD3/wsAAAADAAIAAAD2/woAAAADAAEAAAD2/wsAAAACAAQAAAD2/wwAAAACAAQAAAD3/wwAAAADAAIAAAD2/w0AAAACAAQAAAD2/w4AAAACAAUAAAD3/w0AAAADAAIAAAD4/w4AAAADAAIAAAD3/w4AAAADAAUAAAA=")
 tile_set = SubResource("TileSet_dcilm")
 
 [node name="Player" parent="SceneObjects" instance=ExtResource("2_7n6o4")]
-position = Vector2(32, 135)
+position = Vector2(-119, 176)
 scale = Vector2(0.68558, 0.601599)
 collision_layer = 2
 collision_mask = 12
+bottom_limit = 192
 
 [node name="Enemies" type="Node" parent="SceneObjects"]
 
 [node name="Enemy1" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
-position = Vector2(80, 152)
+position = Vector2(-61, 153)
 
 [node name="Enemy2" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
-position = Vector2(152, 152)
+position = Vector2(18, 153)
 
 [node name="Area2D" type="Area2D" parent="SceneObjects"]
 collision_mask = 3
 script = ExtResource("6_kxsmu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Area2D"]
-position = Vector2(256, 224)
+position = Vector2(119, 202)
 shape = SubResource("WorldBoundaryShape2D_n4tob")
 
 [node name="WinArea" type="Area2D" parent="SceneObjects"]
@@ -165,7 +227,7 @@ collision_mask = 3
 script = ExtResource("1_4bvth")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/WinArea"]
-position = Vector2(323, 151)
+position = Vector2(168, 152)
 shape = SubResource("RectangleShape2D_r1pu1")
 
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
