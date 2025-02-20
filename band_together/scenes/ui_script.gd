@@ -53,13 +53,10 @@ func _on_main_menu_pressed() -> void:
 
 func decrease_health():
 	lives -= 1
-	# Update hearts displayed
-	for current_hearts in 3:
-		if (current_hearts < lives):
-			hearts[current_hearts].show()
-		else: 
-			hearts[current_hearts].hide()
-	
+	# Show only the number of hearts equal to 'lives', hide the rest
+	for i in range(len(hearts)):
+		hearts[i].visible = i < lives
+		
 	if (lives == 0):
 		print("Game Over.\n")
 		SceneTransition.change_scene("res://scenes/states/game_over/game_over.tscn")
