@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://bb4kc7nf21ki5"]
+
+[ext_resource type="Texture2D" uid="uid://2alj1l25hf8a" path="res://entities/enemies/crab/assets/crab-temp.png" id="1_55upx"]
+[ext_resource type="Script" path="res://entities/enemies/crab/crab.gd" id="1_jn3l6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt6tm"]
+atlas = ExtResource("1_55upx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cllhb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt6tm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gbp1u"]
+size = Vector2(20, 17.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ypyrr"]
+radius = 11.0
+
+[node name="Crab" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_jn3l6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cllhb")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-10, 0)
+target_position = Vector2(0, 17)
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_gbp1u")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_ypyrr")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

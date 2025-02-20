@@ -129,7 +129,7 @@ animations = [{
 radius = 18.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
-size = Vector2(12, 36)
+size = Vector2(29, 36)
 
 [node name="Player" type="CharacterBody2D"]
 safe_margin = 0.1
@@ -139,8 +139,6 @@ script = ExtResource("1_mms2d")
 position_smoothing_speed = 3.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-drag_left_margin = 0.1
-drag_right_margin = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
@@ -167,7 +165,7 @@ one_shot = true
 [node name="BatonArea" type="Area2D" parent="."]
 
 [node name="BatonAtack" type="CollisionShape2D" parent="BatonArea"]
-position = Vector2(11, 0)
+position = Vector2(15, 0)
 shape = SubResource("RectangleShape2D_b5c5w")
 disabled = true
 debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
