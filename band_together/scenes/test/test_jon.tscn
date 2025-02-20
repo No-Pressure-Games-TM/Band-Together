@@ -136,7 +136,7 @@ scale = Vector2(0.68558, 0.601599)
 collision_layer = 2
 collision_mask = 12
 left_limit = 0
-bottom_limit = 224
+bottom_limit = 192
 
 [node name="Crab" parent="." instance=ExtResource("7_4xtrx")]
 position = Vector2(232, 115)
