@@ -1,7 +1,5 @@
 extends RigidBody2D
 
-@onready var game_manager: Node = $"../../../GameManager"
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -11,11 +9,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	# Enemy collision detection
 	if (body.name == "Player"):
-		game_manager.decrease_health()
+		UI.decrease_health()
 
 func on_hit():
 	pass

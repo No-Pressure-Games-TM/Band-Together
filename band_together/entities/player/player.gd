@@ -56,7 +56,7 @@ func _physics_process(delta):
 		$BatonArea/BatonAtack/BatonTimer.start()
 
 	direction = Input.get_axis("Left", "Right")
-	wall_attach(direction)
+	wall_attach()
 	gravity(delta)  # Wall slide, jump buffer, coyote time is also in here!
 	## I commented this out for now. Will add it back in when I am done organizing - jon
 	#if not is_on_floor() and not attached_to_wall:
@@ -164,11 +164,15 @@ func jump(delta) -> void:
 	if Input.is_action_just_released("Accept") and velocity.y < -30:
 		velocity.y = - 30
 
-func wall_attach(direction) -> void:
+func wall_attach() -> void:
 	if is_on_wall_only() and direction == -get_wall_normal().x:
 		attached_to_wall = true
 	elif direction == get_wall_normal().x or Input.is_action_just_pressed("Down") or !is_on_wall():
 		attached_to_wall = false
+
+func knocked_back(direction):
+	velocity.x = direction * 600
+	velocity.y = -250
 
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
