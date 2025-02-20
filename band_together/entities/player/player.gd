@@ -1,5 +1,12 @@
 extends CharacterBody2D
 
+#region Camera Limits
+@export var left_limit: int = -10000000        # Camera left limit (px)
+@export var right_limit: int = 10000000        # Camera right limit (px)
+@export var top_limit: int = -10000000         # Camera top limit (px)
+@export var bottom_limit: int = 10000000        # Camera bottom limit (px)
+#endregion
+
 #region Physics
 @export var speed: float = 100.0               # Player's movespeed
 @export var jump_velocity: float = -300.0      # Player's jump velocity
@@ -27,9 +34,16 @@ var attached_to_wall: bool = false
 #endregion
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var camera: Camera2D = $Camera2D
+
+func _ready():
+	# Set the camera limits to those in the editor
+	camera.limit_bottom = bottom_limit
+	camera.limit_right = right_limit
+	camera.limit_left = left_limit
+	camera.limit_top = top_limit
 
 func _physics_process(delta):
-
 	##When the player presses the drum button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds	
 	if Input.is_action_just_pressed("Drum"):
 		$DrumArea/DrumAttack.disabled = false
@@ -78,9 +92,8 @@ func _physics_process(delta):
 		# play the idle animation if not already playing
 		if sprite.animation != "idle" and is_on_floor():
 			sprite.play("idle")
-		
+	
 	move_and_slide()
-
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
