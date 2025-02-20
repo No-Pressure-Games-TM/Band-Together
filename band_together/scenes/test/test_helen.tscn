@@ -17,11 +17,16 @@ texture = ExtResource("1_kga88")
 4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
 5:1/0 = 0
 2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:2/0 = 0
 3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:3/0 = 0
 5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
 6:3/0 = 0
@@ -44,8 +49,11 @@ texture = ExtResource("1_kga88")
 1:3/0 = 0
 1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
 2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:1/0 = 0
 7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
 7:3/0 = 0
@@ -58,9 +66,13 @@ texture = ExtResource("1_kga88")
 10:1/0 = 0
 10:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3, 8, 8, -8, 8)
 4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:5/0 = 0
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:5/0 = 0
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:5/0 = 0
+2:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:8/0 = 0
 12:8/0 = 0
 13:8/0 = 0
@@ -200,19 +212,20 @@ tile_map_data = PackedByteArray("AAABAAoAAAADAAEAAAACAAoAAAADAAEAAAACAAsAAAADAAI
 tile_set = SubResource("TileSet_dcilm")
 
 [node name="Player" parent="SceneObjects" instance=ExtResource("2_7n6o4")]
-position = Vector2(-132, 152)
+position = Vector2(-144, 150)
 scale = Vector2(0.68558, 0.601599)
 collision_layer = 2
 collision_mask = 12
+left_limit = -160
 bottom_limit = 192
 
 [node name="Enemies" type="Node" parent="SceneObjects"]
 
 [node name="Enemy1" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
-position = Vector2(-61, 153)
+position = Vector2(-60, 151)
 
 [node name="Enemy2" parent="SceneObjects/Enemies" instance=ExtResource("5_4utyy")]
-position = Vector2(18, 153)
+position = Vector2(18, 151)
 
 [node name="Area2D" type="Area2D" parent="SceneObjects"]
 collision_mask = 3
@@ -231,3 +244,4 @@ position = Vector2(168, 152)
 shape = SubResource("RectangleShape2D_r1pu1")
 
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="SceneObjects/WinArea" to="SceneObjects/Player" method="_on_win_area_body_entered"]
