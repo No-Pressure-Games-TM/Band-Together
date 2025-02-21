@@ -18,6 +18,7 @@ var jump_buffer_counter: float = 0               # Counts jump buffer
 var double_jump_count: int = 0
 var dash_mult: int = 1                         # Dash movespeed multiply
 var grav_div: int                              # Divide gravity while charging dash
+var moving_allowed: bool = true
 #endregion
 
 #region Dash bools
@@ -36,6 +37,9 @@ var attached_to_wall: bool = false
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: Camera2D = $Camera2D
 
+var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
+@onready var i_frame_timer: float = default_i_frame_timer
+
 func _ready():
 	# Set the camera limits to those in the editor
 	camera.limit_bottom = bottom_limit
@@ -48,14 +52,17 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Drum"):
 		$DrumArea/DrumAttack.disabled = false
 		$DrumArea/DrumAttack/DrumTimer.start()
-		
 			
 	##When the player presses the baton button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Baton"):
 		$BatonArea/BatonAtack.disabled = false
 		$BatonArea/BatonAtack/BatonTimer.start()
-
-	direction = Input.get_axis("Left", "Right")
+	
+	if moving_allowed:
+		direction = Input.get_axis("Left", "Right")
+	else:
+		direction = 0
+		
 	wall_attach()
 	gravity(delta)  # Wall slide, jump buffer, coyote time is also in here!
 	## I commented this out for now. Will add it back in when I am done organizing - jon
@@ -94,6 +101,14 @@ func _physics_process(delta):
 			sprite.play("idle")
 	
 	move_and_slide()
+
+func _process(delta):
+	if i_frame_timer > 0:
+		# Decrease i-frame timer every frame, preventing underflow
+		i_frame_timer -= delta
+	
+	if UI.lives <= 0:
+		pause_movement(3)  # This makes it so the player cannot walk around if they die (before game over screen)
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
@@ -136,7 +151,8 @@ func gravity(delta) -> void:
 func jump(delta) -> void:
 	if Input.is_action_just_pressed("Accept"):
 		jump_buffer_counter = jump_buffer
-	else:
+	elif jump_buffer_counter > 0:
+		# prevent underflow
 		jump_buffer_counter -= delta
 	## Regular Jump
 	if (is_on_floor() or coyote_time_counter > 0) and jump_buffer_counter > 0:
@@ -149,6 +165,7 @@ func jump(delta) -> void:
 		attached_to_wall = false
 		velocity.x = wall_jump_force * get_wall_normal().x
 		velocity.y = jump_velocity
+		pause_movement(0.1)
 		jump_buffer_counter = 0
 		coyote_time_wall_counter = 0
 			
@@ -171,17 +188,28 @@ func wall_attach() -> void:
 		attached_to_wall = false
 
 func take_damage(direction=null):
-	UI.decrease_health()
-	camera.apply_shake()
-	# Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
-	Engine.time_scale = 0.1  
-	await get_tree().create_timer(0.05, false).timeout
-	Engine.time_scale = 1
-	# ChatGPT helped me make a knockback!
-	if direction != null:
-		position.y -= 20  # sometimes the player would get stuck in the crab
-		velocity.x = direction * 500
-		velocity.y = -150
+	# Direction should == -1 or 1 (direction to launch player when taking damage)
+	if i_frame_timer <= 0:
+		i_frame_timer = default_i_frame_timer
+		UI.decrease_health()
+		camera.apply_shake()
+		
+		# Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
+		Engine.time_scale = 0.1  
+		await get_tree().create_timer(0.05, false).timeout
+		Engine.time_scale = 1
+		
+		# ChatGPT helped me make a knockback!
+		if direction != null:
+			velocity.x = direction * 500
+			velocity.y = -100
+			pause_movement(0.2)
+
+func pause_movement(howlong):
+	# Briefly disable movement control (thanks chatgpt <3)
+	moving_allowed = false
+	await get_tree().create_timer(howlong, false).timeout
+	moving_allowed = true
 
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player

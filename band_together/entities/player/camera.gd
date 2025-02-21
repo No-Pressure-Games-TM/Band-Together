@@ -1,7 +1,7 @@
 extends Camera2D
 
 var random_strength: float = 30.0               # Strength of camera shake
-var shake_fade: float = 50.0                    # Speed of camera shake ending
+var shake_fade: float = 100.0                    # Speed of camera shake ending
 
 var rng = RandomNumberGenerator.new()
 

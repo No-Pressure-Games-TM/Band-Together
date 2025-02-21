@@ -35,3 +35,4 @@ func flip():
 func _on_hitbox_body_entered(body):
 	if body.name == "Player":
 		body.take_damage(sign(body.position.x - position.x))
+		flip()  # makes it so player cannot stay in the hitbox
