@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-#region Camera Limits
+#region Camera
 @export var left_limit: int = -10000000        # Camera left limit (px)
 @export var right_limit: int = 10000000        # Camera right limit (px)
 @export var top_limit: int = -10000000         # Camera top limit (px)
@@ -171,8 +171,14 @@ func wall_attach() -> void:
 		attached_to_wall = false
 
 func knocked_back(direction):
-	velocity.x = direction * 600
-	velocity.y = -250
+	camera.apply_shake()
+	Engine.time_scale = 0.1  # Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
+	await get_tree().create_timer(0.05, false).timeout
+	Engine.time_scale = 1
+	
+	position.y -= 20  # sometimes the player would get stuck in the crab
+	velocity.x = direction * 500
+	velocity.y = -150
 
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player

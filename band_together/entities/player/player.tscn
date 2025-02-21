@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=24 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Texture2D" uid="uid://b42mr8qq2k16h" path="res://entities/player/assets/IDLE-DELETE.png" id="1_nnija"]
 [ext_resource type="Texture2D" uid="uid://d07sqbdwnhcg7" path="res://entities/player/assets/WALK-DELETE.png" id="2_0jp00"]
+[ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
 size = Vector2(5.64155, 49.5423)
@@ -139,6 +140,7 @@ script = ExtResource("1_mms2d")
 position_smoothing_speed = 3.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+script = ExtResource("2_a8a0l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
