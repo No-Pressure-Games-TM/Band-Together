@@ -170,15 +170,18 @@ func wall_attach() -> void:
 	elif direction == get_wall_normal().x or Input.is_action_just_pressed("Down") or !is_on_wall():
 		attached_to_wall = false
 
-func knocked_back(direction):
+func take_damage(direction=null):
+	UI.decrease_health()
 	camera.apply_shake()
-	Engine.time_scale = 0.1  # Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
+	# Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
+	Engine.time_scale = 0.1  
 	await get_tree().create_timer(0.05, false).timeout
 	Engine.time_scale = 1
-	
-	position.y -= 20  # sometimes the player would get stuck in the crab
-	velocity.x = direction * 500
-	velocity.y = -150
+	# ChatGPT helped me make a knockback!
+	if direction != null:
+		position.y -= 20  # sometimes the player would get stuck in the crab
+		velocity.x = direction * 500
+		velocity.y = -150
 
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player

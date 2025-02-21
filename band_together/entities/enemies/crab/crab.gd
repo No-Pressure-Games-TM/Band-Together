@@ -34,6 +34,4 @@ func flip():
 
 func _on_hitbox_body_entered(body):
 	if body.name == "Player":
-		UI.decrease_health()
-		# ChatGPT helped me make a knockback!
-		body.knocked_back(sign(body.position.x - position.x))
+		body.take_damage(sign(body.position.x - position.x))
