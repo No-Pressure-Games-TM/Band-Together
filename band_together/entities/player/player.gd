@@ -43,6 +43,7 @@ var default_i_frame_timer: float = 1.3  # number of seconds to be invincible aft
 func _ready():
 	# Set the camera limits to those in the editor
 	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
+	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 
 func _physics_process(delta):
 	check_input()  # Attacks, direction input, wall attaching
@@ -65,7 +66,7 @@ func check_input() -> void:
 		$DrumArea/DrumAttack/DrumTimer.start()
 			
 	## When the player presses the baton button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds		
-	if Input.is_action_just_pressed("Baton"):
+	if Input.is_action_just_pressed("Decline"):
 		$BatonArea/BatonAtack.disabled = false
 		$BatonArea/BatonAtack/BatonTimer.start()
 	
@@ -226,7 +227,7 @@ func _on_drum_area_body_entered(body: Node2D) -> void:
 	if body.name != "Player":
 		body.rotate(1)
 
-##Consequence for enemies hitting the attack hitbox
+##Consequence for enemies hitting the at hitbox
 #Currently, as there is no health system for enemies, this rotates them :D
 func _on_baton_area_body_entered(body: Node2D) -> void:
 	if body.name != "Player":

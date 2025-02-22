@@ -121,6 +121,8 @@ theme_override_constants/separation = 4
 [node name="StartGame" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Settings")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
@@ -137,6 +139,8 @@ text = "Start Game"
 [node name="Settings" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../StartGame")
+focus_neighbor_bottom = NodePath("../Quit")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
@@ -152,6 +156,8 @@ text = "Settings"
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../StartGame")
 focus_previous = NodePath("../Settings")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)

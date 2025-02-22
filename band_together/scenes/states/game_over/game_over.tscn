@@ -102,6 +102,8 @@ grow_vertical = 2
 [node name="Retry" type="Button" parent="VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Quit")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
@@ -115,6 +117,8 @@ text = "Retry"
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Retry")
+focus_neighbor_bottom = NodePath("../Retry")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.988957, 0.988957, 0.988957, 1)
