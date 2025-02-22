@@ -19,14 +19,14 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbp1u"]
-size = Vector2(20, 17.5)
+size = Vector2(15, 17.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ypyrr"]
 radius = 11.0
 
 [node name="Crab" type="CharacterBody2D"]
 collision_layer = 8
-collision_mask = 6
+collision_mask = 12
 script = ExtResource("1_jn3l6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -38,12 +38,12 @@ target_position = Vector2(0, 17)
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(-0.5, 4)
 shape = SubResource("RectangleShape2D_gbp1u")
 
 [node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 14
+collision_layer = 16
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, 2)
