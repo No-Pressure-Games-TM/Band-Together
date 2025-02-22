@@ -13,6 +13,7 @@ var stopped: bool = false
 
 var hp: float = 20.0
 var knocked_back: bool = false
+var spinning = false
 
 func _ready():
 	$StopMoving.wait_time = randf_range(2.5, 4)  # Walk for random time length
@@ -46,25 +47,36 @@ func _process(delta):
 		sprite.position.y = 2
 	else:
 		sprite.position.y = 0
+	
+	if spinning:
+		rotation_degrees += 360 * delta
 
 func flip():
 	direction = -direction
 	sprite.flip_h = !sprite.flip_h
 	raycast.position.x *= -1  # Flip the raycast to the other side
 	
-func take_damage(amount, direction = null):
+func take_damage(amount, direction):
 	hp -= amount
-	if direction != null:
+	if hp <= 0:
+		die(direction)
+	else:
 		knocked_back = true
 		velocity.x = direction * 50
 		velocity.y = -100
 		$KnockbackTimer.start(0.2)
 		
-	if hp <= 0:
-		die()
 
-func die():
-	queue_free()  # This will be improved
+func die(direction):
+	set_collision_layer_value(4, false)  # Remove "enemy" collision layer
+	set_collision_mask_value(3, false)  # Disable colliding with the environment
+	$Hitbox.set_collision_layer_value(5, false)  # Remove "hitbox" collision layer
+	$Hitbox.set_collision_mask_value(2, false)  # Disable colliding with player
+	knocked_back = true  # This means it will not move with it's normal pathing
+	
+	velocity = Vector2(direction * 500, -200)
+	spinning = true
+	$DeathTimer.start()
 
 func _on_hitbox_body_entered(body):
 	if body.name == "Player":
@@ -85,3 +97,7 @@ func _on_stop_moving_timeout():
 		
 func _on_knockback_timer_timeout():
 	knocked_back = false
+
+
+func _on_death_timer_timeout():
+	queue_free()  # Should be off screen by now, delete!
