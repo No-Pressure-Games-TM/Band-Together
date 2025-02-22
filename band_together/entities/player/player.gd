@@ -86,6 +86,7 @@ func check_input() -> void:
 			grav_div = 2
 			is_charging = true
 			$DashChargeTimer.start()
+			$SaxCharge.play()
 	
 	if moving_allowed:
 		direction = Input.get_axis("Left", "Right")
@@ -143,12 +144,14 @@ func jump(delta) -> void:
 		pause_movement(0.1)
 		jump_buffer_counter = 0
 		coyote_time_wall_counter = 0
+		$ViolinJump.play()
 			
 	## Double Jump
 	elif jump_buffer_counter > 0 and double_jump_count == 0:
 		jump_buffer_counter = 0
 		velocity.y = jump_velocity
 		double_jump_count += 1
+		$DrumJump.play()
 	
 	# Otherwise, no jump is performed
 		
@@ -162,7 +165,15 @@ func move_and_animate() -> void:
 		velocity.x = 0
 		return  # NO MOVING WHEN KNOCKED
 	if direction and not attached_to_wall:
-		play_animation("walk")
+		#select animation depending on what state of motion player is in
+		# ie dash, charge dash, regular walk
+		if (!is_charging and !is_dashing):
+			play_animation("walk")
+		elif is_charging:
+			play_animation("charge_up")
+		elif is_dashing:
+			play_animation("sprint")
+			
 		velocity.x = move_toward(velocity.x, direction * speed * dash_mult, speed) 
 		# Flip the sprite based on direction
 		if direction > 0:
@@ -173,9 +184,12 @@ func move_and_animate() -> void:
 			$BatonArea.scale.x = -1
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
-		# play the idle animation if on floor
-		if is_on_floor():
+		# play the idle animation if on floor and not charging up a dash
+		if is_on_floor() and !is_charging:
 			play_animation("idle")
+		# play a slowed down walk animation to simulate charging up 
+		elif  is_on_floor() and is_charging:
+			play_animation("charge_up")
 		else:
 			# place wall slide animation here
 			# place falling animation here
@@ -222,6 +236,7 @@ func _on_dash_charge_timer_timeout() -> void:
 	is_charging = false
 	is_dashing = true
 	$DashExecuteTimer.start()
+	$SaxDash.play()
 	
 func _on_dash_execute_timer_timeout() -> void:
 	#dash over, return to normal movement and fall speeds

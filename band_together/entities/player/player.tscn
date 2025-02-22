@@ -1,12 +1,28 @@
-[gd_scene load_steps=16 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=20 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
 [ext_resource type="Texture2D" uid="uid://5dnnp3572v8l" path="res://entities/player/assets/allegro idle.png" id="3_qj282"]
 [ext_resource type="Texture2D" uid="uid://bvch08qk537ub" path="res://entities/player/assets/allegro walking.png" id="4_06648"]
+[ext_resource type="AudioStream" uid="uid://c4efj6bob3ltw" path="res://audio/sfx/saxophone_dash.wav" id="5_be1l6"]
+[ext_resource type="AudioStream" uid="uid://duakab07jpplt" path="res://audio/sfx/saxophone_charge_up.wav" id="6_jgj6o"]
+[ext_resource type="AudioStream" uid="uid://baga0cnj2pr06" path="res://audio/sfx/double_drump.wav" id="7_6icqt"]
+[ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
 size = Vector2(5.64155, 49.5423)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ltgf"]
+atlas = ExtResource("4_06648")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rnrl"]
+atlas = ExtResource("4_06648")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe8mo"]
+atlas = ExtResource("4_06648")
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nupj2"]
 atlas = ExtResource("3_qj282")
@@ -24,20 +40,25 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("3_qj282")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ltgf"]
-atlas = ExtResource("4_06648")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2rnrl"]
-atlas = ExtResource("4_06648")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pe8mo"]
-atlas = ExtResource("4_06648")
-region = Rect2(64, 0, 32, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_2j7hi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}],
+"loop": true,
+"name": &"charge_up",
+"speed": 3.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nupj2")
@@ -54,6 +75,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}],
+"loop": true,
+"name": &"sprint",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -96,8 +134,7 @@ shape = SubResource("RectangleShape2D_kco12")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2j7hi")
-animation = &"walk"
-frame_progress = 0.0632928
+animation = &"sprint"
 
 [node name="DrumArea" type="Area2D" parent="."]
 
@@ -128,9 +165,11 @@ one_shot = true
 wait_time = 0.4
 
 [node name="DashChargeTimer" type="Timer" parent="."]
+wait_time = 1.65
 one_shot = true
 
 [node name="DashExecuteTimer" type="Timer" parent="."]
+wait_time = 2.5
 one_shot = true
 
 [node name="CritText" type="Label" parent="."]
@@ -142,6 +181,18 @@ theme_override_colors/font_color = Color(0.988235, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.14714, 0.380644, 0.721132, 1)
 theme_override_constants/outline_size = 4
 text = "CRIT!"
+
+[node name="SaxDash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_be1l6")
+
+[node name="SaxCharge" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jgj6o")
+
+[node name="DrumJump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_6icqt")
+
+[node name="ViolinJump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_3mujn")
 
 [connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]
 [connection signal="body_entered" from="DrumArea" to="." method="_on_drum_area_body_entered"]
