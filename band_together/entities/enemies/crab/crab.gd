@@ -20,8 +20,8 @@ func _ready():
 	$StopMoving.start()
 	sprite.play("walk")
 	if direction > 0:
-		direction = -direction  # I coded this weird so.. I guess I'll do this
-		flip()
+		sprite.flip_h = !sprite.flip_h
+		raycast.position.x *= -1
 
 func _physics_process(delta):
 	if not is_on_floor():
