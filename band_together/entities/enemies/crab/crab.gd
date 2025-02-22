@@ -83,7 +83,6 @@ func _on_hitbox_body_entered(body):
 		body.take_damage(sign(body.position.x - position.x))
 		flip()  # makes it so player cannot stay in the hitbox
 
-
 func _on_stop_moving_timeout():
 	if stopped:
 		# we want to start moving
