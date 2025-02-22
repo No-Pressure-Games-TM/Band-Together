@@ -32,6 +32,7 @@ var direction: int = 0
 #region combat
 var damage: int = 15
 var baton_cooling_down: bool = false
+@onready var crit_label = $CritText
 #endregion
 
 #region Wall Jump states
@@ -50,6 +51,7 @@ func _ready():
 	# Set the camera limits to those in the editor
 	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
+	crit_label.visible = false
 
 func _physics_process(delta):
 	check_input()  # Attacks, direction input, wall attaching
@@ -251,7 +253,14 @@ func _on_drum_area_body_entered(body: Node2D) -> void:
 func _on_baton_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
 		var hit_dir = sign(body.position.x - position.x)
-		body.take_damage(damage, hit_dir)
+		if randf() < 0.2:
+			# Critical strike! maybe play diff noise?
+			crit_label.visible = true
+			body.take_damage(2*damage, hit_dir)
+		else:
+			# Regular damage :(
+			body.take_damage(damage, hit_dir)
+		
 		pause_movement(0.1)  # This just makes it feel a lil nicer :)
 		camera.apply_shake(5)
 		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
@@ -259,3 +268,4 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 
 func _on_baton_recharge_timeout():
 	baton_cooling_down = false
+	crit_label.visible = false
