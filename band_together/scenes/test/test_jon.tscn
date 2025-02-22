@@ -144,3 +144,27 @@ position = Vector2(232, 115)
 [node name="Crab2" parent="." instance=ExtResource("7_4xtrx")]
 position = Vector2(277, 115)
 direction = 1
+
+[node name="Crab3" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(370, 101)
+
+[node name="Crab4" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(403, 73)
+
+[node name="Crab5" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(327, 140)
+
+[node name="Crab6" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(430, 43)
+
+[node name="Crab7" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(513, 2)
+
+[node name="Crab8" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(578, 4)
+
+[node name="Crab9" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(542, -10)
+
+[node name="Crab10" parent="." instance=ExtResource("7_4xtrx")]
+position = Vector2(607, -21)

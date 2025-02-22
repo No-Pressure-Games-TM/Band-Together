@@ -130,7 +130,7 @@ animations = [{
 radius = 18.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
-size = Vector2(29, 36)
+size = Vector2(32.75, 25)
 
 [node name="Player" type="CharacterBody2D"]
 safe_margin = 0.1
@@ -165,9 +165,11 @@ wait_time = 0.15
 one_shot = true
 
 [node name="BatonArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 12
 
 [node name="BatonAtack" type="CollisionShape2D" parent="BatonArea"]
-position = Vector2(15, 0)
+position = Vector2(16, 3)
 shape = SubResource("RectangleShape2D_b5c5w")
 disabled = true
 debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
@@ -175,6 +177,9 @@ debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
 [node name="BatonTimer" type="Timer" parent="BatonArea/BatonAtack"]
 wait_time = 0.15
 one_shot = true
+
+[node name="BatonRecharge" type="Timer" parent="BatonArea"]
+wait_time = 0.4
 
 [node name="DashChargeTimer" type="Timer" parent="."]
 one_shot = true
@@ -187,5 +192,6 @@ one_shot = true
 [connection signal="timeout" from="DrumArea/DrumAttack/DrumTimer" to="." method="_on_drum_timer_timeout"]
 [connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
 [connection signal="timeout" from="BatonArea/BatonAtack/BatonTimer" to="." method="_on_baton_timer_timeout"]
+[connection signal="timeout" from="BatonArea/BatonRecharge" to="." method="_on_baton_recharge_timeout"]
 [connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
 [connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]

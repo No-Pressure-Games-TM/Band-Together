@@ -86,7 +86,7 @@ size = Vector2(15, 17.5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_ypyrr"]
 radius = 11.0
 
-[node name="Crab" type="CharacterBody2D"]
+[node name="Crab" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("1_jn3l6")
@@ -118,5 +118,9 @@ shape = SubResource("CircleShape2D_ypyrr")
 wait_time = 2.206
 one_shot = true
 
+[node name="KnockbackTimer" type="Timer" parent="."]
+wait_time = 0.2
+
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="StopMoving" to="." method="_on_stop_moving_timeout"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]

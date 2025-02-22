@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 # I FOLLOWED THIS TUTORIAL
 # https://www.youtube.com/watch?v=P02PcfgqrY8&ab_channel=GameDevKnight
-
 ## Set to 1 if you want it to move right at the start
 @export var direction: int = -1
 @export var speed: float = 40.0
@@ -11,6 +10,9 @@ extends CharacterBody2D
 @onready var raycast: RayCast2D = $RayCast2D
 
 var stopped: bool = false
+
+var hp: float = 20.0
+var knocked_back: bool = false
 
 func _ready():
 	$StopMoving.wait_time = randf_range(2.5, 4)  # Walk for random time length
@@ -24,20 +26,22 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if (not raycast.is_colliding() and is_on_floor()) or is_on_wall():
-		flip()
+	if not knocked_back:
+		if (not raycast.is_colliding() and is_on_floor()) or is_on_wall():
+			flip()
 	
-	if stopped:
-		if sprite.animation != "idle":
-			sprite.play("idle")
-		velocity.x = 0  # stop moving!
-	else:
-		if sprite.animation != "walk":
-			sprite.play("walk")
-		velocity.x = direction * speed
+		if stopped:
+			if sprite.animation != "idle":
+				sprite.play("idle")
+			velocity.x = 0  # stop moving!
+		else:
+			if sprite.animation != "walk":
+				sprite.play("walk")
+			velocity.x = direction * speed
 	move_and_slide()
 
 func _process(delta):
+	# This part makes the crab do those cute lil bounces :p
 	if (sprite.frame == 2 or sprite.frame == 5) and sprite.animation == "walk":
 		sprite.position.y = 2
 	else:
@@ -47,6 +51,20 @@ func flip():
 	direction = -direction
 	sprite.flip_h = !sprite.flip_h
 	raycast.position.x *= -1  # Flip the raycast to the other side
+	
+func take_damage(amount, direction = null):
+	hp -= amount
+	if direction != null:
+		knocked_back = true
+		velocity.x = direction * 50
+		velocity.y = -100
+		$KnockbackTimer.start(0.2)
+		
+	if hp <= 0:
+		die()
+
+func die():
+	queue_free()  # This will be improved
 
 func _on_hitbox_body_entered(body):
 	if body.name == "Player":
@@ -64,3 +82,6 @@ func _on_stop_moving_timeout():
 	stopped = !stopped
 	$StopMoving.start()  # Reset the timer
 		
+		
+func _on_knockback_timer_timeout():
+	knocked_back = false
