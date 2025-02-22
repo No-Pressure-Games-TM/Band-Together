@@ -20,6 +20,7 @@ config/icon="res://assets/icon.svg"
 SceneTransition="*res://scenes/scene_transition/scene_transition.tscn"
 UI="*res://scenes/ui.tscn"
 GameManager="*res://scenes/game_manager.gd"
+AudioManager="*res://scenes/audio_manager.tscn"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
@@ -75,9 +76,14 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 folder_colors={
 "res://Environment/": "teal",
 "res://assets/": "pink",
+"res://audio/": "orange",
 "res://entities/": "yellow",
 "res://scenes/": "blue"
 }
+
+[global_group]
+
+enemy="Enemies that can be hit with attacks!"
 
 [gui]
 
