@@ -12,6 +12,18 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
 size = Vector2(5.64155, 49.5423)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ltgf"]
+atlas = ExtResource("4_06648")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rnrl"]
+atlas = ExtResource("4_06648")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe8mo"]
+atlas = ExtResource("4_06648")
+region = Rect2(64, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_nupj2"]
 atlas = ExtResource("3_qj282")
 region = Rect2(0, 0, 32, 32)
@@ -28,20 +40,25 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("3_qj282")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ltgf"]
-atlas = ExtResource("4_06648")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2rnrl"]
-atlas = ExtResource("4_06648")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pe8mo"]
-atlas = ExtResource("4_06648")
-region = Rect2(64, 0, 32, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_2j7hi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}],
+"loop": true,
+"name": &"charge_up",
+"speed": 3.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nupj2")
@@ -58,6 +75,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}],
+"loop": true,
+"name": &"sprint",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -100,8 +134,7 @@ shape = SubResource("RectangleShape2D_kco12")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2j7hi")
-animation = &"walk"
-frame_progress = 0.0632928
+animation = &"sprint"
 
 [node name="DrumArea" type="Area2D" parent="."]
 
