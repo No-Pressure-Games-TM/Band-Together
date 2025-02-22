@@ -86,6 +86,7 @@ func check_input() -> void:
 			grav_div = 2
 			is_charging = true
 			$DashChargeTimer.start()
+			$SaxCharge.play()
 	
 	if moving_allowed:
 		direction = Input.get_axis("Left", "Right")
@@ -143,12 +144,14 @@ func jump(delta) -> void:
 		pause_movement(0.1)
 		jump_buffer_counter = 0
 		coyote_time_wall_counter = 0
+		$ViolinJump.play()
 			
 	## Double Jump
 	elif jump_buffer_counter > 0 and double_jump_count == 0:
 		jump_buffer_counter = 0
 		velocity.y = jump_velocity
 		double_jump_count += 1
+		$DrumJump.play()
 	
 	# Otherwise, no jump is performed
 		
@@ -222,6 +225,7 @@ func _on_dash_charge_timer_timeout() -> void:
 	is_charging = false
 	is_dashing = true
 	$DashExecuteTimer.start()
+	$SaxDash.play()
 	
 func _on_dash_execute_timer_timeout() -> void:
 	#dash over, return to normal movement and fall speeds
