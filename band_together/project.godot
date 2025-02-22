@@ -20,6 +20,7 @@ config/icon="res://assets/icon.svg"
 SceneTransition="*res://scenes/scene_transition/scene_transition.tscn"
 UI="*res://scenes/ui.tscn"
 GameManager="*res://scenes/game_manager.gd"
+AudioManager="*res://scenes/audio_manager.tscn"
 
 [display]
 
@@ -39,6 +40,7 @@ project/assembly_name="Band Together"
 folder_colors={
 "res://Environment/": "teal",
 "res://assets/": "pink",
+"res://audio/": "orange",
 "res://entities/": "yellow",
 "res://scenes/": "blue"
 }
