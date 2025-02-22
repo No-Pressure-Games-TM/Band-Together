@@ -39,6 +39,7 @@ project/assembly_name="Band Together"
 folder_colors={
 "res://Environment/": "teal",
 "res://assets/": "pink",
+"res://audio/": "orange",
 "res://entities/": "yellow",
 "res://scenes/": "blue"
 }
