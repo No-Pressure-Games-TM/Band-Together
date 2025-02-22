@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b42mr8qq2k16h"
-path="res://.godot/imported/IDLE-DELETE.png-5a29a0702bed2cb4f313e1aaf1f0995c.ctex"
+uid="uid://c5hh3vmiv3c0o"
+path="res://.godot/imported/spider idle.png-3aaab4968dc14afebed497cd3fc495b8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/assets/IDLE-DELETE.png"
-dest_files=["res://.godot/imported/IDLE-DELETE.png-5a29a0702bed2cb4f313e1aaf1f0995c.ctex"]
+source_file="res://entities/enemies/spider/assets/spider idle.png"
+dest_files=["res://.godot/imported/spider idle.png-3aaab4968dc14afebed497cd3fc495b8.ctex"]
 
 [params]
 

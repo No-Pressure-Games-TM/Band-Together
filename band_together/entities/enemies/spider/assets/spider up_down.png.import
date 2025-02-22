@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d07sqbdwnhcg7"
-path="res://.godot/imported/WALK-DELETE.png-ca7c22d515f9b60f66c24c45bb7e2be2.ctex"
+uid="uid://3jwyfd8edea3"
+path="res://.godot/imported/spider up_down.png-dd5dbf0b82c8d2153f28de262d665ad8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/assets/WALK-DELETE.png"
-dest_files=["res://.godot/imported/WALK-DELETE.png-ca7c22d515f9b60f66c24c45bb7e2be2.ctex"]
+source_file="res://entities/enemies/spider/assets/spider up_down.png"
+dest_files=["res://.godot/imported/spider up_down.png-dd5dbf0b82c8d2153f28de262d665ad8.ctex"]
 
 [params]
 
