@@ -87,7 +87,6 @@ func check_input() -> void:
 			is_charging = true
 			$DashChargeTimer.start()
 			$SaxCharge.play()
-			play_animation("charge_up")
 	
 	if moving_allowed:
 		direction = Input.get_axis("Left", "Right")
@@ -238,7 +237,6 @@ func _on_dash_charge_timer_timeout() -> void:
 	is_dashing = true
 	$DashExecuteTimer.start()
 	$SaxDash.play()
-	play_animation("sprint")
 	
 func _on_dash_execute_timer_timeout() -> void:
 	#dash over, return to normal movement and fall speeds
