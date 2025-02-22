@@ -130,7 +130,7 @@ animations = [{
 radius = 18.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
-size = Vector2(29, 36)
+size = Vector2(32.75, 25)
 
 [node name="Player" type="CharacterBody2D"]
 safe_margin = 0.1
@@ -165,9 +165,11 @@ wait_time = 0.15
 one_shot = true
 
 [node name="BatonArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 12
 
 [node name="BatonAtack" type="CollisionShape2D" parent="BatonArea"]
-position = Vector2(15, 0)
+position = Vector2(16, 3)
 shape = SubResource("RectangleShape2D_b5c5w")
 disabled = true
 debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
@@ -176,16 +178,30 @@ debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
 wait_time = 0.15
 one_shot = true
 
+[node name="BatonRecharge" type="Timer" parent="BatonArea"]
+wait_time = 0.4
+
 [node name="DashChargeTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="DashExecuteTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="CritText" type="Label" parent="."]
+offset_left = -15.0
+offset_top = -34.0
+offset_right = 19.0
+offset_bottom = -18.0
+theme_override_colors/font_color = Color(0.988235, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.14714, 0.380644, 0.721132, 1)
+theme_override_constants/outline_size = 4
+text = "CRIT!"
+
 [connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]
 [connection signal="body_entered" from="DrumArea" to="." method="_on_drum_area_body_entered"]
 [connection signal="timeout" from="DrumArea/DrumAttack/DrumTimer" to="." method="_on_drum_timer_timeout"]
 [connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
 [connection signal="timeout" from="BatonArea/BatonAtack/BatonTimer" to="." method="_on_baton_timer_timeout"]
+[connection signal="timeout" from="BatonArea/BatonRecharge" to="." method="_on_baton_recharge_timeout"]
 [connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
 [connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]

@@ -43,6 +43,10 @@ folder_colors={
 "res://scenes/": "blue"
 }
 
+[global_group]
+
+enemy="Enemies that can be hit with attacks!"
+
 [gui]
 
 theme/custom_font="res://assets/GrapeSoda.ttf"

@@ -19,6 +19,7 @@ var double_jump_count: int = 0
 var dash_mult: int = 1                         # Dash movespeed multiply
 var grav_div: int                              # Divide gravity while charging dash
 var moving_allowed: bool = true
+var knocked: bool = false
 #endregion
 
 #region Dash bools
@@ -27,6 +28,12 @@ var is_dashing: bool = false
 #endregion
 
 var direction: int = 0 
+
+#region combat
+var damage: int = 15
+var baton_cooling_down: bool = false
+@onready var crit_label = $CritText
+#endregion
 
 #region Wall Jump states
 var attached_to_wall: bool = false
@@ -43,6 +50,8 @@ var default_i_frame_timer: float = 1.3  # number of seconds to be invincible aft
 func _ready():
 	# Set the camera limits to those in the editor
 	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
+	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
+	crit_label.visible = false
 
 func _physics_process(delta):
 	check_input()  # Attacks, direction input, wall attaching
@@ -65,7 +74,7 @@ func check_input() -> void:
 		$DrumArea/DrumAttack/DrumTimer.start()
 			
 	## When the player presses the baton button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds		
-	if Input.is_action_just_pressed("Baton"):
+	if Input.is_action_just_pressed("Decline") and !baton_cooling_down:
 		$BatonArea/BatonAtack.disabled = false
 		$BatonArea/BatonAtack/BatonTimer.start()
 	
@@ -90,6 +99,9 @@ func check_input() -> void:
 		attached_to_wall = false
 
 func gravity(delta) -> void:
+	if knocked:
+		velocity.y = 0
+		return  # NO GRAVITY WHEN KNOCKED
 	if is_on_floor():
 		double_jump_count = 0  # Reset double jump
 		attached_to_wall = false
@@ -146,14 +158,19 @@ func jump(delta) -> void:
 
 func move_and_animate() -> void:
 	# only walk when there is a direction input and the player is not clinging to a wall
+	if knocked:
+		velocity.x = 0
+		return  # NO MOVING WHEN KNOCKED
 	if direction and not attached_to_wall:
 		play_animation("walk")
 		velocity.x = move_toward(velocity.x, direction * speed * dash_mult, speed) 
 		# Flip the sprite based on direction
 		if direction > 0:
 			sprite.flip_h = false  # Face right
+			$BatonArea.scale.x = 1
 		elif direction < 0:
 			sprite.flip_h = true # Face left
+			$BatonArea.scale.x = -1
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		# play the idle animation if on floor
@@ -176,11 +193,15 @@ func take_damage(direction=null) -> void:
 	if i_frame_timer <= 0:
 		i_frame_timer = default_i_frame_timer
 		UI.decrease_health()
-		camera.apply_shake()
+		camera.apply_shake(30)
 		
 		# Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
-		Engine.time_scale = 0.1  
+		Engine.time_scale = 0.1
+		knocked = true
+		sprite.pause()
 		await get_tree().create_timer(0.05, false).timeout
+		knocked = false
+		sprite.play()
 		Engine.time_scale = 1
 		
 		# ChatGPT helped me make a knockback!
@@ -219,6 +240,8 @@ func _on_drum_timer_timeout() -> void:
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
 	$BatonArea/BatonAtack.disabled = true 
+	baton_cooling_down = true
+	$BatonArea/BatonRecharge.start(0.4)
 
 ##Consequence for enemies hitting the attack hitbox
 #Currently, as there is no health system for enemies, this rotates them :D
@@ -226,8 +249,23 @@ func _on_drum_area_body_entered(body: Node2D) -> void:
 	if body.name != "Player":
 		body.rotate(1)
 
-##Consequence for enemies hitting the attack hitbox
-#Currently, as there is no health system for enemies, this rotates them :D
+##Consequence for enemies hitting the at hitbox
 func _on_baton_area_body_entered(body: Node2D) -> void:
-	if body.name != "Player":
-		body.rotate(1)
+	if body.is_in_group("enemy") and body.has_method("take_damage"):
+		var hit_dir = sign(body.position.x - position.x)
+		if randf() < 0.2:
+			# Critical strike! maybe play diff noise?
+			crit_label.visible = true
+			body.take_damage(2*damage, hit_dir)
+		else:
+			# Regular damage :(
+			body.take_damage(damage, hit_dir)
+		
+		pause_movement(0.1)  # This just makes it feel a lil nicer :)
+		camera.apply_shake(5)
+		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
+
+
+func _on_baton_recharge_timeout():
+	baton_cooling_down = false
+	crit_label.visible = false

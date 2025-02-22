@@ -23,7 +23,7 @@ func reset() -> void:
 		process_mode = PROCESS_MODE_DISABLED
 		self.visible = false
 	else:
-		process_mode = PROCESS_MODE_INHERIT
+		process_mode = PROCESS_MODE_ALWAYS
 		self.visible = true
 		if lives <= 0:
 			lives = default_lives
@@ -41,7 +41,17 @@ func _process(_delta: float) -> void:
 		get_tree().paused = true
 		pause_panel.show()
 
+func _input(event: InputEvent) -> void:
+	# Helped create with ChatGPT
+	# Check if Accept action is pressed and trigger the focused button
+	if event.is_action_pressed("Accept") and pause_panel.visible:
+		var focused = get_viewport().gui_get_focus_owner()
+		if focused is Button:
+			focused.emit_signal("pressed")  # Manually trigger button press
+			get_viewport().set_input_as_handled()
+
 func _on_resume_pressed() -> void:
+	await get_tree().create_timer(0.05).timeout  # This is because player was jumping when unpausing
 	pause_panel.hide()
 	get_tree().paused = false
 
