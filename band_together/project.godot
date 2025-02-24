@@ -26,6 +26,7 @@ directories/dch_directory={
 }
 directories/dtl_directory={
 "event1": "res://dialogic timelines/event1.dtl",
+"findviolin": "res://dialogic timelines/findviolin.dtl",
 "prologue": "res://dialogic timelines/prologue.dtl"
 }
 glossary/default_case_sensitive=true
