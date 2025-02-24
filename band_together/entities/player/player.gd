@@ -33,6 +33,7 @@ var direction: int = 0
 var damage: int = 15
 var baton_cooling_down: bool = false
 @onready var crit_label = $CritText
+@onready var current_instrument: String = GameManager.get_current_instrument()
 #endregion
 
 #region Wall Jump states
@@ -68,6 +69,14 @@ func _process(delta):
 		pause_movement(3)  # This makes it so the player cannot walk around if they die (before game over screen)
 
 func check_input() -> void:
+	if Input.is_action_just_pressed("CycleL"):
+		GameManager.set_current_instrument(-1)
+		print_debug("Set instrument to " + GameManager.get_current_instrument())
+	
+	if Input.is_action_just_pressed("CycleR"):
+		GameManager.set_current_instrument(1)
+		print_debug("Set instrument to " + GameManager.get_current_instrument())
+	
 	## When the player presses the drum button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds	
 	if Input.is_action_just_pressed("Drum"):
 		$DrumArea/DrumAttack.disabled = false
@@ -107,17 +116,21 @@ func gravity(delta) -> void:
 		double_jump_count = 0  # Reset double jump
 		attached_to_wall = false
 		coyote_time_counter = coyote_time
+		coyote_time_wall_counter = 0  # Fix triple jump bug
 	elif attached_to_wall:
+		double_jump_count = 0  # Allow wall double jumps
 		velocity.y = wall_slide_speed * delta  # Slow gravity when sliding on wall
 		coyote_time_wall_counter = coyote_time
 	elif not is_on_floor() and not attached_to_wall:
+		if coyote_time_counter > 0 or coyote_time_wall_counter > 0:
+			# Prevent underflow
+			coyote_time_counter -= delta
+			coyote_time_wall_counter -= delta   # Fix triple jump bug
 		velocity += get_gravity() * delta
 		#if the player is falling, and is either charging their dash or dashing, slow their descent
 		if velocity.y > 0 and (is_charging or is_dashing):
 			velocity.y /= grav_div
 	elif velocity.y > 0:
-		coyote_time_counter -= delta
-		coyote_time_wall_counter -= delta
 		velocity += get_gravity() * delta * 1.5  # Faster falling (feels good)
 	else:
 		coyote_time_counter -= delta
@@ -146,8 +159,8 @@ func jump(delta) -> void:
 		coyote_time_wall_counter = 0
 		$ViolinJump.play()
 			
-	## Double Jump
-	elif jump_buffer_counter > 0 and double_jump_count == 0:
+	## Double Jump - Added check for if drum unlocked
+	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.drum_unlocked:
 		jump_buffer_counter = 0
 		velocity.y = jump_velocity
 		double_jump_count += 1

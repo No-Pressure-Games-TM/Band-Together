@@ -112,12 +112,13 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2u0e4"]
-radius = 18.0
+radius = 20.025
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
 size = Vector2(32.75, 25)
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 safe_margin = 0.1
 script = ExtResource("1_mms2d")
 
@@ -190,6 +191,7 @@ stream = ExtResource("6_jgj6o")
 
 [node name="DrumJump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_6icqt")
+volume_db = -3.5
 
 [node name="ViolinJump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_3mujn")
