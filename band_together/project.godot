@@ -86,7 +86,7 @@ project/assembly_name="Band Together"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+enabled=PackedStringArray()
 
 [file_customization]
 

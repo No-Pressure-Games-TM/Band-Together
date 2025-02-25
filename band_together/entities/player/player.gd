@@ -33,6 +33,7 @@ var direction: int = 0
 var damage: int = 15
 var weapon_cooling_down: bool = false
 @onready var crit_label = $CritText
+@onready var current_instrument: String = GameManager.get_current_instrument()
 #endregion
 
 #region Wall Jump states
