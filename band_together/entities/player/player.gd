@@ -20,6 +20,7 @@ var dash_mult: int = 1                         # Dash movespeed multiply
 var grav_div: int                              # Divide gravity while charging dash
 var moving_allowed: bool = true
 var knocked: bool = false
+var no_doublejump_zone: bool = false           # set by the mushroom, so no double jump when trying to bounce
 #endregion
 
 #region Dash bools
@@ -93,7 +94,7 @@ func check_input() -> void:
 			$SaxCharge.play()
 	
 	if moving_allowed:
-		direction = Input.get_axis("Left", "Right")
+		direction = sign(round(Input.get_vector("Left", "Right", "Up", "Down")).normalized().x)
 	else:
 		direction = 0
 	
@@ -112,7 +113,7 @@ func gravity(delta) -> void:
 		attached_to_wall = false
 		coyote_time_counter = coyote_time
 		coyote_time_wall_counter = 0  # Fix triple jump bug
-	elif attached_to_wall:
+	elif attached_to_wall and GameManager.violin_unlocked:
 		double_jump_count = 0  # Allow wall double jumps
 		velocity.y = wall_slide_speed * delta  # Slow gravity when sliding on wall
 		coyote_time_wall_counter = coyote_time
@@ -145,7 +146,7 @@ func jump(delta) -> void:
 		coyote_time_counter = 0
 	
 	## Wall Jump
-	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0:
+	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0 and GameManager.violin_unlocked:
 		attached_to_wall = false
 		velocity.x = wall_jump_force * get_wall_normal().x
 		velocity.y = jump_velocity
@@ -155,7 +156,7 @@ func jump(delta) -> void:
 		$ViolinJump.play()
 			
 	## Double Jump - Added check for if drum unlocked
-	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.drum_unlocked:
+	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.drum_unlocked and !no_doublejump_zone:
 		jump_buffer_counter = 0
 		velocity.y = jump_velocity
 		double_jump_count += 1
@@ -251,6 +252,9 @@ func use_attack(instrument: String) -> void:
 		"drum":
 			$DrumArea/DrumAttack.disabled = false
 			$DrumArea/DrumAttack/DrumTimer.start()
+			$DrumKnockback/CollisionShape2D.disabled = false
+			play_animation("attack")
+			attack_animation = true
 		"sax":
 			# place sax functionality here
 			pass
@@ -282,6 +286,10 @@ func _on_win_area_body_entered(_body: Node2D) -> void:
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
 	$DrumArea/DrumAttack.disabled = true
+	$DrumKnockback/CollisionShape2D.disabled = true
+	weapon_cooling_down = true
+	$AttackCooldown.start(0.4)
+	attack_animation = false
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
@@ -290,13 +298,24 @@ func _on_baton_timer_timeout() -> void:
 	$AttackCooldown.start(0.4)
 	attack_animation = false
 
-##Consequence for enemies hitting the attack hitbox
-#Currently, as there is no health system for enemies, this rotates them :D
+## Consequence for enemies hitting the DRUM attack hitbox
 func _on_drum_area_body_entered(body: Node2D) -> void:
-	if body.name != "Player":
-		body.rotate(1)
+	# Note that drum does 1/2 the damage of baton
+	if body.is_in_group("enemy") and body.has_method("take_damage"):
+		var hit_dir = sign(body.position.x - position.x)
+		if randf() < 0.1:
+			# Critical strike! maybe play diff noise?
+			crit_label.visible = true
+			body.take_damage(damage, hit_dir)
+		else:
+			# Regular damage :(
+			body.take_damage(damage/2, hit_dir)
+		
+		pause_movement(0.1)
+		camera.apply_shake(5)
+		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
 
-##Consequence for enemies hitting the at hitbox
+## Consequence for enemies hitting the BATON hitbox
 func _on_baton_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
 		var hit_dir = sign(body.position.x - position.x)
@@ -308,7 +327,7 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 			# Regular damage :(
 			body.take_damage(damage, hit_dir)
 		
-		pause_movement(0.1)  # This just makes it feel a lil nicer :)
+		pause_movement(0.1)
 		camera.apply_shake(5)
 		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
 
@@ -316,3 +335,9 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 func _on_attack_cooldown_timeout():
 	weapon_cooling_down = false
 	crit_label.visible = false
+
+
+func _on_drum_knockback_body_entered(body):
+	if body.get_collision_layer() == 32 and body.has_method("knockback"):
+		# Projectile is on collision layer 6 which has a value of 32
+		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
