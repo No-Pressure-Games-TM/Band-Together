@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=30 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
-size = Vector2(5.64155, 49.5423)
+size = Vector2(4.51325, 46.1972)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t3cna"]
 resource_local_to_scene = true
@@ -182,6 +182,9 @@ _data = {
 "flash": SubResource("Animation_568ff")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_t01df"]
+radius = 48.0104
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_2u0e4"]
 radius = 20.025
 
@@ -200,21 +203,31 @@ drag_vertical_enabled = true
 script = ExtResource("2_a8a0l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 2)
+position = Vector2(-3, 0.907129)
 scale = Vector2(1.77256, -0.653411)
 shape = SubResource("RectangleShape2D_kco12")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_t3cna")
 sprite_frames = SubResource("SpriteFrames_2j7hi")
-animation = &"attack"
+animation = &"idle"
 
 [node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_armpr")
 }
 
+[node name="DrumKnockback" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DrumKnockback"]
+shape = SubResource("CircleShape2D_t01df")
+disabled = true
+
 [node name="DrumArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
 
 [node name="DrumAttack" type="CollisionShape2D" parent="DrumArea"]
 shape = SubResource("CircleShape2D_2u0e4")
@@ -227,7 +240,7 @@ one_shot = true
 
 [node name="BatonArea" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 12
+collision_mask = 8
 
 [node name="BatonAtack" type="CollisionShape2D" parent="BatonArea"]
 position = Vector2(16, 3)
@@ -273,6 +286,7 @@ volume_db = -3.5
 [node name="ViolinJump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_3mujn")
 
+[connection signal="body_entered" from="DrumKnockback" to="." method="_on_drum_knockback_body_entered"]
 [connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]
 [connection signal="body_entered" from="DrumArea" to="." method="_on_drum_area_body_entered"]
 [connection signal="timeout" from="DrumArea/DrumAttack/DrumTimer" to="." method="_on_drum_timer_timeout"]

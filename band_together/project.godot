@@ -187,6 +187,7 @@ CycleL={
 2d_physics/layer_3="Terrain"
 2d_physics/layer_4="Enemies"
 2d_physics/layer_5="Enemy Hitboxes"
+2d_physics/layer_6="Projectiles"
 
 [rendering]
 

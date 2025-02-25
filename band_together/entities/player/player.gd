@@ -251,6 +251,9 @@ func use_attack(instrument: String) -> void:
 		"drum":
 			$DrumArea/DrumAttack.disabled = false
 			$DrumArea/DrumAttack/DrumTimer.start()
+			$DrumKnockback/CollisionShape2D.disabled = false
+			play_animation("attack")
+			attack_animation = true
 		"sax":
 			# place sax functionality here
 			pass
@@ -282,6 +285,10 @@ func _on_win_area_body_entered(_body: Node2D) -> void:
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
 	$DrumArea/DrumAttack.disabled = true
+	$DrumKnockback/CollisionShape2D.disabled = true
+	weapon_cooling_down = true
+	$AttackCooldown.start(0.4)
+	attack_animation = false
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
@@ -290,13 +297,24 @@ func _on_baton_timer_timeout() -> void:
 	$AttackCooldown.start(0.4)
 	attack_animation = false
 
-##Consequence for enemies hitting the attack hitbox
-#Currently, as there is no health system for enemies, this rotates them :D
+## Consequence for enemies hitting the DRUM attack hitbox
 func _on_drum_area_body_entered(body: Node2D) -> void:
-	if body.name != "Player":
-		body.rotate(1)
+	# Note that drum does 1/2 the damage of baton
+	if body.is_in_group("enemy") and body.has_method("take_damage"):
+		var hit_dir = sign(body.position.x - position.x)
+		if randf() < 0.1:
+			# Critical strike! maybe play diff noise?
+			crit_label.visible = true
+			body.take_damage(damage, hit_dir)
+		else:
+			# Regular damage :(
+			body.take_damage(damage/2, hit_dir)
+		
+		pause_movement(0.1)
+		camera.apply_shake(5)
+		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
 
-##Consequence for enemies hitting the at hitbox
+## Consequence for enemies hitting the BATON hitbox
 func _on_baton_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
 		var hit_dir = sign(body.position.x - position.x)
@@ -308,7 +326,7 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 			# Regular damage :(
 			body.take_damage(damage, hit_dir)
 		
-		pause_movement(0.1)  # This just makes it feel a lil nicer :)
+		pause_movement(0.1)
 		camera.apply_shake(5)
 		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
 
@@ -316,3 +334,9 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 func _on_attack_cooldown_timeout():
 	weapon_cooling_down = false
 	crit_label.visible = false
+
+
+func _on_drum_knockback_body_entered(body):
+	if body.get_collision_layer() == 32 and body.has_method("knockback"):
+		# Projectile is on collision layer 6 which has a value of 32
+		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
