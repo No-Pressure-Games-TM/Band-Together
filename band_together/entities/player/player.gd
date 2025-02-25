@@ -94,7 +94,7 @@ func check_input() -> void:
 			$SaxCharge.play()
 	
 	if moving_allowed:
-		direction = Input.get_axis("Left", "Right")
+		direction = sign(round(Input.get_vector("Left", "Right", "Up", "Down")).normalized().x)
 	else:
 		direction = 0
 	
@@ -113,7 +113,7 @@ func gravity(delta) -> void:
 		attached_to_wall = false
 		coyote_time_counter = coyote_time
 		coyote_time_wall_counter = 0  # Fix triple jump bug
-	elif attached_to_wall:
+	elif attached_to_wall and GameManager.violin_unlocked:
 		double_jump_count = 0  # Allow wall double jumps
 		velocity.y = wall_slide_speed * delta  # Slow gravity when sliding on wall
 		coyote_time_wall_counter = coyote_time
@@ -146,7 +146,7 @@ func jump(delta) -> void:
 		coyote_time_counter = 0
 	
 	## Wall Jump
-	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0:
+	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0 and GameManager.violin_unlocked:
 		attached_to_wall = false
 		velocity.x = wall_jump_force * get_wall_normal().x
 		velocity.y = jump_velocity

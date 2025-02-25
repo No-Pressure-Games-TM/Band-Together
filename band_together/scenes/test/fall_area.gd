@@ -13,5 +13,5 @@ func _process(_delta: float) -> void:
 # When player falls off scene, reload.
 func _on_body_entered(body: Node2D) -> void:
 	if (body.name == "Player"):
-		get_tree().reload_current_scene()
+		get_tree().reload_current_scene.call_deferred()
 		UI.decrease_health()

@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
-size = Vector2(4.51325, 46.1972)
+size = Vector2(8, 30)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t3cna"]
 resource_local_to_scene = true
@@ -207,8 +207,7 @@ drag_top_margin = 0.35
 script = ExtResource("2_a8a0l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 0.907129)
-scale = Vector2(1.77256, -0.653411)
+position = Vector2(-3, 1)
 shape = SubResource("RectangleShape2D_kco12")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

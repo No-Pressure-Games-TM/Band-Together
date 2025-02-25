@@ -1,11 +1,10 @@
 extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
-var drum_unlocked: bool = true
+var drum_unlocked: bool = false
 var sax_unlocked: bool = false
 var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
-
 
 func get_current_instrument() -> String:
 	return instruments_list[current_instrument]
