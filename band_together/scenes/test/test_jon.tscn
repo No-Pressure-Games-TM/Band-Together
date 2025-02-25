@@ -133,7 +133,6 @@ tile_set = SubResource("TileSet_dcilm")
 [node name="Player" parent="." instance=ExtResource("2_148ad")]
 position = Vector2(32, 135)
 scale = Vector2(0.68558, 0.601599)
-collision_layer = 2
 collision_mask = 4
 left_limit = 0
 bottom_limit = 192
