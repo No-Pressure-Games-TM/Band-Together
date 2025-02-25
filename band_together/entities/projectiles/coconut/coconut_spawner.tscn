@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh2l3175lputt"]
+
+[ext_resource type="Script" path="res://entities/projectiles/coconut/coconut_spawner.gd" id="1_axcb0"]
+
+[node name="CoconutSpawner" type="Node2D"]
+position = Vector2(89, 55)
+script = ExtResource("1_axcb0")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

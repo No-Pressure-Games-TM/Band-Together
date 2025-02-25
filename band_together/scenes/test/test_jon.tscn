@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://id0acxrk2y0w"]
+[gd_scene load_steps=8 format=4 uid="uid://id0acxrk2y0w"]
 
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_wrvxf"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_148ad"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="4_mglu4"]
+[ext_resource type="PackedScene" uid="uid://bh2l3175lputt" path="res://entities/projectiles/coconut/coconut_spawner.tscn" id="5_2he7g"]
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="7_4xtrx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
@@ -157,10 +158,20 @@ position = Vector2(542, -10)
 position = Vector2(607, -21)
 
 [node name="Rock" parent="." instance=ExtResource("4_mglu4")]
-position = Vector2(89, 109)
+position = Vector2(96, 133)
 
 [node name="Rock2" parent="." instance=ExtResource("4_mglu4")]
-position = Vector2(75, 112)
+position = Vector2(224, 136)
 
 [node name="Rock3" parent="." instance=ExtResource("4_mglu4")]
-position = Vector2(105, 110)
+position = Vector2(254, 134)
+
+[node name="CoconutSpawner" parent="." instance=ExtResource("5_2he7g")]
+position = Vector2(88, 71)
+max_spawnrate = 0.1
+min_spawnrate = 0.2
+
+[node name="CoconutSpawner2" parent="." instance=ExtResource("5_2he7g")]
+position = Vector2(98, 71)
+max_spawnrate = 0.1
+min_spawnrate = 0.2
