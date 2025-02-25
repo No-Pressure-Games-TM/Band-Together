@@ -20,6 +20,7 @@ var dash_mult: int = 1                         # Dash movespeed multiply
 var grav_div: int                              # Divide gravity while charging dash
 var moving_allowed: bool = true
 var knocked: bool = false
+var no_doublejump_zone: bool = false           # set by the mushroom, so no double jump when trying to bounce
 #endregion
 
 #region Dash bools
@@ -155,7 +156,7 @@ func jump(delta) -> void:
 		$ViolinJump.play()
 			
 	## Double Jump - Added check for if drum unlocked
-	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.drum_unlocked:
+	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.drum_unlocked and !no_doublejump_zone:
 		jump_buffer_counter = 0
 		velocity.y = jump_velocity
 		double_jump_count += 1

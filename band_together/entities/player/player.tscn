@@ -192,7 +192,9 @@ radius = 20.025
 size = Vector2(32.75, 25)
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 3
 collision_layer = 2
+collision_mask = 4
 safe_margin = 0.1
 script = ExtResource("1_mms2d")
 
@@ -200,6 +202,8 @@ script = ExtResource("1_mms2d")
 position_smoothing_speed = 3.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+drag_left_margin = 0.35
+drag_top_margin = 0.35
 script = ExtResource("2_a8a0l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

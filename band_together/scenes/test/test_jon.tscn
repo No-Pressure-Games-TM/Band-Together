@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://id0acxrk2y0w"]
+[gd_scene load_steps=9 format=4 uid="uid://id0acxrk2y0w"]
 
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_wrvxf"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_148ad"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="4_mglu4"]
-[ext_resource type="PackedScene" uid="uid://bh2l3175lputt" path="res://entities/projectiles/coconut/coconut_spawner.tscn" id="5_2he7g"]
+[ext_resource type="PackedScene" uid="uid://cgv4mrgji2pi" path="res://Environment/mushroom/mushroom_stem.tscn" id="5_jwyvv"]
+[ext_resource type="PackedScene" uid="uid://dmwgtnu46pacq" path="res://Environment/mushroom/mushroom.tscn" id="6_0xx0i"]
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="7_4xtrx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
@@ -133,9 +134,8 @@ tile_map_data = PackedByteArray("AAAAAAQAAQABAAAAAAAAAAUAAQABAAEAAAACAAQAAQACAAA
 tile_set = SubResource("TileSet_dcilm")
 
 [node name="Player" parent="." instance=ExtResource("2_148ad")]
-position = Vector2(32, 135)
+position = Vector2(230, -32)
 scale = Vector2(0.68558, 0.601599)
-collision_mask = 4
 left_limit = 0
 bottom_limit = 192
 
@@ -143,7 +143,7 @@ bottom_limit = 192
 position = Vector2(403, 73)
 
 [node name="Crab6" parent="." instance=ExtResource("7_4xtrx")]
-position = Vector2(430, 43)
+position = Vector2(156, 48)
 
 [node name="Crab7" parent="." instance=ExtResource("7_4xtrx")]
 position = Vector2(513, 2)
@@ -158,20 +158,22 @@ position = Vector2(542, -10)
 position = Vector2(607, -21)
 
 [node name="Rock" parent="." instance=ExtResource("4_mglu4")]
-position = Vector2(96, 133)
+position = Vector2(239, 137)
 
 [node name="Rock2" parent="." instance=ExtResource("4_mglu4")]
-position = Vector2(224, 136)
+position = Vector2(150, 64)
 
 [node name="Rock3" parent="." instance=ExtResource("4_mglu4")]
 position = Vector2(254, 134)
 
-[node name="CoconutSpawner" parent="." instance=ExtResource("5_2he7g")]
-position = Vector2(88, 71)
-max_spawnrate = 0.1
-min_spawnrate = 0.2
+[node name="MushroomStem" parent="." instance=ExtResource("5_jwyvv")]
+position = Vector2(149, 176)
 
-[node name="CoconutSpawner2" parent="." instance=ExtResource("5_2he7g")]
-position = Vector2(98, 71)
-max_spawnrate = 0.1
-min_spawnrate = 0.2
+[node name="MushroomStem2" parent="." instance=ExtResource("5_jwyvv")]
+position = Vector2(149, 144)
+
+[node name="MushroomHead" parent="." instance=ExtResource("6_0xx0i")]
+position = Vector2(149, 89)
+
+[node name="MushroomHead2" parent="." instance=ExtResource("6_0xx0i")]
+position = Vector2(107, 124)

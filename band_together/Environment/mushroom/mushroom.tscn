@@ -1,0 +1,100 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmwgtnu46pacq"]
+
+[ext_resource type="Script" path="res://Environment/mushroom/mushroom.gd" id="1_k6brm"]
+[ext_resource type="Texture2D" uid="uid://dvx14a50ma5ss" path="res://Environment/mushroom/assets/big mushroom.png" id="2_g7182"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h5xyd"]
+radius = 7.0
+height = 34.0
+
+[sub_resource type="Animation" id="Animation_hshe0"]
+resource_name = "squish"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fdwg1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4irub"]
+_data = {
+"RESET": SubResource("Animation_fdwg1"),
+"squish": SubResource("Animation_hshe0")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_usg6r"]
+size = Vector2(8, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nk7v3"]
+size = Vector2(32.5, 30)
+
+[node name="MushroomHead" type="Node2D"]
+script = ExtResource("1_k6brm")
+
+[node name="Head" type="Sprite2D" parent="."]
+z_index = -5
+texture = ExtResource("2_g7182")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 14)
+
+[node name="Area2D" type="Area2D" parent="Head"]
+collision_layer = 4
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Area2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_h5xyd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head"]
+libraries = {
+"": SubResource("AnimationLibrary_4irub")
+}
+
+[node name="StemTop" type="StaticBody2D" parent="."]
+z_index = 3
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="StemTop"]
+position = Vector2(0, 23)
+texture = ExtResource("2_g7182")
+region_enabled = true
+region_rect = Rect2(0, 14, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StemTop"]
+position = Vector2(0, 23)
+shape = SubResource("RectangleShape2D_usg6r")
+
+[node name="NoDoubleJumps" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoDoubleJumps"]
+position = Vector2(-0.25, -10)
+shape = SubResource("RectangleShape2D_nk7v3")
+
+[connection signal="body_entered" from="Head/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="NoDoubleJumps" to="." method="_on_no_double_jumps_body_entered"]
+[connection signal="body_exited" from="NoDoubleJumps" to="." method="_on_no_double_jumps_body_exited"]
