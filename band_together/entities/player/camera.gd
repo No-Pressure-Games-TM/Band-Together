@@ -2,8 +2,6 @@ extends Camera2D
 
 var shake_fade: float = 100.0                    # Speed of camera shake ending
 
-var rng = RandomNumberGenerator.new()
-
 var shake_strength: float = 0.0
 
 func apply_shake(strength):
@@ -11,8 +9,8 @@ func apply_shake(strength):
 	shake_strength = strength
 
 func random_offset() -> Vector2:
-	return Vector2(rng.randf_range(-shake_strength, shake_strength),
-				   rng.randf_range(-shake_strength, shake_strength))
+	return Vector2(randf_range(-shake_strength, shake_strength),
+				   randf_range(-shake_strength, shake_strength))
 
 func set_limits(bottom_limit, top_limit, right_limit, left_limit):
 	# Sets the bounds that the camera cannot go past
@@ -23,5 +21,5 @@ func set_limits(bottom_limit, top_limit, right_limit, left_limit):
 
 func _process(delta):
 	if shake_strength > 0:
-		shake_strength = lerpf(shake_strength, 0, shake_fade * delta)
+		shake_strength = lerp(shake_strength, 0.0, shake_fade * delta)
 		offset = random_offset()

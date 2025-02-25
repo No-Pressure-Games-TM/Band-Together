@@ -4,9 +4,11 @@
 "_translation_id": "",
 "color": Color(1, 1, 1, 1),
 "custom_info": {
+"prefix": "",
 "sound_mood_default": "",
 "sound_moods": {},
-"style": ""
+"style": "",
+"suffix": ""
 },
 "default_portrait": "neutral",
 "description": "Protagonist",
@@ -19,6 +21,7 @@
 "export_overrides": {
 "image": "\"res://assets/portraits/allegro portrait neutral.png\""
 },
+"ignore_char_scale": false,
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,

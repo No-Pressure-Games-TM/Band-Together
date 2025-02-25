@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="1_oparx"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="2_oi3pf"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="3_wdqm4"]
-[ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock_enemy.tscn" id="4_mfn4g"]
+[ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="4_mfn4g"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="5_m44e5"]
 [ext_resource type="Script" path="res://scenes/game_manager.gd" id="6_ohrhe"]
 
@@ -218,7 +218,6 @@ tile_set = SubResource("TileSet_dcilm")
 [node name="Player" parent="SceneObjects" instance=ExtResource("3_wdqm4")]
 position = Vector2(-176, 153)
 scale = Vector2(0.68558, 0.601599)
-collision_layer = 2
 collision_mask = 12
 left_limit = -186
 bottom_limit = 192

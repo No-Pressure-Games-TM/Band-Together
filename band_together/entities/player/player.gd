@@ -31,9 +31,8 @@ var direction: int = 0
 
 #region combat
 var damage: int = 15
-var baton_cooling_down: bool = false
+var weapon_cooling_down: bool = false
 @onready var crit_label = $CritText
-@onready var current_instrument: String = GameManager.get_current_instrument()
 #endregion
 
 #region Wall Jump states
@@ -44,6 +43,7 @@ var attached_to_wall: bool = false
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: Camera2D = $Camera2D
+var attack_animation: bool = false
 
 var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
 @onready var i_frame_timer: float = default_i_frame_timer
@@ -76,16 +76,10 @@ func check_input() -> void:
 	if Input.is_action_just_pressed("CycleR"):
 		GameManager.set_current_instrument(1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
-	
-	## When the player presses the drum button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds	
-	if Input.is_action_just_pressed("Drum"):
-		$DrumArea/DrumAttack.disabled = false
-		$DrumArea/DrumAttack/DrumTimer.start()
 			
-	## When the player presses the baton button, it enables the drum's hitbox and sets a timer that keeps it active for 0.15 seconds		
-	if Input.is_action_just_pressed("Decline") and !baton_cooling_down:
-		$BatonArea/BatonAtack.disabled = false
-		$BatonArea/BatonAtack/BatonTimer.start()
+	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
+	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
+		use_attack(GameManager.get_current_instrument())
 	
 	# Handle Dash - Will eventually be associated with the saxophones movement ability
 	# Starts the charge up for the dash
@@ -180,7 +174,7 @@ func move_and_animate() -> void:
 	if direction and not attached_to_wall:
 		#select animation depending on what state of motion player is in
 		# ie dash, charge dash, regular walk
-		if (!is_charging and !is_dashing):
+		if (!is_charging and !is_dashing and !attack_animation):
 			play_animation("walk")
 		elif is_charging:
 			play_animation("charge_up")
@@ -198,13 +192,15 @@ func move_and_animate() -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		# play the idle animation if on floor and not charging up a dash
-		if is_on_floor() and !is_charging:
+		if is_on_floor() and !is_charging and !attack_animation:
 			play_animation("idle")
 		# play a slowed down walk animation to simulate charging up 
-		elif  is_on_floor() and is_charging:
+		elif is_on_floor() and is_charging:
 			play_animation("charge_up")
+		elif is_on_wall_only():
+			# put wall slide here
+			play_animation("idle")
 		else:
-			# place wall slide animation here
 			# place falling animation here
 			# etc etc
 			pass
@@ -215,10 +211,11 @@ func play_animation(animation_name) -> void:
 	if sprite.animation != animation_name:
 		sprite.play(animation_name)
 
-func take_damage(direction=null) -> void:
+func take_damage(knockback_dir=null) -> void:
 	# Direction should == -1 or 1 (direction to launch player when taking damage)
 	if i_frame_timer <= 0:
 		i_frame_timer = default_i_frame_timer
+		$AnimatedSprite2D/HitFlash.play("flash")
 		UI.decrease_health()
 		camera.apply_shake(30)
 		
@@ -232,8 +229,8 @@ func take_damage(direction=null) -> void:
 		Engine.time_scale = 1
 		
 		# ChatGPT helped me make a knockback!
-		if direction != null:
-			velocity.x = direction * 500
+		if knockback_dir != null:
+			velocity.x = knockback_dir * 500
 			velocity.y = -100
 			pause_movement(0.2)
 
@@ -242,6 +239,26 @@ func pause_movement(howlong) -> void:
 	moving_allowed = false
 	await get_tree().create_timer(howlong, false).timeout
 	moving_allowed = true
+
+func use_attack(instrument: String) -> void:
+	match instrument:
+		"baton":
+			$BatonArea/BatonAtack.disabled = false
+			$BatonArea/BatonAtack/BatonTimer.start()
+			play_animation("attack")
+			attack_animation = true
+		"drum":
+			$DrumArea/DrumAttack.disabled = false
+			$DrumArea/DrumAttack/DrumTimer.start()
+		"sax":
+			# place sax functionality here
+			pass
+		"violin":
+			# place violin functionality here
+			pass
+		_:
+			print_debug("player.use_attack called with unknown instrument! How did you get here?")
+	
 
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
@@ -268,8 +285,9 @@ func _on_drum_timer_timeout() -> void:
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
 	$BatonArea/BatonAtack.disabled = true 
-	baton_cooling_down = true
-	$BatonArea/BatonRecharge.start(0.4)
+	weapon_cooling_down = true
+	$AttackCooldown.start(0.4)
+	attack_animation = false
 
 ##Consequence for enemies hitting the attack hitbox
 #Currently, as there is no health system for enemies, this rotates them :D
@@ -281,7 +299,7 @@ func _on_drum_area_body_entered(body: Node2D) -> void:
 func _on_baton_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") and body.has_method("take_damage"):
 		var hit_dir = sign(body.position.x - position.x)
-		if randf() < 0.2:
+		if randf() < 0.1:
 			# Critical strike! maybe play diff noise?
 			crit_label.visible = true
 			body.take_damage(2*damage, hit_dir)
@@ -294,6 +312,6 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
 
 
-func _on_baton_recharge_timeout():
-	baton_cooling_down = false
+func _on_attack_cooldown_timeout():
+	weapon_cooling_down = false
 	crit_label.visible = false
