@@ -1,12 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://f860pnqtg4hh"]
 
-[ext_resource type="Texture2D" uid="uid://hb27tlmaqa53" path="res://assets/textures/beach/5 fixed.png" id="1_xy7yn"]
-[ext_resource type="Texture2D" uid="uid://cwdldovox83y4" path="res://assets/textures/beach/4 fixed.png" id="2_pe66k"]
-[ext_resource type="Texture2D" uid="uid://bx4gaol8fpn6k" path="res://assets/textures/beach/3 fixed.png" id="3_umk1j"]
-[ext_resource type="Texture2D" uid="uid://ch2mf7g1ct40b" path="res://assets/textures/beach/2 fixed.png" id="4_wj6wj"]
-[ext_resource type="Texture2D" uid="uid://ruixbjv2ev1d" path="res://assets/textures/beach/1 fixed.png" id="5_333s4"]
+[ext_resource type="Texture2D" uid="uid://cwed0q50cj3fj" path="res://assets/textures/beach/layer_4_sand.png" id="2_d452c"]
+[ext_resource type="Texture2D" uid="uid://cybi0gvx41btq" path="res://assets/textures/beach/layer_2_clouds.png" id="2_heqyx"]
+[ext_resource type="Texture2D" uid="uid://j32372vou5l" path="res://assets/textures/beach/layer_1_sky.png" id="2_y36pb"]
+[ext_resource type="Texture2D" uid="uid://coetumem2r3so" path="res://assets/textures/beach/layer_3_water.png" id="3_34amf"]
+[ext_resource type="Texture2D" uid="uid://dapbfwil70vn2" path="res://assets/textures/beach/layer_5_foam.png" id="5_mk5sm"]
 
-[node name="BeachParallax" type="Node2D"]
+[node name="Parallax" type="Node2D"]
 position = Vector2(0, 2)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -18,7 +18,7 @@ motion_scale = Vector2(0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sky"]
 texture_filter = 1
-texture = ExtResource("1_xy7yn")
+texture = ExtResource("2_y36pb")
 centered = false
 
 [node name="Clouds" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -28,7 +28,7 @@ motion_mirroring = Vector2(320, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Clouds"]
 texture_filter = 1
-texture = ExtResource("2_pe66k")
+texture = ExtResource("2_heqyx")
 centered = false
 
 [node name="Water" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -39,7 +39,7 @@ motion_mirroring = Vector2(320, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Water"]
 texture_filter = 1
 position = Vector2(0, 42)
-texture = ExtResource("3_umk1j")
+texture = ExtResource("3_34amf")
 centered = false
 
 [node name="Sand" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -49,7 +49,7 @@ motion_mirroring = Vector2(320, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sand"]
 texture_filter = 1
 position = Vector2(0, 13)
-texture = ExtResource("4_wj6wj")
+texture = ExtResource("2_d452c")
 centered = false
 
 [node name="Foam" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -59,5 +59,5 @@ motion_mirroring = Vector2(319, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Foam"]
 texture_filter = 1
 position = Vector2(0, 42)
-texture = ExtResource("5_333s4")
+texture = ExtResource("5_mk5sm")
 centered = false

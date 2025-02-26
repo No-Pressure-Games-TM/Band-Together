@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch2mf7g1ct40b"
-path="res://.godot/imported/2 fixed.png-2510873be81f1b5daa1f1332fe9e05bd.ctex"
+uid="uid://coetumem2r3so"
+path="res://.godot/imported/layer_3_water.png-82805aad02df220b7e9bdaf17c247263.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/beach/2 fixed.png"
-dest_files=["res://.godot/imported/2 fixed.png-2510873be81f1b5daa1f1332fe9e05bd.ctex"]
+source_file="res://assets/textures/beach/layer_3_water.png"
+dest_files=["res://.godot/imported/layer_3_water.png-82805aad02df220b7e9bdaf17c247263.ctex"]
 
 [params]
 
