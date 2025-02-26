@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://dfmjew60pcpy"]
+[gd_scene load_steps=13 format=3 uid="uid://dfmjew60pcpy"]
 
 [ext_resource type="Script" path="res://scenes/ui_script.gd" id="1_kp52i"]
 [ext_resource type="Texture2D" uid="uid://dnldkpuhl5sx6" path="res://assets/arrow-left.png" id="2_2runv"]
 [ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="3_sn8k0"]
+[ext_resource type="Texture2D" uid="uid://bqpuadd0cdidg" path="res://assets/portraits/baton.png" id="4_5fklh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfj8y"]
 content_margin_left = 0.0
@@ -261,6 +262,21 @@ texture_filter = 1
 layout_mode = 2
 texture = ExtResource("3_sn8k0")
 expand_mode = 2
+
+[node name="CurrentWeapon" type="TextureRect" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_5fklh")
+
+[node name="Panel" type="Panel" parent="CurrentWeapon"]
+z_index = -2
+layout_mode = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 34.0
+offset_bottom = 34.0
 
 [connection signal="pressed" from="PausePanel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PausePanel/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]

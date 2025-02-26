@@ -3,6 +3,12 @@ extends Node
 @onready var pause_panel: Panel = %PausePanel
 @onready var resume_btn: Button = $PausePanel/VBoxContainer/Resume
 @onready var hearts: Array[Node] = $Hearts/HBoxContainer.get_children()
+@onready var current_weapon_display: TextureRect = $CurrentWeapon
+
+#region weapon icons
+var baton = preload("res://assets/portraits/baton.png")
+var drum = preload("res://assets/portraits/drumtemp.png")
+#endregion
 
 var not_allowed_scenes: Array[String] = ["GameOver", "Win", "MainMenu"]
 var default_lives: int = 3  # This allows us to add more hearts if we want!
@@ -40,6 +46,16 @@ func _process(_delta: float) -> void:
 		resume_btn.grab_focus()
 		get_tree().paused = true
 		pause_panel.show()
+	
+	match GameManager.get_current_instrument():
+		"baton":
+			current_weapon_display.texture = baton
+		"drum":
+			current_weapon_display.texture = drum
+		"sax":
+			pass
+		"violin":
+			pass
 
 func _input(event: InputEvent) -> void:
 	# Helped create with ChatGPT
