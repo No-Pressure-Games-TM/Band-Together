@@ -59,7 +59,7 @@ func _on_resume_pressed() -> void:
 func _on_main_menu_pressed() -> void:
 	get_tree().paused = false
 	pause_panel.hide()
-	SceneTransition.change_scene("res://scenes/states/main_menu/main_menu.tscn")
+	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
 
 func decrease_health():
 	lives -= 1
@@ -69,6 +69,6 @@ func decrease_health():
 		
 	if (lives == 0):
 		print("Game Over.\n")
-		SceneTransition.change_scene("res://scenes/states/game_over/game_over.tscn")
+		SceneTransition.change_scene("res://scenes/interfaces/game_over/game_over.tscn")
 	else: 
 		print("Lives: ", lives)
