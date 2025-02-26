@@ -291,11 +291,17 @@ func _on_win_area_body_entered(_body: Node2D) -> void:
 func _on_drum_timer_timeout() -> void:
 	$DrumArea/DrumAttack.disabled = true
 
+	$DrumKnockback/CollisionShape2D.disabled = true
+	weapon_cooling_down = true
+	$AttackCooldown.start(0.25)
+	attack_animation = false
+
+
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
 	$BatonArea/BatonAtack.disabled = true 
 	weapon_cooling_down = true
-	$AttackCooldown.start(0.4)
+	$AttackCooldown.start(0.25)
 	attack_animation = false
 
 ##Consequence for enemies hitting the attack hitbox
