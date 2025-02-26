@@ -60,6 +60,12 @@ func _physics_process(delta):
 	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
 	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
 	move_and_animate()  # Sets velocity based on input, changes sprites
+	
+	if is_on_floor():
+		GameManager.save_ground_position(global_position)  # Store last ground position
+	
+	if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
+		respawn()
 
 func _process(delta):
 	if i_frame_timer > 0:
@@ -68,7 +74,10 @@ func _process(delta):
 	
 	if UI.lives <= 0:
 		pause_movement(3)  # This makes it so the player cannot walk around if they die (before game over screen)
-
+		
+func respawn() -> void:
+	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
+	
 func check_input() -> void:
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
@@ -260,7 +269,6 @@ func use_attack(instrument: String) -> void:
 		_:
 			print_debug("player.use_attack called with unknown instrument! How did you get here?")
 	
-
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
 	dash_mult = 2
@@ -277,7 +285,7 @@ func _on_dash_execute_timer_timeout() -> void:
 
 func _on_win_area_body_entered(_body: Node2D) -> void:
 	print("You Win!\n")
-	SceneTransition.change_scene("res://scenes/states/win/win.tscn")
+	SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
@@ -311,7 +319,6 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 		pause_movement(0.1)  # This just makes it feel a lil nicer :)
 		camera.apply_shake(5)
 		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
-
 
 func _on_attack_cooldown_timeout():
 	weapon_cooling_down = false

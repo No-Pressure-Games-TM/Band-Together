@@ -1,11 +1,11 @@
-[gd_scene load_steps=13 format=4 uid="uid://bnpo75dm0wp2n"]
+[gd_scene load_steps=12 format=4 uid="uid://bnpo75dm0wp2n"]
 
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/parallax.tscn" id="1_1gg8b"]
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="1_oparx"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="2_oi3pf"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="3_wdqm4"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="4_mfn4g"]
-[ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="5_m44e5"]
+[ext_resource type="PackedScene" uid="uid://d1corgwhnfoyh" path="res://scenes/world_boundary.tscn" id="6_nuwux"]
 [ext_resource type="Script" path="res://scenes/game_manager.gd" id="6_ohrhe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tfm4j"]
@@ -200,8 +200,6 @@ terrain_set_0/mode = 0
 sources/1 = SubResource("TileSetAtlasSource_yw07a")
 sources/0 = SubResource("TileSetAtlasSource_tfm4j")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4tob"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r1pu1"]
 
 [node name="Level0" type="Node2D"]
@@ -233,13 +231,7 @@ position = Vector2(16, 154)
 [node name="Enemy3" parent="SceneObjects/Enemies" instance=ExtResource("4_mfn4g")]
 position = Vector2(78, 154)
 
-[node name="Area2D" type="Area2D" parent="SceneObjects"]
-collision_mask = 3
-script = ExtResource("5_m44e5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Area2D"]
-position = Vector2(119, 202)
-shape = SubResource("WorldBoundaryShape2D_n4tob")
+[node name="WorldBoundary" parent="SceneObjects" instance=ExtResource("6_nuwux")]
 
 [node name="WinArea" type="Area2D" parent="SceneObjects"]
 collision_mask = 3
@@ -249,5 +241,4 @@ script = ExtResource("6_ohrhe")
 position = Vector2(357, 9)
 shape = SubResource("RectangleShape2D_r1pu1")
 
-[connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="SceneObjects/WinArea" to="SceneObjects/Player" method="_on_win_area_body_entered"]
