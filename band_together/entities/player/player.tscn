@@ -318,7 +318,7 @@ wait_time = 1.65
 one_shot = true
 
 [node name="AttackCooldown" type="Timer" parent="."]
-wait_time = 0.4
+wait_time = 0.25
 
 [node name="DashExecuteTimer" type="Timer" parent="."]
 wait_time = 2.5
