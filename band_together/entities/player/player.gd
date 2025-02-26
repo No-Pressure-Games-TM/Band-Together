@@ -44,6 +44,8 @@ var attached_to_wall: bool = false
 #endregion
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var smear: AnimatedSprite2D = $AnimatedSprite2D/SwordSmear
+@onready var drum_wave: Sprite2D = $AnimatedSprite2D/DrumWave
 @onready var camera: Camera2D = $Camera2D
 var attack_animation: bool = false
 
@@ -170,6 +172,8 @@ func jump(delta) -> void:
 
 func move_and_animate() -> void:
 	# only walk when there is a direction input and the player is not clinging to a wall
+	smear.visible = !$BatonArea/BatonAtack.disabled
+	drum_wave.visible = !$DrumArea/DrumAttack.disabled
 	if knocked:
 		velocity.x = 0
 		return  # NO MOVING WHEN KNOCKED
@@ -188,9 +192,13 @@ func move_and_animate() -> void:
 		if direction > 0:
 			sprite.flip_h = false  # Face right
 			$BatonArea.scale.x = 1
+			smear.scale.x = 0.2
+			smear.position.x = 29
 		elif direction < 0:
 			sprite.flip_h = true # Face left
 			$BatonArea.scale.x = -1
+			smear.scale.x = -0.2
+			smear.position.x = -29
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		# play the idle animation if on floor and not charging up a dash
@@ -248,6 +256,7 @@ func use_attack(instrument: String) -> void:
 			$BatonArea/BatonAtack.disabled = false
 			$BatonArea/BatonAtack/BatonTimer.start()
 			play_animation("attack")
+			smear.play("smear")
 			attack_animation = true
 		"drum":
 			$DrumArea/DrumAttack.disabled = false
@@ -297,6 +306,7 @@ func _on_baton_timer_timeout() -> void:
 	weapon_cooling_down = true
 	$AttackCooldown.start(0.4)
 	attack_animation = false
+	smear.stop()
 
 ## Consequence for enemies hitting the DRUM attack hitbox
 func _on_drum_area_body_entered(body: Node2D) -> void:

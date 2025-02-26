@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=38 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -9,7 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://c4efj6bob3ltw" path="res://audio/sfx/saxophone_dash.wav" id="5_be1l6"]
 [ext_resource type="AudioStream" uid="uid://duakab07jpplt" path="res://audio/sfx/saxophone_charge_up.wav" id="6_jgj6o"]
 [ext_resource type="AudioStream" uid="uid://baga0cnj2pr06" path="res://audio/sfx/double_drump.wav" id="7_6icqt"]
+[ext_resource type="Texture2D" uid="uid://cnlkdv5kjdria" path="res://entities/player/assets/temp-smear.png" id="7_ynu3v"]
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
+[ext_resource type="Texture2D" uid="uid://c33vr716yilr7" path="res://entities/player/assets/temp-drumwave.png" id="8_8bo1n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
 size = Vector2(8, 30)
@@ -182,11 +184,54 @@ _data = {
 "flash": SubResource("Animation_568ff")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccnvu"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6l52e"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ocsu"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uespa"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37u6b"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8nlni"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccnvu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6l52e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ocsu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uespa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37u6b")
+}],
+"loop": true,
+"name": &"smear",
+"speed": 40.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_t01df"]
 radius = 48.0104
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2u0e4"]
-radius = 20.025
+radius = 24.0208
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
 size = Vector2(32.75, 25)
@@ -219,6 +264,19 @@ animation = &"idle"
 libraries = {
 "": SubResource("AnimationLibrary_armpr")
 }
+
+[node name="SwordSmear" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+visible = false
+position = Vector2(29, 3)
+scale = Vector2(0.205315, 0.869607)
+sprite_frames = SubResource("SpriteFrames_8nlni")
+animation = &"smear"
+frame_progress = 0.481864
+
+[node name="DrumWave" type="Sprite2D" parent="AnimatedSprite2D"]
+visible = false
+z_index = -3
+texture = ExtResource("8_8bo1n")
 
 [node name="DrumKnockback" type="Area2D" parent="."]
 collision_layer = 0
