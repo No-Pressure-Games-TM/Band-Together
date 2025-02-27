@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://rkd3ltxd52lp"]
+[gd_scene load_steps=9 format=3 uid="uid://rkd3ltxd52lp"]
 
 [ext_resource type="Texture2D" uid="uid://cpqf0r844psnb" path="res://assets/backgrounds/main_menu_bg.jpg" id="1_3kv3e"]
 [ext_resource type="Script" path="res://scenes/states/main_menu/main_menu.gd" id="1_35m0h"]
@@ -28,18 +28,7 @@ shadow_size = 1
 shadow_offset = Vector2(0, 1)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f0yxt"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0, 0.176471, 0, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-corner_detail = 13
-anti_aliasing = false
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hyb1m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fy76"]
 content_margin_left = 0.0
@@ -61,6 +50,19 @@ shadow_color = Color(0, 0, 0, 1)
 shadow_size = 1
 shadow_offset = Vector2(0, 2)
 anti_aliasing_size = 0.01
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f0yxt"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0.176471, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+anti_aliasing = false
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -107,9 +109,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -45.5
+offset_left = -45.0
 offset_top = -37.0
-offset_right = 45.5
+offset_right = 46.0
 offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -119,6 +121,8 @@ theme_override_constants/separation = 4
 [node name="StartGame" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Settings")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
@@ -128,13 +132,15 @@ theme_override_fonts/font = ExtResource("2_fewg4")
 theme_override_font_sizes/font_size = 0
 theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hyb1m")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Start Game"
 
 [node name="Settings" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../StartGame")
+focus_neighbor_bottom = NodePath("../Quit")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
@@ -150,6 +156,8 @@ text = "Settings"
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../StartGame")
 focus_previous = NodePath("../Settings")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://c2o5bq8pwfgqk"]
+[gd_scene load_steps=9 format=3 uid="uid://c2o5bq8pwfgqk"]
 
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="1_2afko"]
 [ext_resource type="Script" path="res://scenes/states/game_over/game_over.gd" id="1_ljw15"]
+[ext_resource type="PackedScene" uid="uid://l0oouukr5bwn" path="res://scenes/scene_transition/scene_transition.tscn" id="2_0nc2f"]
 [ext_resource type="Texture2D" uid="uid://fq6qg6ww7bo5" path="res://assets/backgrounds/game_over.jpg" id="2_o65wy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lng4i"]
@@ -58,6 +59,8 @@ anti_aliasing = false
 [node name="GameOver" type="CanvasLayer"]
 script = ExtResource("1_ljw15")
 
+[node name="SceneTransition" parent="." instance=ExtResource("2_0nc2f")]
+
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,6 +102,8 @@ grow_vertical = 2
 [node name="Retry" type="Button" parent="VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Quit")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
@@ -112,6 +117,8 @@ text = "Retry"
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Retry")
+focus_neighbor_bottom = NodePath("../Retry")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.988957, 0.988957, 0.988957, 1)

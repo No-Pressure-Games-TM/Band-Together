@@ -1,0 +1,282 @@
+[gd_scene load_steps=13 format=3 uid="uid://dfmjew60pcpy"]
+
+[ext_resource type="Script" path="res://scenes/ui_script.gd" id="1_kp52i"]
+[ext_resource type="Texture2D" uid="uid://dnldkpuhl5sx6" path="res://assets/arrow-left.png" id="2_2runv"]
+[ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="3_sn8k0"]
+[ext_resource type="Texture2D" uid="uid://bqpuadd0cdidg" path="res://assets/portraits/baton.png" id="4_5fklh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfj8y"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k1bpx"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbxol"]
+bg_color = Color(0.161554, 0.258631, 0.0968004, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6dbbc"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+anti_aliasing_size = 0.01
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f0gvk"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pw4tr"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wrdp4"]
+bg_color = Color(0.161554, 0.258631, 0.0968004, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy8np"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+anti_aliasing_size = 0.01
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_kp52i")
+
+[node name="PausePanel" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+top_level = true
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -70.0
+offset_right = 76.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_font_sizes/font_size = 32
+text = "Game Paused"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -20.0
+offset_right = 51.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Resume" type="Button" parent="PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_sfj8y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k1bpx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lbxol")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6dbbc")
+text = "Resume"
+
+[node name="MainMenu" type="Button" parent="PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_constants/icon_max_width = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_f0gvk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pw4tr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wrdp4")
+theme_override_styles/normal = SubResource("StyleBoxFlat_iy8np")
+text = "Main Menu"
+icon = ExtResource("2_2runv")
+alignment = 0
+expand_icon = true
+
+[node name="Hearts" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_bottom = 24.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Hearts"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -8.0
+offset_right = 28.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="Heart" type="TextureRect" parent="Hearts/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_sn8k0")
+expand_mode = 2
+
+[node name="Heart2" type="TextureRect" parent="Hearts/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_sn8k0")
+expand_mode = 2
+
+[node name="Heart3" type="TextureRect" parent="Hearts/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_sn8k0")
+expand_mode = 2
+
+[node name="CurrentWeapon" type="TextureRect" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_5fklh")
+
+[node name="Panel" type="Panel" parent="CurrentWeapon"]
+z_index = -2
+layout_mode = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 34.0
+offset_bottom = 34.0
+
+[connection signal="pressed" from="PausePanel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PausePanel/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]

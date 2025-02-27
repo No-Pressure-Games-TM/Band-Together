@@ -1,0 +1,182 @@
+[gd_scene load_steps=21 format=3 uid="uid://bb4kc7nf21ki5"]
+
+[ext_resource type="Script" path="res://entities/enemies/crab/crab.gd" id="1_jn3l6"]
+[ext_resource type="Texture2D" uid="uid://cc452ywc3kk12" path="res://entities/enemies/crab/assets/crab idle.png" id="2_7jyv3"]
+[ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="2_fnu47"]
+[ext_resource type="Texture2D" uid="uid://cofsmsfeijh28" path="res://entities/enemies/crab/assets/crab walking.png" id="3_2j0dm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5ey5"]
+resource_local_to_scene = true
+shader = ExtResource("2_fnu47")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2l51f"]
+atlas = ExtResource("2_7jyv3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6ky1"]
+atlas = ExtResource("2_7jyv3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxh55"]
+atlas = ExtResource("2_7jyv3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60d1k"]
+atlas = ExtResource("3_2j0dm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ek1tl"]
+atlas = ExtResource("3_2j0dm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uetj"]
+atlas = ExtResource("3_2j0dm")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_las0y"]
+atlas = ExtResource("3_2j0dm")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnavj"]
+atlas = ExtResource("3_2j0dm")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w71gi"]
+atlas = ExtResource("3_2j0dm")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cllhb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2l51f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6ky1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxh55")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60d1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ek1tl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2uetj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_las0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnavj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w71gi")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 7.0
+}]
+
+[sub_resource type="Animation" id="Animation_qrclp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_568ff"]
+resource_name = "flash"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_armpr"]
+_data = {
+"RESET": SubResource("Animation_qrclp"),
+"flash": SubResource("Animation_568ff")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gbp1u"]
+size = Vector2(24, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ypyrr"]
+radius = 5.0
+
+[node name="Crab" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_jn3l6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_x5ey5")
+sprite_frames = SubResource("SpriteFrames_cllhb")
+animation = &"walk"
+
+[node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_armpr")
+}
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-10, 0)
+target_position = Vector2(0, 17)
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_gbp1u")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-6, 9)
+shape = SubResource("CircleShape2D_ypyrr")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(5, 9)
+shape = SubResource("CircleShape2D_ypyrr")
+
+[node name="StopMoving" type="Timer" parent="."]
+wait_time = 2.206
+one_shot = true
+
+[node name="KnockbackTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="StopMoving" to="." method="_on_stop_moving_timeout"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
