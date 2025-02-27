@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="Band Together"
-run/main_scene="res://scenes/states/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
@@ -29,7 +28,11 @@ directories/dch_directory={
 "allegro": "res://allegro.dch"
 }
 directories/dtl_directory={
-"event1": "res://dialogic timelines/event1.dtl",
+"door1": "res://dialogic timelines/door1.dtl",
+"findbaton": "res://dialogic timelines/findbaton.dtl",
+"finddrum": "res://dialogic timelines/finddrum.dtl",
+"findsax": "res://dialogic timelines/findsax.dtl",
+"findviolin": "res://dialogic timelines/findviolin.dtl",
 "prologue": "res://dialogic timelines/prologue.dtl"
 }
 glossary/default_case_sensitive=true

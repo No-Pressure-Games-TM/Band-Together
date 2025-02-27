@@ -8,6 +8,7 @@ var current_instrument: int = 0  # Array index of instruments_list
 
 # Temporary rudimentary saving system in case players die
 var furthest_level: String = "res://scenes/levels/level_0.tscn"
+var last_ground_position: Vector2 = Vector2.ZERO
 
 func get_current_instrument() -> String:
 	return instruments_list[current_instrument]
@@ -40,3 +41,9 @@ func is_instrument_unlocked(index: int) -> bool:
 		_:
 			print_debug("is_instrument_unlocked: index greater than 3 or less than 0. How did you even get here?")
 			return false
+
+func save_ground_position(pos: Vector2) -> void:
+	last_ground_position = pos
+
+func get_last_ground_position() -> Vector2:
+	return last_ground_position
