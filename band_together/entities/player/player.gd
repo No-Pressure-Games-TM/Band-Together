@@ -100,14 +100,25 @@ func _process(delta):
 func respawn() -> void:
 	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
 	
+func adjust_volumes() -> void:
+	if GameManager.get_current_instrument() == "drum":
+		$BeachDrum.volume_db = 5
+		$BeachMarimba.volume_db = 0
+	
+	if GameManager.get_current_instrument() == "baton":
+		if GameManager.drum_unlocked:
+			$BeachDrum.volume_db = 0
+		$BeachMarimba.volume_db = 5
 func check_input() -> void:
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
+		adjust_volumes()
 	
 	if Input.is_action_just_pressed("CycleR"):
 		GameManager.set_current_instrument(1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
+		adjust_volumes()
 			
 	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
