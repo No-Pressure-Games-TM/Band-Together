@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_main_menu_pressed() -> void:
-	SceneTransition.change_scene("res://scenes/states/main_menu/main_menu.tscn")
+	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
