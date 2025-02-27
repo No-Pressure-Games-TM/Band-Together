@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://wtx0lf8qg43q"
+path="res://.godot/imported/Beach Track! - Drums.wav-2231a75288f00da1d8283af5ea150c37.sample"
+
+[deps]
+
+source_file="res://scenes/levels/Beach Track! - Drums.wav"
+dest_files=["res://.godot/imported/Beach Track! - Drums.wav-2231a75288f00da1d8283af5ea150c37.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

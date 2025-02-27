@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=42 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -12,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://cnlkdv5kjdria" path="res://entities/player/assets/temp-smear.png" id="7_ynu3v"]
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
 [ext_resource type="Texture2D" uid="uid://c33vr716yilr7" path="res://entities/player/assets/temp-drumwave.png" id="8_8bo1n"]
+[ext_resource type="AudioStream" uid="uid://lovsd56qf0we" path="res://audio/music/Beach Track! - Marimba.wav" id="13_qk1gk"]
+[ext_resource type="AudioStream" uid="uid://wtx0lf8qg43q" path="res://scenes/levels/Beach Track! - Drums.wav" id="14_e0w5o"]
+[ext_resource type="AudioStream" uid="uid://ljtfbhmtk8mp" path="res://audio/music/Beach Track! - Sax.wav" id="15_ms2uu"]
+[ext_resource type="AudioStream" uid="uid://ceh1gap8kgld1" path="res://audio/music/Beach Track! - Strings.wav" id="16_xcjgq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
 size = Vector2(8, 30)
@@ -347,6 +351,22 @@ volume_db = -3.5
 
 [node name="ViolinJump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_3mujn")
+
+[node name="BeachMarimba" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_qk1gk")
+volume_db = -80.0
+
+[node name="BeachDrum" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_e0w5o")
+volume_db = -80.0
+
+[node name="BeachSax" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_ms2uu")
+volume_db = -80.0
+
+[node name="BeachString" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_xcjgq")
+volume_db = -80.0
 
 [connection signal="body_entered" from="DrumKnockback" to="." method="_on_drum_knockback_body_entered"]
 [connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]

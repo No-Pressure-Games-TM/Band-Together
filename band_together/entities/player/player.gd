@@ -57,8 +57,27 @@ func _ready():
 	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
+	$BeachMarimba.play()
+	$BeachDrum.play()
+	$BeachSax.play()
+	$BeachString.play()
+	$BeachMarimba.volume_db = 0
+	if GameManager.drum_unlocked:
+		$BeachDrum.volume_db = 0
+		
+
 
 func _physics_process(delta):
+	if GameManager.drum_unlocked:
+		$BeachDrum.volume_db = 0
+		
+	if GameManager.violin_unlocked:
+		$BeachString.volume_db = 0
+		
+	if GameManager.sax_unlocked:
+		$BeachSax.volume_db = 0
+		
+	
 	check_input()  # Attacks, direction input, wall attaching
 	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
 	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
@@ -363,9 +382,11 @@ func _on_door_body_entered(body):
 	elif get_tree().current_scene.name == "Level11":
 		GameManager.furthest_level = "res://scenes/levels/level1_2.tscn"
 		SceneTransition.change_scene("res://scenes/levels/level1_2.tscn")
+		GameManager.sax_unlocked = true
 	elif get_tree().current_scene.name == "Level12":
 		GameManager.furthest_level = "res://scenes/levels/level1_3.tscn"
 		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
+		GameManager.violin_unlocked = true
 	elif get_tree().current_scene.name == "Level13":
 		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
 		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")

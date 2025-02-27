@@ -1,0 +1,379 @@
+[gd_scene load_steps=42 format=3 uid="uid://chmdbpxvcc4i8"]
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
+[ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
+[ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="3_ipirm"]
+[ext_resource type="Texture2D" uid="uid://5dnnp3572v8l" path="res://entities/player/assets/allegro idle.png" id="3_qj282"]
+[ext_resource type="Texture2D" uid="uid://bvch08qk537ub" path="res://entities/player/assets/allegro walking.png" id="4_06648"]
+[ext_resource type="Texture2D" uid="uid://b83h74p34wdcs" path="res://entities/player/assets/allegro attack.png" id="4_dp6bn"]
+[ext_resource type="AudioStream" uid="uid://c4efj6bob3ltw" path="res://audio/sfx/saxophone_dash.wav" id="5_be1l6"]
+[ext_resource type="AudioStream" uid="uid://duakab07jpplt" path="res://audio/sfx/saxophone_charge_up.wav" id="6_jgj6o"]
+[ext_resource type="AudioStream" uid="uid://baga0cnj2pr06" path="res://audio/sfx/double_drump.wav" id="7_6icqt"]
+[ext_resource type="Texture2D" uid="uid://cnlkdv5kjdria" path="res://entities/player/assets/temp-smear.png" id="7_ynu3v"]
+[ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
+[ext_resource type="Texture2D" uid="uid://c33vr716yilr7" path="res://entities/player/assets/temp-drumwave.png" id="8_8bo1n"]
+[ext_resource type="AudioStream" uid="uid://lovsd56qf0we" path="res://audio/music/Beach Track! - Marimba.wav" id="13_qk1gk"]
+[ext_resource type="AudioStream" uid="uid://wtx0lf8qg43q" path="res://scenes/levels/Beach Track! - Drums.wav" id="14_e0w5o"]
+[ext_resource type="AudioStream" uid="uid://ljtfbhmtk8mp" path="res://audio/music/Beach Track! - Sax.wav" id="15_ms2uu"]
+[ext_resource type="AudioStream" uid="uid://ceh1gap8kgld1" path="res://audio/music/Beach Track! - Strings.wav" id="16_xcjgq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
+size = Vector2(8, 30)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t3cna"]
+resource_local_to_scene = true
+shader = ExtResource("3_ipirm")
+shader_parameter/flash_color = Color(1, 0.187881, 0.138683, 1)
+shader_parameter/flash_value = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2h6r"]
+atlas = ExtResource("4_dp6bn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcedg"]
+atlas = ExtResource("4_dp6bn")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkska"]
+atlas = ExtResource("4_dp6bn")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ltgf"]
+atlas = ExtResource("4_06648")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rnrl"]
+atlas = ExtResource("4_06648")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe8mo"]
+atlas = ExtResource("4_06648")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nupj2"]
+atlas = ExtResource("3_qj282")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pniv0"]
+atlas = ExtResource("3_qj282")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70r07"]
+atlas = ExtResource("3_qj282")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnx0d"]
+atlas = ExtResource("3_qj282")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2j7hi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2h6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcedg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkska")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}],
+"loop": true,
+"name": &"charge_up",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nupj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pniv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70r07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnx0d")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}],
+"loop": true,
+"name": &"sprint",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ltgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnrl")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="Animation" id="Animation_qrclp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_568ff"]
+resource_name = "flash"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_armpr"]
+_data = {
+"RESET": SubResource("Animation_qrclp"),
+"flash": SubResource("Animation_568ff")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccnvu"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6l52e"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ocsu"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uespa"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37u6b"]
+atlas = ExtResource("7_ynu3v")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8nlni"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccnvu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6l52e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ocsu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uespa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37u6b")
+}],
+"loop": true,
+"name": &"smear",
+"speed": 40.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t01df"]
+radius = 48.0104
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2u0e4"]
+radius = 24.0208
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
+size = Vector2(32.75, 25)
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 2
+collision_mask = 4
+safe_margin = 0.1
+script = ExtResource("1_mms2d")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_speed = 3.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_top_margin = 0.35
+drag_bottom_margin = 0.3
+script = ExtResource("2_a8a0l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 1)
+shape = SubResource("RectangleShape2D_kco12")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_t3cna")
+sprite_frames = SubResource("SpriteFrames_2j7hi")
+animation = &"idle"
+
+[node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_armpr")
+}
+
+[node name="SwordSmear" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+visible = false
+position = Vector2(29, 3)
+scale = Vector2(0.205315, 0.869607)
+sprite_frames = SubResource("SpriteFrames_8nlni")
+animation = &"smear"
+frame_progress = 0.481864
+
+[node name="DrumWave" type="Sprite2D" parent="AnimatedSprite2D"]
+visible = false
+z_index = -3
+texture = ExtResource("8_8bo1n")
+
+[node name="DrumKnockback" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DrumKnockback"]
+shape = SubResource("CircleShape2D_t01df")
+disabled = true
+
+[node name="DrumArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="DrumAttack" type="CollisionShape2D" parent="DrumArea"]
+shape = SubResource("CircleShape2D_2u0e4")
+disabled = true
+debug_color = Color(0.772696, 0.354526, 0.685309, 0.42)
+
+[node name="DrumTimer" type="Timer" parent="DrumArea/DrumAttack"]
+wait_time = 0.6
+one_shot = true
+
+[node name="BatonArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="BatonAtack" type="CollisionShape2D" parent="BatonArea"]
+position = Vector2(16, 3)
+shape = SubResource("RectangleShape2D_b5c5w")
+disabled = true
+debug_color = Color(0.861381, 0.245675, 0.664147, 0.42)
+
+[node name="BatonTimer" type="Timer" parent="BatonArea/BatonAtack"]
+wait_time = 0.25
+one_shot = true
+
+[node name="DashChargeTimer" type="Timer" parent="."]
+wait_time = 1.65
+one_shot = true
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="DashExecuteTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="CritText" type="Label" parent="."]
+z_index = 5
+offset_left = -15.0
+offset_top = -34.0
+offset_right = 19.0
+offset_bottom = -18.0
+theme_override_colors/font_color = Color(0.988235, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.14714, 0.380644, 0.721132, 1)
+theme_override_constants/outline_size = 4
+text = "CRIT!"
+
+[node name="SaxDash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_be1l6")
+
+[node name="SaxCharge" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jgj6o")
+
+[node name="DrumJump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_6icqt")
+volume_db = -3.5
+
+[node name="ViolinJump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_3mujn")
+
+[node name="BeachMarimba" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_qk1gk")
+volume_db = -80.0
+
+[node name="BeachDrum" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_e0w5o")
+volume_db = -80.0
+
+[node name="BeachSax" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_ms2uu")
+volume_db = -80.0
+
+[node name="BeachString" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_xcjgq")
+volume_db = -80.0
+
+[connection signal="body_entered" from="DrumKnockback" to="." method="_on_drum_knockback_body_entered"]
+[connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]
+[connection signal="body_entered" from="DrumArea" to="." method="_on_drum_area_body_entered"]
+[connection signal="timeout" from="DrumArea/DrumAttack/DrumTimer" to="." method="_on_drum_timer_timeout"]
+[connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
+[connection signal="timeout" from="BatonArea/BatonAtack/BatonTimer" to="." method="_on_baton_timer_timeout"]
+[connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]

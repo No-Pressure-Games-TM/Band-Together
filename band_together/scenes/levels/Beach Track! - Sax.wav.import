@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ugw4dxo3nbh0"
+path="res://.godot/imported/Beach Track! - Sax.wav-1797da8c35f500cf2c0ce4f67f030cab.sample"
+
+[deps]
+
+source_file="res://scenes/levels/Beach Track! - Sax.wav"
+dest_files=["res://.godot/imported/Beach Track! - Sax.wav-1797da8c35f500cf2c0ce4f67f030cab.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
