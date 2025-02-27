@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://mymux0rp76e4"]
 
 [ext_resource type="Texture2D" uid="uid://pjp5md1cl3w4" path="res://assets/backgrounds/win.jpg" id="1_bwjd3"]
-[ext_resource type="Script" path="res://scenes/states/win/win.gd" id="1_lvoku"]
+[ext_resource type="Script" path="res://scenes/interfaces/win/win.gd" id="1_lvoku"]
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="3_ni75x"]
 [ext_resource type="Texture2D" uid="uid://dnldkpuhl5sx6" path="res://assets/arrow-left.png" id="4_wkw47"]
 
