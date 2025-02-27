@@ -368,4 +368,4 @@ func _on_door_body_entered(body):
 		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
 	elif get_tree().current_scene.name == "Level13":
 		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
-		SceneTransition.change_scene("res://scenes/states/win/win.tscn")
+		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
