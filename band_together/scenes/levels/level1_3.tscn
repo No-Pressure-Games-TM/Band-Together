@@ -269,6 +269,7 @@ bottom_limit = 0
 position = Vector2(-275, -187)
 scale = Vector2(3, 6)
 speed = 0.0
+hp = 99.0
 
 [node name="Area2D" type="Area2D" parent="SceneObjects"]
 position = Vector2(-338, -196)
