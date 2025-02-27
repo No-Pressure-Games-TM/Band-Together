@@ -29,7 +29,11 @@ directories/dch_directory={
 "allegro": "res://allegro.dch"
 }
 directories/dtl_directory={
-"event1": "res://dialogic timelines/event1.dtl",
+"door1": "res://dialogic timelines/door1.dtl",
+"findbaton": "res://dialogic timelines/findbaton.dtl",
+"finddrum": "res://dialogic timelines/finddrum.dtl",
+"findsax": "res://dialogic timelines/findsax.dtl",
+"findviolin": "res://dialogic timelines/findviolin.dtl",
 "prologue": "res://dialogic timelines/prologue.dtl"
 }
 glossary/default_case_sensitive=true
@@ -86,7 +90,7 @@ project/assembly_name="Band Together"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 
 [file_customization]
 
