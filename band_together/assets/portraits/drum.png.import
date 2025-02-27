@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://batfbghc4rg3i"
-path="res://.godot/imported/drumtemp.png-fac71f72126c000f10578fe88270b049.ctex"
+uid="uid://l8164h285v6j"
+path="res://.godot/imported/drum.png-94ee0cf724af7f70cd5ef4db354143ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/portraits/drumtemp.png"
-dest_files=["res://.godot/imported/drumtemp.png-fac71f72126c000f10578fe88270b049.ctex"]
+source_file="res://assets/portraits/drum.png"
+dest_files=["res://.godot/imported/drum.png-94ee0cf724af7f70cd5ef4db354143ed.ctex"]
 
 [params]
 

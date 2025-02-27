@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://id0acxrk2y0w"]
+[gd_scene load_steps=10 format=4 uid="uid://id0acxrk2y0w"]
 
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_wrvxf"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_148ad"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cgv4mrgji2pi" path="res://Environment/mushroom/mushroom_stem.tscn" id="5_jwyvv"]
 [ext_resource type="PackedScene" uid="uid://dmwgtnu46pacq" path="res://Environment/mushroom/mushroom.tscn" id="6_0xx0i"]
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="7_4xtrx"]
+[ext_resource type="PackedScene" uid="uid://bh2l3175lputt" path="res://entities/projectiles/coconut/coconut_spawner.tscn" id="7_oprbn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
 texture = ExtResource("1_wrvxf")
@@ -134,7 +135,7 @@ tile_map_data = PackedByteArray("AAAAAAQAAQABAAAAAAAAAAUAAQABAAEAAAACAAQAAQACAAA
 tile_set = SubResource("TileSet_dcilm")
 
 [node name="Player" parent="." instance=ExtResource("2_148ad")]
-position = Vector2(230, -32)
+position = Vector2(26, 137)
 scale = Vector2(0.68558, 0.601599)
 left_limit = 0
 bottom_limit = 192
@@ -177,3 +178,8 @@ position = Vector2(149, 89)
 
 [node name="MushroomHead2" parent="." instance=ExtResource("6_0xx0i")]
 position = Vector2(107, 124)
+
+[node name="CoconutSpawner" parent="." instance=ExtResource("7_oprbn")]
+position = Vector2(61, 83)
+max_spawnrate = 0.1
+min_spawnrate = 0.1

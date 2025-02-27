@@ -6,6 +6,9 @@ var sax_unlocked: bool = false
 var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
 
+# Temporary rudimentary saving system in case players die
+var furthest_level: String = "res://scenes/levels/level_0.tscn"
+
 func get_current_instrument() -> String:
 	return instruments_list[current_instrument]
 	

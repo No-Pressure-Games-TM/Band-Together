@@ -12,7 +12,7 @@ extends CharacterBody2D
 
 var stopped: bool = false
 
-var hp: float = 20.0
+@export var hp: float = 20.0
 var knocked_back: bool = false
 var spinning = false
 
@@ -44,7 +44,7 @@ func _physics_process(delta):
 
 func _process(delta):
 	# This part makes the crab do those cute lil bounces :p
-	if (sprite.frame == 2 or sprite.frame == 5) and sprite.animation == "walk":
+	if (sprite.frame == 2 or sprite.frame == 5) and sprite.animation == "walk" and velocity.x > 0:
 		sprite.position.y = 2
 	else:
 		sprite.position.y = 0

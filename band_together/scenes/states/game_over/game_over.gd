@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_retry_pressed() -> void:
-	SceneTransition.change_scene("res://scenes/levels/level_0.tscn")
+	SceneTransition.change_scene(GameManager.furthest_level)
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

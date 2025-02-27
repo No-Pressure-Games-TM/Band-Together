@@ -251,6 +251,8 @@ func pause_movement(howlong) -> void:
 	moving_allowed = true
 
 func use_attack(instrument: String) -> void:
+	$AttackCooldown.start(0.4)
+	weapon_cooling_down = true
 	match instrument:
 		"baton":
 			$BatonArea/BatonAtack.disabled = false
@@ -288,23 +290,15 @@ func _on_dash_execute_timer_timeout() -> void:
 	grav_div = 1
 	is_dashing = false
 
-func _on_win_area_body_entered(_body: Node2D) -> void:
-	print("You Win!\n")
-	SceneTransition.change_scene("res://scenes/states/win/win.tscn")
-
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
 	$DrumArea/DrumAttack.disabled = true
 	$DrumKnockback/CollisionShape2D.disabled = true
-	weapon_cooling_down = true
-	$AttackCooldown.start(0.25)
 	attack_animation = false
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
-	$BatonArea/BatonAtack.disabled = true 
-	weapon_cooling_down = true
-	$AttackCooldown.start(0.25)
+	$BatonArea/BatonAtack.disabled = true
 	attack_animation = false
 	smear.stop()
 
@@ -351,3 +345,18 @@ func _on_drum_knockback_body_entered(body):
 	if body.get_collision_layer() == 32 and body.has_method("knockback"):
 		# Projectile is on collision layer 6 which has a value of 32
 		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
+
+
+func _on_door_body_entered(body):
+	if get_tree().current_scene.name == "Level0":
+		GameManager.furthest_level = "res://scenes/levels/level1_1.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
+	elif get_tree().current_scene.name == "Level11":
+		GameManager.furthest_level = "res://scenes/levels/level1_2.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_2.tscn")
+	elif get_tree().current_scene.name == "Level12":
+		GameManager.furthest_level = "res://scenes/levels/level1_3.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
+	elif get_tree().current_scene.name == "Level13":
+		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
+		SceneTransition.change_scene("res://scenes/states/win/win.tscn")

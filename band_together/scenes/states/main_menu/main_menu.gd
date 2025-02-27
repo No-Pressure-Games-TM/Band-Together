@@ -19,9 +19,7 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_start_pressed() -> void:
-	SceneTransition.change_scene("res://scenes/levels/level_0.tscn")
-	#get_tree().change_scene_to_file("res://scenes/test/test_walljump.tscn")
-	#SceneTransition.change_scene("res://scenes/levels/parallax.tscn")
+	SceneTransition.change_scene(GameManager.furthest_level)
 
 
 func _on_options_pressed() -> void:

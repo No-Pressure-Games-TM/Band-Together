@@ -5,7 +5,7 @@ var spawn_pos: Vector2  # The location to spawn this coconut
 
 func _ready():
 	global_position = spawn_pos
-	random_weight_multiplier = randf_range(1, 1.4)  # Adjust as needed
+	random_weight_multiplier = randf_range(0.3, 1.4)  # Adjust as needed
 
 func _physics_process(delta):
 	velocity += get_gravity() * delta * random_weight_multiplier
