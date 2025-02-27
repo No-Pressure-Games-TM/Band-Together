@@ -63,6 +63,12 @@ func _physics_process(delta):
 	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
 	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
 	move_and_animate()  # Sets velocity based on input, changes sprites
+	
+	if is_on_floor():
+		GameManager.save_ground_position(global_position)  # Store last ground position
+
+	if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
+		respawn()
 
 func _process(delta):
 	if i_frame_timer > 0:
@@ -72,6 +78,9 @@ func _process(delta):
 	if UI.lives <= 0:
 		pause_movement(3)  # This makes it so the player cannot walk around if they die (before game over screen)
 
+func respawn() -> void:
+	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
+	
 func check_input() -> void:
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
