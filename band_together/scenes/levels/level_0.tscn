@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=4 uid="uid://bnpo75dm0wp2n"]
 
-[ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="1_1gg8b"]
+[ext_resource type="PackedScene" path="res://scenes/levels/beach_parallax.tscn" id="1_1gg8b"]
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="1_oparx"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="2_oi3pf"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="3_wdqm4"]

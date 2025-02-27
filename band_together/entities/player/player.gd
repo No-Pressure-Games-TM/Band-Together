@@ -290,7 +290,7 @@ func _on_dash_execute_timer_timeout() -> void:
 
 func _on_win_area_body_entered(_body: Node2D) -> void:
 	print("You Win!\n")
-	SceneTransition.change_scene("res://scenes/states/win/win.tscn")
+	SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
