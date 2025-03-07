@@ -1,11 +1,10 @@
 extends RichTextLabel
 
 var is_using_controller: bool = false
-var left = "res://assets/control_icons/left.png"
+var left = "res://assets/control_icons/a.png"
 var left_gamepad = "res://assets/control_icons/left_gamepad.png"
-var right = "res://assets/control_icons/right.png"
+var right = "res://assets/control_icons/d.png"
 var right_gamepad = "res://assets/control_icons/right_gamepad.png"
-var z = "res://assets/control_icons/z.png"
 var a_gamepad = "res://assets/control_icons/a_gamepad.png"
 
 func _ready():
@@ -29,4 +28,4 @@ func update_text(is_using_controller: bool):
 	if is_using_controller:
 		append_text("Press [img]%s[/img] [img]%s[/img] to move.\nPress [img]%s[/img] to jump.\nHold [img]%s[/img] to jump higher." % [left_gamepad, right_gamepad, a_gamepad, a_gamepad])
 	else:
-		append_text("Press [img]%s[/img] [img]%s[/img] to move.\nPress [img]%s[/img] to jump.\nHold [img]%s[/img] to jump higher." % [left, right, z, z])
+		append_text("Press [img]%s[/img] [img]%s[/img] to move.\nPress SPACE to jump.\nHold SPACE to jump higher." % [left, right])

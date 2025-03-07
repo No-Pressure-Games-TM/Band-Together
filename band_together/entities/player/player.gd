@@ -9,7 +9,9 @@ extends CharacterBody2D
 
 #region Physics
 @export var speed: float = 100.0               # Player's movespeed
-@export var jump_velocity: float = -300.0      # Player's jump velocity
+@export var acceleration: float = 400.0        # The rate at which speeds up from 0
+@export var deceleration: float = 600.0
+@export var jump_velocity: float = -325.0      # Player's jump velocity
 @export var jump_buffer: float = 0.1            # Jump buffer
 @export var coyote_time: float = 0.1             # Coyote time
 var coyote_time_counter: float = 0               # Counts coyote time
@@ -34,7 +36,6 @@ var direction: int = 0
 var damage: int = 15
 var weapon_cooling_down: bool = false
 @onready var crit_label = $CritText
-@onready var current_instrument: String = GameManager.get_current_instrument()
 #endregion
 
 #region Wall Jump states
@@ -81,7 +82,7 @@ func _physics_process(delta):
 	check_input()  # Attacks, direction input, wall attaching
 	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
 	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
-	move_and_animate()  # Sets velocity based on input, changes sprites
+	move_and_animate(delta)  # Sets velocity based on input, changes sprites
 	
 	if is_on_floor():
 		GameManager.save_ground_position(global_position)  # Store last ground position
@@ -197,7 +198,7 @@ func jump(delta) -> void:
 		$ViolinJump.play()
 			
 	## Double Jump - Added check for if drum unlocked
-	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.drum_unlocked and !no_doublejump_zone:
+	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.get_current_instrument() == "drum" and !no_doublejump_zone:
 		jump_buffer_counter = 0
 		velocity.y = jump_velocity
 		double_jump_count += 1
@@ -209,10 +210,10 @@ func jump(delta) -> void:
 	if Input.is_action_just_released("Accept") and velocity.y < -30:
 		velocity.y = - 30
 
-func move_and_animate() -> void:
+func move_and_animate(delta) -> void:
 	# only walk when there is a direction input and the player is not clinging to a wall
 	smear.visible = !$BatonArea/BatonAtack.disabled
-	drum_wave.visible = !$DrumArea/DrumAttack.disabled
+	drum_wave.visible = !$DrumKnockback/CollisionShape2D.disabled
 	if knocked:
 		velocity.x = 0
 		return  # NO MOVING WHEN KNOCKED
@@ -225,21 +226,28 @@ func move_and_animate() -> void:
 			play_animation("charge_up")
 		elif is_dashing:
 			play_animation("sprint")
+		
+		if sign(velocity.x) != direction:
+			# Stronger deceleration if turning around
+			velocity.x = move_toward(velocity.x, direction * speed * dash_mult, deceleration * delta * 1.5)
+		else:
+			velocity.x = move_toward(velocity.x, direction * speed * dash_mult, acceleration * delta) 
 			
-		velocity.x = move_toward(velocity.x, direction * speed * dash_mult, speed) 
 		# Flip the sprite based on direction
 		if direction > 0:
 			sprite.flip_h = false  # Face right
+			$CollisionShape2D.position.x = -3
 			$BatonArea.scale.x = 1
 			smear.scale.x = 0.2
 			smear.position.x = 29
 		elif direction < 0:
 			sprite.flip_h = true # Face left
+			$CollisionShape2D.position.x = 3
 			$BatonArea.scale.x = -1
 			smear.scale.x = -0.2
 			smear.position.x = -29
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
 		# play the idle animation if on floor and not charging up a dash
 		if is_on_floor() and !is_charging and !attack_animation:
 			play_animation("idle")
@@ -279,7 +287,7 @@ func take_damage(knockback_dir=null) -> void:
 		
 		# ChatGPT helped me make a knockback!
 		if knockback_dir != null:
-			velocity.x = knockback_dir * 500
+			velocity.x += knockback_dir * 300
 			velocity.y = -100
 			pause_movement(0.2)
 
@@ -300,10 +308,9 @@ func use_attack(instrument: String) -> void:
 			smear.play("smear")
 			attack_animation = true
 		"drum":
-			$DrumArea/DrumAttack.disabled = false
-			$DrumArea/DrumAttack/DrumTimer.start()
+			$DrumKnockback/DrumTimer.start()
 			$DrumKnockback/CollisionShape2D.disabled = false
-			play_animation("attack")
+			play_animation("attack")  # Change to drum attack when it exists
 			attack_animation = true
 		"sax":
 			# place sax functionality here
@@ -331,7 +338,6 @@ func _on_dash_execute_timer_timeout() -> void:
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
-	$DrumArea/DrumAttack.disabled = true
 	$DrumKnockback/CollisionShape2D.disabled = true
 	attack_animation = false
 
@@ -341,22 +347,22 @@ func _on_baton_timer_timeout() -> void:
 	attack_animation = false
 	smear.stop()
 
-## Consequence for enemies hitting the DRUM attack hitbox
-func _on_drum_area_body_entered(body: Node2D) -> void:
-	# Note that drum does 1/2 the damage of baton
-	if body.is_in_group("enemy") and body.has_method("take_damage"):
-		var hit_dir = sign(body.position.x - position.x)
-		if randf() < 0.1:
-			# Critical strike! maybe play diff noise?
-			crit_label.visible = true
-			body.take_damage(damage, hit_dir)
-		else:
-			# Regular damage :(
-			body.take_damage(damage/2, hit_dir)
-		
-		pause_movement(0.1)
-		camera.apply_shake(5)
-		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
+### Consequence for enemies hitting the DRUM attack hitbox
+## Commented out to remove drum damage
+#func _on_drum_area_body_entered(body: Node2D) -> void:
+	## Note that drum does 1/2 the damage of baton
+	#if body.is_in_group("enemy") and body.has_method("take_damage"):
+		#var hit_dir = sign(body.position.x - position.x)
+		#if randf() < 0.1:
+			## Critical strike! maybe play diff noise?
+			#crit_label.visible = true
+			#body.take_damage(damage, hit_dir)
+		#else:
+			## Regular damage :(
+			#body.take_damage(damage/2, hit_dir)
+		#
+		#camera.apply_shake(5)
+		#velocity.x += -hit_dir * 100  # knock the player back a tiny bit too
 
 ## Consequence for enemies hitting the BATON hitbox
 func _on_baton_area_body_entered(body: Node2D) -> void:
@@ -370,9 +376,8 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 			# Regular damage :(
 			body.take_damage(damage, hit_dir)
 		
-		pause_movement(0.1)
 		camera.apply_shake(5)
-		velocity.x = -hit_dir * 200  # knock the player back a tiny bit too
+		velocity.x += -hit_dir * 100  # knock the player back a tiny bit too
 
 
 func _on_attack_cooldown_timeout():

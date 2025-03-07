@@ -58,12 +58,19 @@ func _process(_delta: float) -> void:
 			pass
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion or event is InputEventMouseButton:
+		return  # Ignore mouse movement for this
+		
+	var current_focused = get_viewport().gui_get_focus_owner()
+	if current_focused == null or not current_focused is Button:
+		# No button is focused. Grab focus
+		resume_btn.grab_focus()
+	
 	# Helped create with ChatGPT
 	# Check if Accept action is pressed and trigger the focused button
 	if event.is_action_pressed("Accept") and pause_panel.visible:
-		var focused = get_viewport().gui_get_focus_owner()
-		if focused is Button:
-			focused.emit_signal("pressed")  # Manually trigger button press
+		if current_focused is Button:
+			current_focused.emit_signal("pressed")  # Manually trigger button press
 			get_viewport().set_input_as_handled()
 
 func _on_resume_pressed() -> void:
