@@ -6,7 +6,8 @@
 size = Vector2(8, 32)
 
 [node name="MushroomStem" type="StaticBody2D"]
-collision_layer = 4
+z_index = -1
+collision_layer = 0
 collision_mask = 0
 
 [node name="Stem" type="Sprite2D" parent="."]

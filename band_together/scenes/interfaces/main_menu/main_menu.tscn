@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://rkd3ltxd52lp"]
+[gd_scene load_steps=9 format=3 uid="uid://cwhaajrnohhnq"]
 
-[ext_resource type="Texture2D" uid="uid://cpqf0r844psnb" path="res://assets/backgrounds/main_menu_bg.jpg" id="1_3kv3e"]
 [ext_resource type="Script" path="res://scenes/interfaces/main_menu/main_menu.gd" id="1_35m0h"]
+[ext_resource type="Texture2D" uid="uid://ievits8s3uy" path="res://assets/backgrounds/main_menu_bg.png" id="2_a7y77"]
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="2_fewg4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ubkg"]
-texture = ExtResource("1_3kv3e")
+texture = ExtResource("2_a7y77")
 modulate_color = Color(0.460347, 0.460347, 0.460347, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yywy"]

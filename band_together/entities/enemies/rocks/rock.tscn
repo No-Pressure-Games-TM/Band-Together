@@ -153,8 +153,8 @@ _data = {
 "flash": SubResource("Animation_568ff")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_n57rm"]
-radius = 9.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0rdk"]
+size = Vector2(17, 15)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0k27v"]
 
@@ -179,8 +179,8 @@ libraries = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 texture_filter = 1
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_n57rm")
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_t0rdk")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 16

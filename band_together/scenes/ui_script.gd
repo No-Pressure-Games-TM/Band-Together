@@ -7,7 +7,7 @@ extends Node
 
 #region weapon icons
 var baton = preload("res://assets/portraits/baton.png")
-var drum = preload("res://assets/portraits/drumtemp.png")
+var drum = preload("res://assets/portraits/drum.png")
 #endregion
 
 var not_allowed_scenes: Array[String] = ["GameOver", "Win", "MainMenu"]

@@ -57,8 +57,27 @@ func _ready():
 	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
+	$BeachMarimba.play()
+	$BeachDrum.play()
+	$BeachSax.play()
+	$BeachString.play()
+	$BeachMarimba.volume_db = 0
+	if GameManager.drum_unlocked:
+		$BeachDrum.volume_db = 0
+		
+
 
 func _physics_process(delta):
+	if GameManager.drum_unlocked:
+		$BeachDrum.volume_db = 0
+		
+	if GameManager.violin_unlocked:
+		$BeachString.volume_db = 0
+		
+	if GameManager.sax_unlocked:
+		$BeachSax.volume_db = 0
+		
+	
 	check_input()  # Attacks, direction input, wall attaching
 	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
 	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
@@ -81,14 +100,25 @@ func _process(delta):
 func respawn() -> void:
 	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
 	
+func adjust_volumes() -> void:
+	if GameManager.get_current_instrument() == "drum":
+		$BeachDrum.volume_db = 5
+		$BeachMarimba.volume_db = 0
+	
+	if GameManager.get_current_instrument() == "baton":
+		if GameManager.drum_unlocked:
+			$BeachDrum.volume_db = 0
+		$BeachMarimba.volume_db = 5
 func check_input() -> void:
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
+		adjust_volumes()
 	
 	if Input.is_action_just_pressed("CycleR"):
 		GameManager.set_current_instrument(1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
+		adjust_volumes()
 			
 	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
@@ -260,6 +290,8 @@ func pause_movement(howlong) -> void:
 	moving_allowed = true
 
 func use_attack(instrument: String) -> void:
+	$AttackCooldown.start(0.4)
+	weapon_cooling_down = true
 	match instrument:
 		"baton":
 			$BatonArea/BatonAtack.disabled = false
@@ -297,23 +329,15 @@ func _on_dash_execute_timer_timeout() -> void:
 	grav_div = 1
 	is_dashing = false
 
-func _on_win_area_body_entered(_body: Node2D) -> void:
-	print("You Win!\n")
-	SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
-
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
 	$DrumArea/DrumAttack.disabled = true
 	$DrumKnockback/CollisionShape2D.disabled = true
-	weapon_cooling_down = true
-	$AttackCooldown.start(0.25)
 	attack_animation = false
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_baton_timer_timeout() -> void:
-	$BatonArea/BatonAtack.disabled = true 
-	weapon_cooling_down = true
-	$AttackCooldown.start(0.25)
+	$BatonArea/BatonAtack.disabled = true
 	attack_animation = false
 	smear.stop()
 
@@ -360,3 +384,20 @@ func _on_drum_knockback_body_entered(body):
 	if body.get_collision_layer() == 32 and body.has_method("knockback"):
 		# Projectile is on collision layer 6 which has a value of 32
 		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
+
+
+func _on_door_body_entered(body):
+	if get_tree().current_scene.name == "Level0":
+		GameManager.furthest_level = "res://scenes/levels/level1_1.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
+	elif get_tree().current_scene.name == "Level11":
+		GameManager.furthest_level = "res://scenes/levels/level1_2.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_2.tscn")
+		GameManager.sax_unlocked = true
+	elif get_tree().current_scene.name == "Level12":
+		GameManager.furthest_level = "res://scenes/levels/level1_3.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
+		GameManager.violin_unlocked = true
+	elif get_tree().current_scene.name == "Level13":
+		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
+		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
