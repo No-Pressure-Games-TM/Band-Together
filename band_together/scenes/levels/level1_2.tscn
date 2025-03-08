@@ -388,10 +388,10 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "LEVEL GRAPHICS WIP!!!"
 
 [node name="PressToSwap" type="RichTextLabel" parent="SceneObjects"]
-offset_left = -51.0
-offset_top = -87.0
-offset_right = 96.0
-offset_bottom = -39.0
+offset_left = -65.0
+offset_top = -86.0
+offset_right = 143.0
+offset_bottom = -38.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Hold O to bounce higher."
 script = ExtResource("9_riowr")

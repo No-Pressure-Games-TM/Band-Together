@@ -22,6 +22,6 @@ func _input(event):
 func update_text(is_using_controller: bool):
 	clear()
 	if is_using_controller:
-		append_text("Hold [img]%s[/img] to bounce\nhigher." % a_gamepad)
+		append_text("Press [img]%s[/img] on mushroom\nto bounce higher." % a_gamepad)
 	else:
-		append_text("Hold SPACE to bounce\nhigher.")
+		append_text("Press SPACE on mushroom\nto bounce higher.")
