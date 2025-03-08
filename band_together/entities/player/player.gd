@@ -382,7 +382,7 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 			body.take_damage(damage, hit_dir)
 		
 		camera.apply_shake(5)
-		velocity.x += -hit_dir * 100  # knock the player back a tiny bit too
+		velocity.x += -hit_dir * 10  # knock the player back a tiny bit too
 
 
 func _on_attack_cooldown_timeout():
