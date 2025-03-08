@@ -23,6 +23,7 @@ var grav_div: int                              # Divide gravity while charging d
 var moving_allowed: bool = true
 var knocked: bool = false
 var no_doublejump_zone: bool = false           # set by the mushroom, so no double jump when trying to bounce
+var cutting_enabled = true                     # true if jump cutting is enabled. This is for mushrooms
 #endregion
 
 #region Dash bools
@@ -198,8 +199,7 @@ func jump(delta) -> void:
 		$ViolinJump.play()
 			
 	## Double Jump - Added check for if drum unlocked
-	elif jump_buffer_counter > 0 and double_jump_count == 0 and GameManager.get_current_instrument() == "drum" and !no_doublejump_zone:
-		jump_buffer_counter = 0
+	elif Input.is_action_just_pressed("Accept") and !is_on_floor() and double_jump_count == 0 and GameManager.get_current_instrument() == "drum" and !no_doublejump_zone:
 		velocity.y = jump_velocity
 		double_jump_count += 1
 		$DrumJump.play()
@@ -207,7 +207,7 @@ func jump(delta) -> void:
 	# Otherwise, no jump is performed
 		
 	## Jump Cutting
-	if Input.is_action_just_released("Accept") and velocity.y < -30:
+	if Input.is_action_just_released("Accept") and velocity.y < -30 and cutting_enabled:
 		velocity.y = - 30
 
 func move_and_animate(delta) -> void:
@@ -321,6 +321,11 @@ func use_attack(instrument: String) -> void:
 		_:
 			print_debug("player.use_attack called with unknown instrument! How did you get here?")
 	
+func pause_jumpcutting():
+	# Pauses jump cutting. This is used currently just for mushrooms
+	cutting_enabled = false
+	await get_tree().create_timer(0.4).timeout
+	cutting_enabled = true
 
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
