@@ -48,7 +48,7 @@ _data = {
 size = Vector2(8, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nk7v3"]
-size = Vector2(32.5, 30)
+size = Vector2(32.5, 50)
 
 [node name="MushroomHead" type="Node2D"]
 script = ExtResource("1_k6brm")
@@ -92,7 +92,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoDoubleJumps"]
-position = Vector2(-0.25, -10)
+position = Vector2(-0.25, -20)
 shape = SubResource("RectangleShape2D_nk7v3")
 
 [connection signal="body_entered" from="Head/Area2D" to="." method="_on_area_2d_body_entered"]

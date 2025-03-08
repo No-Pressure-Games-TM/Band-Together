@@ -1,12 +1,12 @@
 extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
-var drum_unlocked: bool = false
+var drum_unlocked: bool = true
 var sax_unlocked: bool = false
 var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
 
-# Temporary rudimentary saving system in case players die
+# rudimentary saving system in case players die
 var furthest_level: String = "res://scenes/levels/level_0.tscn"
 var last_ground_position: Vector2 = Vector2.ZERO
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=45 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://c4efj6bob3ltw" path="res://audio/sfx/saxophone_dash.wav" id="5_be1l6"]
 [ext_resource type="AudioStream" uid="uid://duakab07jpplt" path="res://audio/sfx/saxophone_charge_up.wav" id="6_jgj6o"]
 [ext_resource type="AudioStream" uid="uid://baga0cnj2pr06" path="res://audio/sfx/double_drump.wav" id="7_6icqt"]
+[ext_resource type="Texture2D" uid="uid://bcbuffgbqgav3" path="res://entities/player/assets/allegro jumping.png" id="7_48w6e"]
 [ext_resource type="Texture2D" uid="uid://cnlkdv5kjdria" path="res://entities/player/assets/temp-smear.png" id="7_ynu3v"]
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
 [ext_resource type="Texture2D" uid="uid://c33vr716yilr7" path="res://entities/player/assets/temp-drumwave.png" id="8_8bo1n"]
@@ -66,6 +67,18 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("3_qj282")
 region = Rect2(96, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sac8"]
+atlas = ExtResource("7_48w6e")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pba7q"]
+atlas = ExtResource("7_48w6e")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyvto"]
+atlas = ExtResource("7_48w6e")
+region = Rect2(64, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_2j7hi"]
 animations = [{
 "frames": [{
@@ -115,6 +128,20 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sac8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pba7q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyvto")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -234,9 +261,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_t01df"]
 radius = 48.0104
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2u0e4"]
-radius = 24.0208
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5c5w"]
 size = Vector2(32.75, 25)
 
@@ -262,7 +286,9 @@ shape = SubResource("RectangleShape2D_kco12")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_t3cna")
 sprite_frames = SubResource("SpriteFrames_2j7hi")
-animation = &"idle"
+animation = &"jump"
+frame = 1
+frame_progress = 0.241301
 
 [node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
@@ -286,22 +312,13 @@ texture = ExtResource("8_8bo1n")
 collision_layer = 0
 collision_mask = 32
 
+[node name="DrumTimer" type="Timer" parent="DrumKnockback"]
+wait_time = 0.6
+one_shot = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrumKnockback"]
 shape = SubResource("CircleShape2D_t01df")
 disabled = true
-
-[node name="DrumArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 8
-
-[node name="DrumAttack" type="CollisionShape2D" parent="DrumArea"]
-shape = SubResource("CircleShape2D_2u0e4")
-disabled = true
-debug_color = Color(0.772696, 0.354526, 0.685309, 0.42)
-
-[node name="DrumTimer" type="Timer" parent="DrumArea/DrumAttack"]
-wait_time = 0.6
-one_shot = true
 
 [node name="BatonArea" type="Area2D" parent="."]
 collision_layer = 0
@@ -369,9 +386,7 @@ stream = ExtResource("16_xcjgq")
 volume_db = -80.0
 
 [connection signal="body_entered" from="DrumKnockback" to="." method="_on_drum_knockback_body_entered"]
-[connection signal="area_shape_entered" from="DrumArea" to="." method="_on_drum_area_area_shape_entered"]
-[connection signal="body_entered" from="DrumArea" to="." method="_on_drum_area_body_entered"]
-[connection signal="timeout" from="DrumArea/DrumAttack/DrumTimer" to="." method="_on_drum_timer_timeout"]
+[connection signal="timeout" from="DrumKnockback/DrumTimer" to="." method="_on_drum_timer_timeout"]
 [connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
 [connection signal="timeout" from="BatonArea/BatonAtack/BatonTimer" to="." method="_on_baton_timer_timeout"]
 [connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]

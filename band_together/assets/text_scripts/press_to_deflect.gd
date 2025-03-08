@@ -1,7 +1,7 @@
 extends RichTextLabel
 
 var is_using_controller: bool = false
-var x = "res://assets/control_icons/x.png"
+var left_click = "res://assets/control_icons/left_click.png"
 var b_gamepad = "res://assets/control_icons/b_gamepad.png"
 
 func _ready():
@@ -25,4 +25,4 @@ func update_text(is_using_controller: bool):
 	if is_using_controller:
 		append_text("Press [img]%s[/img] with drum to\ndeflect projectiles." % b_gamepad)
 	else:
-		append_text("Press [img]%s[/img] with drum to\ndeflect projectiles." % x)
+		append_text("Press [img]%s[/img] with drum to\ndeflect projectiles." % left_click)

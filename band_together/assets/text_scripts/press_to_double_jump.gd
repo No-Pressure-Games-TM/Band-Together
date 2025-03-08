@@ -1,7 +1,6 @@
 extends RichTextLabel
 
 var is_using_controller: bool = false
-var z = "res://assets/control_icons/z.png"
 var a_gamepad = "res://assets/control_icons/a_gamepad.png"
 
 func _ready():
@@ -25,4 +24,4 @@ func update_text(is_using_controller: bool):
 	if is_using_controller:
 		append_text("Press [img]%s[/img] in the air\nto double jump." % a_gamepad)
 	else:
-		append_text("Press [img]%s[/img] in the air\nto double jump." % z)
+		append_text("Press SPACE in the air\nto double jump.")

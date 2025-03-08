@@ -1,7 +1,6 @@
 extends RichTextLabel
 
 var is_using_controller: bool = false
-var z = "res://assets/control_icons/z.png"
 var a_gamepad = "res://assets/control_icons/a_gamepad.png"
 
 func _ready():
@@ -23,6 +22,6 @@ func _input(event):
 func update_text(is_using_controller: bool):
 	clear()
 	if is_using_controller:
-		append_text("Hold [img]%s[/img] to bounce\nhigher." % a_gamepad)
+		append_text("Press [img]%s[/img] on mushroom\nto bounce higher." % a_gamepad)
 	else:
-		append_text("Hold [img]%s[/img] to bounce\nhigher." % z)
+		append_text("Press SPACE on mushroom\nto bounce higher.")

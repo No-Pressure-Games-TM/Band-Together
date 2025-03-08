@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcbuffgbqgav3"
-path="res://.godot/imported/allegro jumping.png-ec191bbafaff6f9d3be3e78c9e33d178.ctex"
+uid="uid://q3tnepn4npqk"
+path="res://.godot/imported/scroll_up.png-e8b256754658ee3faaea117ac4f26d3c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/assets/allegro jumping.png"
-dest_files=["res://.godot/imported/allegro jumping.png-ec191bbafaff6f9d3be3e78c9e33d178.ctex"]
+source_file="res://assets/control_icons/scroll_up.png"
+dest_files=["res://.godot/imported/scroll_up.png-e8b256754658ee3faaea117ac4f26d3c.ctex"]
 
 [params]
 
