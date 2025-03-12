@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 var random_weight_multiplier: float  # different coconuts fall at different speeds!
 var spawn_pos: Vector2  # The location to spawn this coconut
+var despawn_timer: float = 3.0  # despawn after 3 seconds to reduce lag
 
 func _ready():
 	global_position = spawn_pos
@@ -10,6 +11,11 @@ func _ready():
 func _physics_process(delta):
 	velocity += get_gravity() * delta * random_weight_multiplier
 	move_and_slide()
+
+func _process(delta):
+	despawn_timer -= delta
+	if despawn_timer <= 0:
+		queue_free()
 
 func knockback(direction: Vector2):
 	velocity.x = direction.x * 500
