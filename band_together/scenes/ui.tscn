@@ -203,6 +203,20 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_lbxol")
 theme_override_styles/normal = SubResource("StyleBoxFlat_6dbbc")
 text = "Resume"
 
+[node name="Reset" type="Button" parent="PausePanel/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_sfj8y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k1bpx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lbxol")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6dbbc")
+text = "Restart Level"
+
 [node name="MainMenu" type="Button" parent="PausePanel/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
@@ -279,4 +293,5 @@ offset_right = 18.0
 offset_bottom = 18.0
 
 [connection signal="pressed" from="PausePanel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PausePanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="PausePanel/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]

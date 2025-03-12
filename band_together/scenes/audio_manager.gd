@@ -14,8 +14,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if music_player.volume_db != -80:
-		music_player.volume_db = -80  # Mute music for testing lol
+	#if music_player.volume_db != -80:
+		#music_player.volume_db = -80  # Mute music for testing lol
+	pass
 	
 func _on_scene_changed(scene: Node) -> void:
 	if scene.get_parent() == get_tree().root:
