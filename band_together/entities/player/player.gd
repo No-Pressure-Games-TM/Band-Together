@@ -403,11 +403,9 @@ func _on_door_body_entered(body):
 	elif get_tree().current_scene.name == "Level11":
 		GameManager.furthest_level = "res://scenes/levels/level1_2.tscn"
 		SceneTransition.change_scene("res://scenes/levels/level1_2.tscn")
-		GameManager.sax_unlocked = true
 	elif get_tree().current_scene.name == "Level12":
 		GameManager.furthest_level = "res://scenes/levels/level1_3.tscn"
 		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
-		GameManager.violin_unlocked = true
 	elif get_tree().current_scene.name == "Level13":
 		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
 		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")

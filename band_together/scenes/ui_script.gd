@@ -80,6 +80,7 @@ func _on_resume_pressed() -> void:
 
 
 func _on_main_menu_pressed() -> void:
+	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	get_tree().paused = false
 	pause_panel.hide()
 	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
@@ -95,3 +96,14 @@ func decrease_health():
 		SceneTransition.change_scene("res://scenes/interfaces/game_over/game_over.tscn")
 	else: 
 		print("Lives: ", lives)
+
+
+func _on_reset_pressed():
+	var current_scene = get_tree().current_scene
+	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
+	get_tree().paused = false
+	pause_panel.hide()
+	if current_scene.name == "Level11":
+		GameManager.drum_unlocked = false  # Reset drum unlocked state if this level
+		GameManager.current_instrument = 0  # Reset to baton
+	SceneTransition.change_scene(current_scene.scene_file_path)
