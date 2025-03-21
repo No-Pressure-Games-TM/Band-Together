@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://k4oxl1qa80ur"]
+[gd_scene load_steps=14 format=4 uid="uid://k4oxl1qa80ur"]
 
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="1_64tlq"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="2_nkj1k"]
@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://assets/text_scripts/press_to_deflect.gd" id="6_6lf6b"]
 [ext_resource type="PackedScene" uid="uid://bh2l3175lputt" path="res://entities/projectiles/coconut/coconut_spawner.tscn" id="8_4t6o1"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="8_eplm8"]
-[ext_resource type="Texture2D" uid="uid://bim0mwjn5urrv" path="res://assets/door.png" id="9_cyrqy"]
+[ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="9_ibt8o"]
 [ext_resource type="PackedScene" uid="uid://drgq6uc3w23m0" path="res://scenes/levels/forest_parallax.tscn" id="11_ry17v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_edxun"]
@@ -211,43 +211,6 @@ sources/0 = SubResource("TileSetAtlasSource_edxun")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b023o"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_otixw"]
-atlas = ExtResource("9_cyrqy")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m3xpt"]
-atlas = ExtResource("9_cyrqy")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u5xel"]
-atlas = ExtResource("9_cyrqy")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_chewv"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_otixw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m3xpt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u5xel")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m3xpt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_otixw")
-}],
-"loop": true,
-"name": &"default",
-"speed": 3.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ao66s"]
-
 [node name="Level13" type="Node2D"]
 
 [node name="SceneObjects" type="Node" parent="."]
@@ -280,18 +243,6 @@ script = ExtResource("8_eplm8")
 position = Vector2(119, 202)
 shape = SubResource("WorldBoundaryShape2D_b023o")
 
-[node name="WinArea" type="Area2D" parent="SceneObjects"]
-position = Vector2(-484, -111)
-collision_mask = 3
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SceneObjects/WinArea"]
-position = Vector2(0, -17)
-sprite_frames = SubResource("SpriteFrames_chewv")
-autoplay = "default"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/WinArea"]
-shape = SubResource("RectangleShape2D_ao66s")
-
 [node name="PressToDeflect" type="RichTextLabel" parent="SceneObjects"]
 offset_left = -161.0
 offset_top = -139.0
@@ -323,5 +274,8 @@ min_spawnrate = 0.1
 [node name="ForestParallax" parent="." instance=ExtResource("11_ry17v")]
 position = Vector2(-625, -105)
 
+[node name="Door" parent="." instance=ExtResource("9_ibt8o")]
+position = Vector2(-464, -111)
+destination_scene = "res://scenes/levels/level_0.tscn"
+
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
-[connection signal="body_entered" from="SceneObjects/WinArea" to="SceneObjects/Player" method="_on_door_body_entered"]
