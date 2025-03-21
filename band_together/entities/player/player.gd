@@ -89,6 +89,9 @@ func _physics_process(delta):
 
 		if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 			respawn()
+	else:
+		# We are in a dialogue
+		play_animation("idle")
 
 func _process(delta):
 	if i_frame_timer > 0:
@@ -396,28 +399,11 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 		camera.apply_shake(5)
 		velocity.x += -hit_dir * 10  # knock the player back a tiny bit too
 
-
 func _on_attack_cooldown_timeout():
 	weapon_cooling_down = false
 	crit_label.visible = false
-
 
 func _on_drum_knockback_body_entered(body):
 	if body.get_collision_layer() == 32 and body.has_method("knockback"):
 		# Projectile is on collision layer 6 which has a value of 32
 		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
-
-
-func _on_door_body_entered(body):
-	if get_tree().current_scene.name == "Level0":
-		GameManager.furthest_level = "res://scenes/levels/level1_1.tscn"
-		SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
-	elif get_tree().current_scene.name == "Level11":
-		GameManager.furthest_level = "res://scenes/levels/level1_2.tscn"
-		SceneTransition.change_scene("res://scenes/levels/level1_2.tscn")
-	elif get_tree().current_scene.name == "Level12":
-		GameManager.furthest_level = "res://scenes/levels/level1_3.tscn"
-		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
-	elif get_tree().current_scene.name == "Level13":
-		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
-		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")

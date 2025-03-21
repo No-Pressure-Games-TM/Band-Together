@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://c4oiwa65qnkwo"]
+[gd_scene load_steps=19 format=4 uid="uid://c4oiwa65qnkwo"]
 
 [ext_resource type="Script" path="res://scenes/levels/level_1_1.gd" id="1_i2g3k"]
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="1_mpho6"]
@@ -6,13 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="3_ewj0v"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="4_ipv16"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="5_5ohx6"]
-[ext_resource type="Texture2D" uid="uid://bim0mwjn5urrv" path="res://assets/door.png" id="6_kagdk"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="7_rpstj"]
 [ext_resource type="Script" path="res://scenes/levels/pickup.gd" id="8_2imuc"]
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="8_g87ce"]
 [ext_resource type="Texture2D" uid="uid://l8164h285v6j" path="res://assets/portraits/drum.png" id="9_4bbtv"]
 [ext_resource type="Script" path="res://assets/text_scripts/press_to_double_jump.gd" id="11_cxqk0"]
 [ext_resource type="Script" path="res://assets/text_scripts/press_to_swap.gd" id="12_q1nk5"]
+[ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="13_rcw31"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_edxun"]
 texture = ExtResource("2_rugup")
@@ -215,43 +215,6 @@ sources/0 = SubResource("TileSetAtlasSource_edxun")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b023o"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_otixw"]
-atlas = ExtResource("6_kagdk")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m3xpt"]
-atlas = ExtResource("6_kagdk")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u5xel"]
-atlas = ExtResource("6_kagdk")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_chewv"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_otixw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m3xpt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u5xel")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m3xpt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_otixw")
-}],
-"loop": true,
-"name": &"default",
-"speed": 3.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ao66s"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgh4a"]
 
 [node name="Level11" type="Node2D"]
@@ -331,18 +294,6 @@ script = ExtResource("5_5ohx6")
 position = Vector2(119, 202)
 shape = SubResource("WorldBoundaryShape2D_b023o")
 
-[node name="WinArea" type="Area2D" parent="SceneObjects"]
-position = Vector2(546, -351)
-collision_mask = 3
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SceneObjects/WinArea"]
-position = Vector2(0, -17)
-sprite_frames = SubResource("SpriteFrames_chewv")
-autoplay = "default"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/WinArea"]
-shape = SubResource("RectangleShape2D_ao66s")
-
 [node name="DrumPickup" type="Area2D" parent="SceneObjects"]
 position = Vector2(142, -269)
 collision_layer = 0
@@ -388,6 +339,9 @@ damage enemies."
 
 [node name="BeachParallax" parent="." instance=ExtResource("1_mpho6")]
 
+[node name="Door" parent="." instance=ExtResource("13_rcw31")]
+position = Vector2(546, -351)
+destination_scene = "res://scenes/levels/level1_2.tscn"
+
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
-[connection signal="body_entered" from="SceneObjects/WinArea" to="SceneObjects/Player" method="_on_door_body_entered"]
 [connection signal="body_entered" from="SceneObjects/DrumPickup" to="SceneObjects/DrumPickup" method="_on_body_entered"]
