@@ -67,8 +67,6 @@ func _ready():
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
 		
-
-
 func _physics_process(delta):
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
@@ -78,18 +76,19 @@ func _physics_process(delta):
 		
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
+			
+	if GameManager.in_dialogue == false:
+		# Added this if statement to remove control when in dialogue
+		check_input()  # Attacks, direction input, wall attaching
+		gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
+		jump(delta)  # All types of jumps (wall jump, double jump, etc!)
+		move_and_animate(delta)  # Sets velocity based on input, changes sprites
 		
-	
-	check_input()  # Attacks, direction input, wall attaching
-	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
-	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
-	move_and_animate(delta)  # Sets velocity based on input, changes sprites
-	
-	if is_on_floor():
-		GameManager.save_ground_position(global_position)  # Store last ground position
+		if is_on_floor():
+			GameManager.save_ground_position(global_position)  # Store last ground position
 
-	if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
-		respawn()
+		if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
+			respawn()
 
 func _process(delta):
 	if i_frame_timer > 0:
@@ -142,7 +141,8 @@ func check_input() -> void:
 		direction = 0
 	
 	# Wall attaching
-	if is_on_wall_only() and direction == -get_wall_normal().x:
+	if is_on_wall_only() and direction == -get_wall_normal().x and velocity.y > -10:
+		# Added velocity.y > -10 to allow player to jump when beside wall
 		attached_to_wall = true
 	elif direction == get_wall_normal().x or Input.is_action_just_pressed("Down") or !is_on_wall():
 		attached_to_wall = false
@@ -156,7 +156,7 @@ func gravity(delta) -> void:
 		attached_to_wall = false
 		coyote_time_counter = coyote_time
 		coyote_time_wall_counter = 0  # Fix triple jump bug
-	elif attached_to_wall and GameManager.violin_unlocked:
+	elif attached_to_wall and GameManager.current_instrument == 3:
 		double_jump_count = 0  # Allow wall double jumps
 		velocity.y = wall_slide_speed * delta  # Slow gravity when sliding on wall
 		coyote_time_wall_counter = coyote_time
@@ -189,7 +189,7 @@ func jump(delta) -> void:
 		coyote_time_counter = 0
 	
 	## Wall Jump
-	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0 and GameManager.violin_unlocked:
+	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0 and GameManager.current_instrument == 3:
 		attached_to_wall = false
 		velocity.x = wall_jump_force * get_wall_normal().x
 		velocity.y = jump_velocity
@@ -214,19 +214,12 @@ func move_and_animate(delta) -> void:
 	# only walk when there is a direction input and the player is not clinging to a wall
 	smear.visible = !$BatonArea/BatonAtack.disabled
 	drum_wave.visible = !$DrumKnockback/CollisionShape2D.disabled
+	
 	if knocked:
 		velocity.x = 0
 		return  # NO MOVING WHEN KNOCKED
-	if direction and not attached_to_wall:
-		#select animation depending on what state of motion player is in
-		# ie dash, charge dash, regular walk
-		if (!is_charging and !is_dashing and !attack_animation):
-			play_animation("walk")
-		elif is_charging:
-			play_animation("charge_up")
-		elif is_dashing:
-			play_animation("sprint")
 		
+	if direction and not attached_to_wall:
 		if sign(velocity.x) != direction:
 			# Stronger deceleration if turning around
 			velocity.x = move_toward(velocity.x, direction * speed * dash_mult, deceleration * delta * 1.5)
@@ -248,19 +241,38 @@ func move_and_animate(delta) -> void:
 			smear.position.x = -29
 	else:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
-		# play the idle animation if on floor and not charging up a dash
-		if is_on_floor() and !is_charging and !attack_animation:
-			play_animation("idle")
-		# play a slowed down walk animation to simulate charging up 
-		elif is_on_floor() and is_charging:
+	
+	if attack_animation:
+		# Attack animations need to be handled elsewhere. So I added this
+		move_and_slide()
+		return  # Don't play the other animations if we are attacking
+	
+	## Animations go here
+	if attached_to_wall and GameManager.current_instrument == 3:
+		play_animation("wall_slide")
+		# The next 2 if statements are to fix a graphical bug (sliding backwards on walls)
+		if get_wall_normal().x < 0:
+			sprite.flip_h = false  
+		elif get_wall_normal().x > 0:
+			sprite.flip_h = true
+	elif not is_on_floor():
+		if velocity.y > -30 and velocity.y < 30:
+			play_animation("jump_apex")  # Top of the jump (gave a small range)
+		elif velocity.y < 0:
+			play_animation("jump_start")  # moving upwards
+		elif velocity.y > 0:
+			play_animation("falling")  # moving downwards
+	elif is_on_floor():
+		if is_charging:
 			play_animation("charge_up")
-		elif is_on_wall_only():
-			# put wall slide here
-			play_animation("idle")
+		elif is_dashing:
+			play_animation("sprint")
+		elif direction != 0:
+			# Attack animation is handled elsewhere (sorry!)
+			play_animation("walk")
 		else:
-			# place falling animation here
-			# etc etc
-			pass
+			# There is no other states. Just idle
+			play_animation("idle")
 			
 	move_and_slide()
 
@@ -287,7 +299,7 @@ func take_damage(knockback_dir=null) -> void:
 		
 		# ChatGPT helped me make a knockback!
 		if knockback_dir != null:
-			velocity.x += knockback_dir * 300
+			velocity.x += knockback_dir * 200
 			velocity.y = -100
 			pause_movement(0.2)
 
@@ -304,13 +316,13 @@ func use_attack(instrument: String) -> void:
 		"baton":
 			$BatonArea/BatonAtack.disabled = false
 			$BatonArea/BatonAtack/BatonTimer.start()
-			play_animation("attack")
+			play_animation("baton_attack")
 			smear.play("smear")
 			attack_animation = true
 		"drum":
 			$DrumKnockback/DrumTimer.start()
 			$DrumKnockback/CollisionShape2D.disabled = false
-			play_animation("attack")  # Change to drum attack when it exists
+			play_animation("drum_attack")
 			attack_animation = true
 		"sax":
 			# place sax functionality here

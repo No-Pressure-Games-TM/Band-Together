@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dv7ulek10hmqy"
-path="res://.godot/imported/Rock3_Idle (22x18).png-a257c3c1817d81c08a0ab0ef8a468a16.ctex"
+uid="uid://bcj4tw5o18173"
+path="res://.godot/imported/saxophone attack.PNG-1fc4bd7c7b23093208ea48ac7008fc36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/enemies/rocks/assets/Rock3_Idle (22x18).png"
-dest_files=["res://.godot/imported/Rock3_Idle (22x18).png-a257c3c1817d81c08a0ab0ef8a468a16.ctex"]
+source_file="res://entities/player/assets/saxophone attack.PNG"
+dest_files=["res://.godot/imported/saxophone attack.PNG-1fc4bd7c7b23093208ea48ac7008fc36.ctex"]
 
 [params]
 

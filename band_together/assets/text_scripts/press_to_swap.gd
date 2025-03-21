@@ -9,7 +9,7 @@ var scrup = "res://assets/control_icons/scroll_up.png"
 var scrdown = "res://assets/control_icons/scroll_down.png"
 
 func _ready():
-	update_text(is_using_controller)
+	update_text()
 
 func _input(event):
 	## Used for checking what controller player is using
@@ -17,14 +17,14 @@ func _input(event):
 		if not is_using_controller:
 			# Controller
 			is_using_controller = true
-			update_text(is_using_controller)
+			update_text()
 	elif event is InputEventKey:
 		if is_using_controller:
 			# Keyboard
 			is_using_controller = false
-			update_text(is_using_controller)
+			update_text()
 
-func update_text(is_using_controller: bool):
+func update_text():
 	clear()
 	if is_using_controller:
 		append_text("Press [img]%s[/img] [img]%s[/img] to swap\ninstruments." % [l_gamepad, r_gamepad])

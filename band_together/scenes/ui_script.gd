@@ -29,7 +29,7 @@ func reset() -> void:
 		process_mode = PROCESS_MODE_DISABLED
 		self.visible = false
 	else:
-		process_mode = PROCESS_MODE_ALWAYS
+		process_mode = PROCESS_MODE_INHERIT  # Changed this from ALWAYS, change back if issues
 		self.visible = true
 		if lives <= 0:
 			lives = default_lives
@@ -44,6 +44,8 @@ func _process(_delta: float) -> void:
 	
 	if (esc_pressed):
 		resume_btn.grab_focus()
+		if GameManager.in_dialogue == true:
+			Dialogic.Text.hide_textbox()
 		get_tree().paused = true
 		pause_panel.show()
 	
@@ -77,6 +79,8 @@ func _on_resume_pressed() -> void:
 	await get_tree().create_timer(0.05).timeout  # This is because player was jumping when unpausing
 	pause_panel.hide()
 	get_tree().paused = false
+	if GameManager.in_dialogue == true:
+		Dialogic.Text.show_textbox()
 
 
 func _on_main_menu_pressed() -> void:
