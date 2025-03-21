@@ -1,17 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2m67x1ryjhi0"]
+[gd_scene load_steps=4 format=3 uid="uid://d2m67x1ryjhi0"]
 
 [ext_resource type="Texture2D" uid="uid://bpgcuo0nbsphw" path="res://entities/player/assets/temp-saxproj.png" id="1_d4f3o"]
+[ext_resource type="Script" path="res://entities/player/reed.gd" id="1_g4h8f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vmeig"]
 
 [node name="Reed" type="Node2D"]
+script = ExtResource("1_g4h8f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.385416, 0.369792)
+texture = ExtResource("1_d4f3o")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_vmeig")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(7, 7)
-scale = Vector2(0.395833, 0.385417)
-texture = ExtResource("1_d4f3o")

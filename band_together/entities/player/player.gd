@@ -54,6 +54,10 @@ var attack_animation: bool = false
 var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
 @onready var i_frame_timer: float = default_i_frame_timer
 
+#Signal for sax attack (creation of reed projectiles)
+#https://www.youtube.com/watch?v=7ijfcTN4g0Y
+signal shoot(pos: Vector2)
+
 func _ready():
 	# Set the camera limits to those in the editor
 	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
@@ -314,6 +318,7 @@ func use_attack(instrument: String) -> void:
 			attack_animation = true
 		"sax":
 			# place sax functionality here
+			shoot.emit(global_position)
 			pass
 		"violin":
 			# place violin functionality here
