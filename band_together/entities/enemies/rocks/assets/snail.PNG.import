@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rxjihvpki044"
-path="res://.godot/imported/Rock1_Run (38x34).png-68855195bbd7d9acfa2b2a4286383258.ctex"
+uid="uid://34ijk2gi7xgv"
+path="res://.godot/imported/snail.PNG-72ca8691760666a13b24c815e1971446.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/enemies/rocks/assets/Rock1_Run (38x34).png"
-dest_files=["res://.godot/imported/Rock1_Run (38x34).png-68855195bbd7d9acfa2b2a4286383258.ctex"]
+source_file="res://entities/enemies/rocks/assets/snail.PNG"
+dest_files=["res://.godot/imported/snail.PNG-72ca8691760666a13b24c815e1971446.ctex"]
 
 [params]
 

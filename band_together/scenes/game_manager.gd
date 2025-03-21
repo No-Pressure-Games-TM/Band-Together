@@ -3,12 +3,18 @@ extends Node
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
 var drum_unlocked: bool = false
 var sax_unlocked: bool = false
-var violin_unlocked: bool = false
+var violin_unlocked: bool = true
 var current_instrument: int = 0  # Array index of instruments_list
 
 # rudimentary saving system in case players die
 var furthest_level: String = "res://scenes/levels/level_0.tscn"
 var last_ground_position: Vector2 = Vector2.ZERO
+
+# dialogic
+var in_dialogue: bool = false
+
+func _ready():
+	Dialogic.signal_event.connect(dialogic_signal_end)  # 17 minutes in, https://www.youtube.com/watch?v=Tmy1tzhDLl4&ab_channel=DevWorm
 
 func get_current_instrument() -> String:
 	return instruments_list[current_instrument]
@@ -47,3 +53,13 @@ func save_ground_position(pos: Vector2) -> void:
 
 func get_last_ground_position() -> Vector2:
 	return last_ground_position
+	
+func start_dialogue(dialogue_name: String):
+	# Start a dialogue. Pause the rest of the game
+	in_dialogue = true
+	Dialogic.start(dialogue_name)
+
+func dialogic_signal_end(arg: String):
+	# This is where we choose what happens at the end of dialogs
+	# for example if arg == "test_dialog": do this
+	in_dialogue = false
