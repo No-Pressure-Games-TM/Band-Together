@@ -25,7 +25,9 @@ func _on_player_shoot(pos: Vector2, facing_left) -> void:
 	
 	var reed = reed_scene.instantiate()
 	var direction = -1 if facing_left else 1
-	$SceneObjects/Reeds.add_child(reed)
+
 	#reed.position = pos
-	reed.global_position = pos
+	
 	reed.direction = direction
+	$SceneObjects/Reeds.add_child(reed)
+	reed.global_position = pos + Vector2(16*direction , 0)

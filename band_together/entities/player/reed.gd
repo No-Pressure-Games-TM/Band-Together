@@ -4,6 +4,7 @@ var direction: int = 1
 @export var speed:= 300
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Sprite2D.flip_h = direction > 0
 	pass # Replace with function body.
 
 
