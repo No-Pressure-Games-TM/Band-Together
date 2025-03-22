@@ -31,6 +31,15 @@ var is_charging: bool = false
 var is_dashing: bool = false
 #endregion
 
+#region Projectile bools
+var was_held: bool = false
+var is_held: bool = false
+var angle: float = 0;
+const inc: float  = 0.025
+var dir: int = 1
+#endregion
+
+
 var direction: int = 0 
 
 #region combat
@@ -56,7 +65,7 @@ var default_i_frame_timer: float = 1.3  # number of seconds to be invincible aft
 
 #Signal for sax attack (creation of reed projectiles)
 #https://www.youtube.com/watch?v=7ijfcTN4g0Y
-signal shoot(pos: Vector2, direction: int)
+signal shoot(pos: Vector2, direction: int, angle: float)
 
 func _ready():
 	# Set the camera limits to those in the editor
@@ -82,6 +91,19 @@ func _physics_process(delta):
 		
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
+		
+	if !was_held and is_held: #start the sax charge
+		angle = 0
+		was_held = true
+	if was_held and is_held: # increment the sax charge
+		angle += dir*inc
+		if angle> 1.57:
+			dir = -1
+		if angle < 0:
+			dir = 1
+			
+	#if was_held and !is_held: # release the sax charge
+		
 		
 	
 	check_input()  # Attacks, direction input, wall attaching
@@ -128,6 +150,17 @@ func check_input() -> void:
 			
 	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
+		if GameManager.get_current_instrument() == "sax":
+			is_held = true
+			return
+			
+		
+		
+		use_attack(GameManager.get_current_instrument(), direction)
+	
+	if Input.is_action_just_released("Decline") and GameManager.get_current_instrument() == "sax":
+		was_held =false
+		is_held = false
 		use_attack(GameManager.get_current_instrument(), direction)
 	
 	# Handle Dash - Will eventually be associated with the saxophones movement ability
@@ -318,7 +351,7 @@ func use_attack(instrument: String, direction: int) -> void:
 			attack_animation = true
 		"sax":
 			# place sax functionality here
-			shoot.emit(global_position, sprite.flip_h)
+			shoot.emit(global_position, sprite.flip_h, angle)
 			pass
 		"violin":
 			# place violin functionality here

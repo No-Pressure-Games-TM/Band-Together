@@ -19,7 +19,7 @@ func _ready():
 		
 
 
-func _on_player_shoot(pos: Vector2, facing_left) -> void:
+func _on_player_shoot(pos: Vector2, facing_left, angle) -> void:
 	print("allegro shoots a reed from the saxophone, gross!")
 	print(pos)
 	
@@ -29,5 +29,6 @@ func _on_player_shoot(pos: Vector2, facing_left) -> void:
 	#reed.position = pos
 	
 	reed.direction = direction
+	reed.angle = angle
 	$SceneObjects/Reeds.add_child(reed)
 	reed.global_position = pos + Vector2(16*direction , 0)
