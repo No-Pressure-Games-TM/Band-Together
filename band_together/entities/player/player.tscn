@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=56 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -102,6 +102,14 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("9_bvmgo")
 region = Rect2(64, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb4yu"]
+atlas = ExtResource("9_bvmgo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uaiih"]
+atlas = ExtResource("9_bvmgo")
+region = Rect2(32, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ujqgt"]
 atlas = ExtResource("8_bs0tv")
 region = Rect2(0, 0, 32, 32)
@@ -137,7 +145,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"charge_up",
-"speed": 3.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -210,13 +218,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_4ltgf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2rnrl")
+"texture": SubResource("AtlasTexture_tb4yu")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pe8mo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2rnrl")
+"texture": SubResource("AtlasTexture_uaiih")
 }],
 "loop": true,
 "name": &"sprint",
@@ -249,7 +257,7 @@ animations = [{
 }]
 
 [sub_resource type="Animation" id="Animation_qrclp"]
-length = 0.001
+length = 0.002
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -356,8 +364,7 @@ shape = SubResource("RectangleShape2D_kco12")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_t3cna")
 sprite_frames = SubResource("SpriteFrames_2j7hi")
-animation = &"drum_attack"
-frame_progress = 0.604164
+animation = &"sax_attack"
 
 [node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
@@ -404,14 +411,14 @@ wait_time = 0.25
 one_shot = true
 
 [node name="DashChargeTimer" type="Timer" parent="."]
-wait_time = 1.65
+wait_time = 0.8
 one_shot = true
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 0.25
 
 [node name="DashExecuteTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 1.2
 one_shot = true
 
 [node name="CritText" type="Label" parent="."]

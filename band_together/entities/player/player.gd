@@ -12,8 +12,8 @@ extends CharacterBody2D
 @export var acceleration: float = 400.0        # The rate at which speeds up from 0
 @export var deceleration: float = 600.0
 @export var jump_velocity: float = -325.0      # Player's jump velocity
-@export var jump_buffer: float = 0.1            # Jump buffer
-@export var coyote_time: float = 0.1             # Coyote time
+@export var jump_buffer: float = 0.2            # Jump buffer
+@export var coyote_time: float = 0.2             # Coyote time
 var coyote_time_counter: float = 0               # Counts coyote time
 var coyote_time_wall_counter: float = 0          # Counter specifically for walls
 var jump_buffer_counter: float = 0               # Counts jump buffer
@@ -32,6 +32,7 @@ var is_dashing: bool = false
 #endregion
 
 var direction: int = 0 
+var last_direction: int = 0
 
 #region combat
 var damage: int = 15
@@ -41,8 +42,8 @@ var weapon_cooling_down: bool = false
 
 #region Wall Jump states
 var attached_to_wall: bool = false
-@export var wall_jump_force: int = 400        # Force of bouncing off wall
-@export var wall_slide_speed: float = 800.0    # Speed of sliding down wall
+@export var wall_jump_force: int = 250        # Force of bouncing off wall
+@export var wall_slide_speed: float = 1200.0    # Speed of sliding down wall
 #endregion
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -113,6 +114,8 @@ func adjust_volumes() -> void:
 		if GameManager.drum_unlocked:
 			$BeachDrum.volume_db = 0
 		$BeachMarimba.volume_db = 5
+
+
 func check_input() -> void:
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
@@ -128,26 +131,16 @@ func check_input() -> void:
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
 		use_attack(GameManager.get_current_instrument())
 	
-	# Handle Dash - Will eventually be associated with the saxophones movement ability
-	# Starts the charge up for the dash
-	if Input.is_action_just_pressed("Dash"): 
-		if !is_charging and !is_dashing: # prevents repeated dashing
-			#Start charging up a dash, reduces fall speed
-			grav_div = 2
-			is_charging = true
-			$DashChargeTimer.start()
-			$SaxCharge.play()
-	
 	if moving_allowed:
 		direction = sign(round(Input.get_vector("Left", "Right", "Up", "Down")).normalized().x)
 	else:
 		direction = 0
 	
 	# Wall attaching
-	if is_on_wall_only() and direction == -get_wall_normal().x and velocity.y > -10:
+	if is_on_wall_only() and direction == -get_wall_normal().x and velocity.y > -10 and !is_charging:
 		# Added velocity.y > -10 to allow player to jump when beside wall
 		attached_to_wall = true
-	elif direction == get_wall_normal().x or Input.is_action_just_pressed("Down") or !is_on_wall():
+	elif direction == get_wall_normal().x or Input.is_action_just_pressed("Down") or !is_on_wall() or is_charging:
 		attached_to_wall = false
 
 func gravity(delta) -> void:
@@ -185,17 +178,18 @@ func jump(delta) -> void:
 	elif jump_buffer_counter > 0:
 		# prevent underflow
 		jump_buffer_counter -= delta
-	## Regular Jump
-	if (is_on_floor() or coyote_time_counter > 0) and jump_buffer_counter > 0:
+	
+	## Regular Jump - Disabled for sax
+	if (is_on_floor() or coyote_time_counter > 0) and jump_buffer_counter > 0 and GameManager.get_current_instrument() != "sax":
 		velocity.y = jump_velocity
 		jump_buffer_counter = 0
 		coyote_time_counter = 0
 	
 	## Wall Jump
-	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0 and GameManager.current_instrument == 3:
+	elif (attached_to_wall or coyote_time_wall_counter > 0) and jump_buffer_counter > 0 and GameManager.get_current_instrument() == "violin":
 		attached_to_wall = false
 		velocity.x = wall_jump_force * get_wall_normal().x
-		velocity.y = jump_velocity
+		velocity.y = jump_velocity/1.2
 		pause_movement(0.1)
 		jump_buffer_counter = 0
 		coyote_time_wall_counter = 0
@@ -206,6 +200,14 @@ func jump(delta) -> void:
 		velocity.y = jump_velocity
 		double_jump_count += 1
 		$DrumJump.play()
+	
+	## Dash
+	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing:
+		#Start charging up a dash
+		is_charging = true
+		speed = 20
+		$DashChargeTimer.start()
+		$SaxCharge.play()
 	
 	# Otherwise, no jump is performed
 		
@@ -221,14 +223,9 @@ func move_and_animate(delta) -> void:
 	if knocked:
 		velocity.x = 0
 		return  # NO MOVING WHEN KNOCKED
-		
-	if direction and not attached_to_wall:
-		if sign(velocity.x) != direction:
-			# Stronger deceleration if turning around
-			velocity.x = move_toward(velocity.x, direction * speed * dash_mult, deceleration * delta * 1.5)
-		else:
-			velocity.x = move_toward(velocity.x, direction * speed * dash_mult, acceleration * delta) 
-			
+	
+	if direction != 0:
+		last_direction = direction
 		# Flip the sprite based on direction
 		if direction > 0:
 			sprite.flip_h = false  # Face right
@@ -242,6 +239,23 @@ func move_and_animate(delta) -> void:
 			$BatonArea.scale.x = -1
 			smear.scale.x = -0.2
 			smear.position.x = -29
+	
+	if is_dashing:
+		# no need to use move_toward so they can turn on a dime
+		velocity.x = last_direction * speed * dash_mult
+		if is_on_wall() and sign(velocity.x) == -get_wall_normal().x:
+			# stop dashing when hit a wall
+			$DashExecuteTimer.stop()
+			$DashExecuteTimer.emit_signal("timeout")
+	elif direction and not attached_to_wall:
+		if sign(velocity.x) != direction:
+			# Stronger deceleration if turning around or in air
+			if not is_on_floor():
+				velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta * 20)
+			else:
+				velocity.x = move_toward(velocity.x, direction * speed, deceleration * delta * 1.5)
+		else:
+			velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta) 
 	else:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
 	
@@ -251,13 +265,17 @@ func move_and_animate(delta) -> void:
 		return  # Don't play the other animations if we are attacking
 	
 	## Animations go here
-	if attached_to_wall and GameManager.current_instrument == 3:
+	if attached_to_wall and GameManager.get_current_instrument() == "violin":
 		play_animation("wall_slide")
 		# The next 2 if statements are to fix a graphical bug (sliding backwards on walls)
 		if get_wall_normal().x < 0:
 			sprite.flip_h = false  
 		elif get_wall_normal().x > 0:
 			sprite.flip_h = true
+	elif is_charging:
+		play_animation("charge_up")
+	elif is_dashing:
+		play_animation("sprint")
 	elif not is_on_floor():
 		if velocity.y > -30 and velocity.y < 30:
 			play_animation("jump_apex")  # Top of the jump (gave a small range)
@@ -266,11 +284,7 @@ func move_and_animate(delta) -> void:
 		elif velocity.y > 0:
 			play_animation("falling")  # moving downwards
 	elif is_on_floor():
-		if is_charging:
-			play_animation("charge_up")
-		elif is_dashing:
-			play_animation("sprint")
-		elif direction != 0:
+		if direction != 0:
 			# Attack animation is handled elsewhere (sorry!)
 			play_animation("walk")
 		else:
@@ -345,6 +359,8 @@ func pause_jumpcutting():
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
 	dash_mult = 2
+	grav_div = 2
+	speed = 100  # Reset after slowing down previously
 	is_charging = false
 	is_dashing = true
 	$DashExecuteTimer.start()

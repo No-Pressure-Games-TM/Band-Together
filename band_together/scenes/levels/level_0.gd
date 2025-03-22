@@ -2,7 +2,8 @@ extends Node2D
 
 func _ready():
 	if GameManager.is_instrument_unlocked(2):
-		pass  # This is where the player goes and dialogue for when level 2 is done
+		# This is where the player goes and dialogue for when level 2 is done
+		$SceneObjects/Player.position = Vector2(560, 144)  # Move player
 	elif GameManager.is_instrument_unlocked(1):
 		# Drum is unlocked
 		$SceneObjects/Player.position = Vector2(560, 144)  # Move player
