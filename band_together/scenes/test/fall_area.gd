@@ -15,5 +15,5 @@ func _on_body_entered(body: Node2D) -> void:
 	if (body.name == "Player"):
 		UI.decrease_health()
 		await get_tree().create_timer(1).timeout  # Short delay after death
-		get_tree().reload_current_scene.call_deferred()
+		body.respawn()
 		
