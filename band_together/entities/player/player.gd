@@ -56,7 +56,7 @@ var default_i_frame_timer: float = 1.3  # number of seconds to be invincible aft
 
 #Signal for sax attack (creation of reed projectiles)
 #https://www.youtube.com/watch?v=7ijfcTN4g0Y
-signal shoot(pos: Vector2)
+signal shoot(pos: Vector2, direction: int)
 
 func _ready():
 	# Set the camera limits to those in the editor
@@ -128,7 +128,7 @@ func check_input() -> void:
 			
 	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
-		use_attack(GameManager.get_current_instrument())
+		use_attack(GameManager.get_current_instrument(), direction)
 	
 	# Handle Dash - Will eventually be associated with the saxophones movement ability
 	# Starts the charge up for the dash
@@ -301,7 +301,7 @@ func pause_movement(howlong) -> void:
 	await get_tree().create_timer(howlong, false).timeout
 	moving_allowed = true
 
-func use_attack(instrument: String) -> void:
+func use_attack(instrument: String, direction: int) -> void:
 	$AttackCooldown.start(0.4)
 	weapon_cooling_down = true
 	match instrument:
@@ -318,7 +318,7 @@ func use_attack(instrument: String) -> void:
 			attack_animation = true
 		"sax":
 			# place sax functionality here
-			shoot.emit(global_position)
+			shoot.emit(global_position, sprite.flip_h)
 			pass
 		"violin":
 			# place violin functionality here
