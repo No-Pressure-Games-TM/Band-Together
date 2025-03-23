@@ -19,7 +19,7 @@ var coyote_time_wall_counter: float = 0          # Counter specifically for wall
 var jump_buffer_counter: float = 0               # Counts jump buffer
 var double_jump_count: int = 0
 var dash_mult: int = 1                         # Dash movespeed multiply
-var grav_div: int                              # Divide gravity while charging dash
+var grav_div: float                              # Divide gravity while charging dash
 var moving_allowed: bool = true
 var knocked: bool = false
 var no_doublejump_zone: bool = false           # set by the mushroom, so no double jump when trying to bounce
@@ -34,6 +34,10 @@ var is_dashing: bool = false
 var direction: int = 0 
 var last_direction: int = 0
 
+# DEBUG
+var path: PackedVector2Array = []
+var pathing: bool = false
+
 #region combat
 var damage: int = 15
 var weapon_cooling_down: bool = false
@@ -42,8 +46,8 @@ var weapon_cooling_down: bool = false
 
 #region Wall Jump states
 var attached_to_wall: bool = false
-@export var wall_jump_force: int = 250        # Force of bouncing off wall
-@export var wall_slide_speed: float = 1200.0    # Speed of sliding down wall
+@export var wall_jump_force: int = 200        # Force of bouncing off wall
+@export var wall_slide_speed: float = 1500.0    # Speed of sliding down wall
 #endregion
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -67,8 +71,18 @@ func _ready():
 	$BeachMarimba.volume_db = 0
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
-		
+
+func _draw():
+	# delete this before shipping
+	if path.size() >= 2:
+		for i in range(path.size() -1):
+			draw_line(to_local(path[i]), to_local(path[i+1]), Color.RED, 30)
+
 func _physics_process(delta):
+	# delete this pathing part before shipping
+	if pathing:
+		path.append(global_position)
+		queue_redraw()
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
 		
@@ -117,6 +131,14 @@ func adjust_volumes() -> void:
 
 
 func check_input() -> void:
+	# DELETE THE NEXT 2 IF STATEMENTS BEFORE SHIPPING GAME
+	if Input.is_action_just_pressed("Path"):
+		pathing = true
+		print_debug("Pathing started")
+	if Input.is_action_just_pressed("StopPath"):
+		pathing = false
+		print_debug("Pathing stopped")
+		path.clear()
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
@@ -131,10 +153,7 @@ func check_input() -> void:
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
 		use_attack(GameManager.get_current_instrument())
 	
-	if moving_allowed:
-		direction = sign(round(Input.get_vector("Left", "Right", "Up", "Down")).normalized().x)
-	else:
-		direction = 0
+	direction = sign(round(Input.get_vector("Left", "Right", "Up", "Down")).normalized().x)
 	
 	# Wall attaching
 	if is_on_wall_only() and direction == -get_wall_normal().x and velocity.y > -10 and !is_charging:
@@ -152,7 +171,7 @@ func gravity(delta) -> void:
 		attached_to_wall = false
 		coyote_time_counter = coyote_time
 		coyote_time_wall_counter = 0  # Fix triple jump bug
-	elif attached_to_wall and GameManager.current_instrument == 3:
+	elif attached_to_wall and GameManager.get_current_instrument() == "violin":
 		double_jump_count = 0  # Allow wall double jumps
 		velocity.y = wall_slide_speed * delta  # Slow gravity when sliding on wall
 		coyote_time_wall_counter = coyote_time
@@ -247,7 +266,7 @@ func move_and_animate(delta) -> void:
 			# stop dashing when hit a wall
 			$DashExecuteTimer.stop()
 			$DashExecuteTimer.emit_signal("timeout")
-	elif direction and not attached_to_wall:
+	elif direction and not attached_to_wall and moving_allowed:
 		if sign(velocity.x) != direction:
 			# Stronger deceleration if turning around or in air
 			if not is_on_floor():
@@ -256,7 +275,7 @@ func move_and_animate(delta) -> void:
 				velocity.x = move_toward(velocity.x, direction * speed, deceleration * delta * 1.5)
 		else:
 			velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta) 
-	else:
+	elif moving_allowed:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
 	
 	if attack_animation:
@@ -359,7 +378,7 @@ func pause_jumpcutting():
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
 	dash_mult = 2
-	grav_div = 2
+	grav_div = 1.2
 	speed = 100  # Reset after slowing down previously
 	is_charging = false
 	is_dashing = true
