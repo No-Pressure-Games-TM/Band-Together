@@ -36,6 +36,7 @@ var loop_delay: float = 3.0                   # Time between collapse cycles
 var has_hit_player: bool = false              # Prevents multiple hits in one collapse
 var has_collapsed: bool = false               # Whether vine is currently collapsed
 var is_looping: bool = false                  # Whether vine should loop collapse
+var is_retracting: bool = false               # Whether vine is currently retracting
 
 #-------------------------------------------------------------------------------
 # Initialization
@@ -94,21 +95,22 @@ func connect_signals() -> void:
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 
 #-------------------------------------------------------------------------------
-# Public API
+# External Methods
 #-------------------------------------------------------------------------------
 
 # Trigger the vine to collapse once
 func trigger_collapse() -> void:
-	if not has_collapsed:
+	if not has_collapsed and not is_retracting:
 		has_collapsed = true
 		is_looping = false
 		start_collapse()
 
 # Trigger the vine to collapse in a loop
 func trigger_collapse_loop() -> void:
-	has_collapsed = false
-	is_looping = true
-	start_collapse()
+	if not is_retracting:
+		has_collapsed = false
+		is_looping = true
+		start_collapse()
 
 # Stop the vine from looping
 func stop_loop() -> void:
@@ -130,7 +132,7 @@ func start_collapse() -> void:
 	# Enable physics
 	freeze = false
 
-# Reset vine to initial state
+# Reset vine to initial state with retraction
 func reset_vine() -> void:
 	# Reset position and physics
 	global_position = initial_position
@@ -139,6 +141,17 @@ func reset_vine() -> void:
 	linear_velocity = Vector2.ZERO
 	angular_velocity = 0
 	
+	# Start retraction animation
+	sprite.animation = "retract"
+	sprite.play()
+	is_retracting = true
+	
+	# Reset state flags (except is_retracting)
+	has_collapsed = false
+	has_hit_player = false
+
+# Complete reset after retraction finishes
+func complete_reset() -> void:
 	# Reset collision shapes size
 	if body_collision and body_collision.shape is CapsuleShape2D:
 		body_collision.shape.height = original_height
@@ -151,17 +164,20 @@ func reset_vine() -> void:
 	if hitbox_shape:
 		hitbox_shape.position = original_hitbox_position
 	
-	# Reset animation
+	# Reset animation to idle
+	sprite.frame_changed.disconnect(_on_frame_changed)  # Disconnect temporarily
 	sprite.animation = "idle"
+	sprite.frame = 0
 	sprite.play()
+	await get_tree().process_frame  # Wait a frame
+	sprite.frame_changed.connect(_on_frame_changed)  # Reconnect
 	
-	# Reset state flags
-	has_collapsed = false
-	has_hit_player = false
+	# Reset retraction flag
+	is_retracting = false
 	
 	# Handle looping if needed
 	if is_looping:
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(loop_delay).timeout
 		start_collapse()
 
 #-------------------------------------------------------------------------------
@@ -174,20 +190,26 @@ func update_single_shape(shape: Shape2D, growth: float) -> void:
 		shape.height = original_height * growth
 
 # Update both collision shapes based on animation progress
-func update_collision_shapes(progress: float) -> void:
-	# Calculate growth factor
-	var growth = 1.0 + (3.0 * progress)
+func update_collision_shapes(progress: float, grow: bool) -> void:
+	var growth
+	
+	if grow:
+		# For collapse animation - grow from 1x to 4x
+		growth = 1.0 + (3.0 * progress)
+	else:
+		# For retract animation - shrink from 4x to 1x
+		growth = 1.0 + (3.0 * (1.0 - progress))
 	
 	# Update shape sizes
 	update_single_shape(body_collision.shape, growth)
 	update_single_shape(hitbox_shape.shape, growth)
 	
-	# Adjust positions to grow downward from top
+	# Adjust positions to match growing/shrinking
 	if body_collision.shape is CapsuleShape2D:
 		var new_height = original_height * growth
 		var height_diff = new_height - original_height
 		
-		# Keep X position the same, only adjust Y to grow downward
+		# Keep X position the same, only adjust Y
 		body_collision.position.y = original_body_position.y + (height_diff / 2)
 		hitbox_shape.position.y = original_hitbox_position.y + (height_diff / 2)
 
@@ -197,21 +219,37 @@ func update_collision_shapes(progress: float) -> void:
 
 # Updates collision shape when animation frame changes
 func _on_frame_changed() -> void:
+	# Handle growing during collapse animation
 	if sprite.animation == "collapse":
-		# Calculate animation progress (0.0 to 1.0)
 		var frame_count = sprite.sprite_frames.get_frame_count("collapse")
 		var progress = float(sprite.frame) / max(1, frame_count - 1)
-		update_collision_shapes(progress)
+		update_collision_shapes(progress, true)
+	
+	# Handle shrinking during retract animation
+	elif sprite.animation == "retract":
+		var frame_count = sprite.sprite_frames.get_frame_count("retract")
+		var progress = float(sprite.frame) / max(1, frame_count - 1)
+		update_collision_shapes(progress, false)
 
-# Handles animation completion
+# Handle animation completion
 func _on_animation_finished() -> void:
-	if sprite.animation == "collapse" and is_looping:
-		# Wait before resetting
-		await get_tree().create_timer(loop_delay).timeout
-		reset_vine()
+	if sprite.animation == "collapse":
+		# Freeze vine in collapsed state
+		freeze = true
+		
+		# If looping, wait then reset
+		if is_looping:
+			# Wait before resetting (full cycle)
+			await get_tree().create_timer(loop_delay).timeout
+			reset_vine()
+	
+	elif sprite.animation == "retract":
+		# Only happens for looping vines that are retracting
+		complete_reset()
 
-# Detects when player is hit by vine, in case we want to add damage
+# Detects when player is hit by vine
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Only trigger for players during collapse animation
 	if body.is_in_group("Player") and sprite.animation == "collapse" and not has_hit_player:
 		has_hit_player = true
+		player_hit.emit(damage_amount)
