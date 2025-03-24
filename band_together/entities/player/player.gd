@@ -19,7 +19,7 @@ var coyote_time_wall_counter: float = 0          # Counter specifically for wall
 var jump_buffer_counter: float = 0               # Counts jump buffer
 var double_jump_count: int = 0
 var dash_mult: int = 1                         # Dash movespeed multiply
-var grav_div: float                              # Divide gravity while charging dash
+var grav_div: float = 1                        # Divide gravity while charging dash
 var moving_allowed: bool = true
 var knocked: bool = false
 var no_doublejump_zone: bool = false           # set by the mushroom, so no double jump when trying to bounce
@@ -37,6 +37,7 @@ var is_held: bool = false
 var angle: float = 0;
 const inc: float  = 0.025
 var dir: int = 1
+const reed_scene: PackedScene = preload("res://entities/player/reed.tscn")
 #endregion
 
 
@@ -107,43 +108,37 @@ func _physics_process(delta):
 			
 	if GameManager.in_dialogue == false:
 		# Added this if statement to remove control when in dialogue
+		
+		if !was_held and is_held: #start the sax charge
+			angle = 0
+			was_held = true
+			attack_animation = true
+			play_animation("aim")
+		if was_held and is_held: # increment the sax charge
+			$Line2D.clear_points()
+			angle += dir*inc
+			if angle> 1.57:
+				dir = -1
+			if angle < 0:
+				dir = 1
+			$Line2D.add_point(Vector2(0,0))
+			if sprite.flip_h:
+				$Line2D.add_point(Vector2(-cos(angle),sin(angle)))
+			else:
+				$Line2D.add_point(Vector2(cos(angle),sin(angle)))
+		
 		check_input()  # Attacks, direction input, wall attaching
 		gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
 		jump(delta)  # All types of jumps (wall jump, double jump, etc!)
 		move_and_animate(delta)  # Sets velocity based on input, changes sprites
 		
-	if !was_held and is_held: #start the sax charge
-		angle = 0
-		was_held = true
-		attack_animation = true
-		play_animation("aim")
-	if was_held and is_held: # increment the sax charge
-		$Line2D.clear_points()
-		angle += dir*inc
-		if angle> 1.57:
-			dir = -1
-		if angle < 0:
-			dir = 1
-		$Line2D.add_point(Vector2(0,0))
-		if sprite.flip_h:
-			$Line2D.add_point(Vector2(-cos(angle),sin(angle)))
-		else:
-			$Line2D.add_point(Vector2(cos(angle),sin(angle)))
+	
+		if is_on_floor():
+			GameManager.save_ground_position(global_position)  # Store last ground position
 			
-	#if was_held and !is_held: # release the sax charge
-		
-		
-	
-	check_input()  # Attacks, direction input, wall attaching
-	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
-	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
-	move_and_animate(delta)  # Sets velocity based on input, changes sprites
-	
-	if is_on_floor():
-		GameManager.save_ground_position(global_position)  # Store last ground position
-
-		if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
-			respawn()
+			# commented the following two lines out temporarily. Sometimes sax dash was breaking the game with this
+			if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
+				respawn()
 	else:
 		# We are in a dialogue
 		play_animation("idle")
@@ -274,6 +269,7 @@ func jump(delta) -> void:
 	## Dash
 	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing:
 		#Start charging up a dash
+		print("DASH STARTING")
 		is_charging = true
 		speed = 20
 		$DashChargeTimer.start()
@@ -502,22 +498,19 @@ func _on_drum_knockback_body_entered(body):
 		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
 
 
-func _on_door_body_entered(body):
-	if get_tree().current_scene.name == "Level0":
-		GameManager.furthest_level = "res://scenes/levels/level1_1.tscn"
-		SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
-	elif get_tree().current_scene.name == "Level11":
-		GameManager.furthest_level = "res://scenes/levels/level1_2.tscn"
-		SceneTransition.change_scene("res://scenes/levels/level1_2.tscn")
-		GameManager.sax_unlocked = true
-	elif get_tree().current_scene.name == "Level12":
-		GameManager.furthest_level = "res://scenes/levels/level1_3.tscn"
-		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
-		GameManager.violin_unlocked = true
-	elif get_tree().current_scene.name == "Level13":
-		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
-		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
-
-
 func _on_reed_timer_timeout() -> void:
 	attack_animation = false # Replace with function body.
+
+func _on_shoot(pos, facing_left, angle):
+	print("allegro shoots a reed from the saxophone, gross!")
+	print(pos)
+	
+	var reed = reed_scene.instantiate()
+	var shoot_dir = -1 if facing_left else 1
+
+	#reed.position = pos
+	
+	reed.direction = shoot_dir
+	reed.angle = angle
+	get_tree().get_root().add_child(reed)
+	reed.global_position = pos + Vector2(16*shoot_dir , 0)

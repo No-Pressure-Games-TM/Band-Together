@@ -2,8 +2,6 @@ extends Node2D
 
 @onready var p: CharacterBody2D = $SceneObjects/Player
 
-const reed_scene: PackedScene = preload("res://entities/player/reed.tscn")
-
 func _ready():
 	if GameManager.drum_unlocked:
 		# Do the stuff unlocking the drum wouldve done. This just 
@@ -19,16 +17,16 @@ func _ready():
 		
 
 
-func _on_player_shoot(pos: Vector2, facing_left, angle) -> void:
-	print("allegro shoots a reed from the saxophone, gross!")
-	print(pos)
-	
-	var reed = reed_scene.instantiate()
-	var direction = -1 if facing_left else 1
-
-	#reed.position = pos
-	
-	reed.direction = direction
-	reed.angle = angle
-	$SceneObjects/Reeds.add_child(reed)
-	reed.global_position = pos + Vector2(16*direction , 0)
+#func _on_player_shoot(pos: Vector2, facing_left, angle) -> void:
+	#print("allegro shoots a reed from the saxophone, gross!")
+	#print(pos)
+	#
+	#var reed = reed_scene.instantiate()
+	#var direction = -1 if facing_left else 1
+#
+	##reed.position = pos
+	#
+	#reed.direction = direction
+	#reed.angle = angle
+	#$SceneObjects/Reeds.add_child(reed)
+	#reed.global_position = pos + Vector2(16*direction , 0)

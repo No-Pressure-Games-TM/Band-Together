@@ -23,3 +23,5 @@ func _process(delta):
 	if shake_strength > 0:
 		shake_strength = lerp(shake_strength, 0.0, shake_fade * delta)
 		offset = random_offset()
+	else:
+		offset = Vector2.ZERO  # Fix position if not shaking
