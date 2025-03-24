@@ -12,13 +12,8 @@ func _ready() -> void:
 		hitbox.body_entered.connect(_on_hitbox_body_entered)
 
 func _on_hitbox_body_entered(body: Node2D) -> void:	
-	# Don't trigger if the flower was hit by an enemy
-	if body.is_in_group("enemy"):
-		print("Flower hit by enemy - ignoring")
-		return
-	
-	# Trigger for any body, not just player
-	if not has_triggered:
+	# Trigger for non-enemies if not already triggered
+	if not has_triggered and not body.is_in_group("enemy"):
 		print("Flower triggered by: ", body.name)
 		has_triggered = true
 		hit.emit()
