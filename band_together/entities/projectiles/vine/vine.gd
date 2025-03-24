@@ -210,9 +210,8 @@ func _on_animation_finished() -> void:
 		await get_tree().create_timer(loop_delay).timeout
 		reset_vine()
 
-# Detects when player is hit by vine
+# Detects when player is hit by vine, in case we want to add damage
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Only trigger for players during collapse animation
 	if body.is_in_group("Player") and sprite.animation == "collapse" and not has_hit_player:
 		has_hit_player = true
-		player_hit.emit(damage_amount)
