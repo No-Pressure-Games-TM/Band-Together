@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dciq4l8a58eed"
-path="res://.godot/imported/saxophone attack.PNG-1fc4bd7c7b23093208ea48ac7008fc36.ctex"
+uid="uid://bpgcuo0nbsphw"
+path="res://.godot/imported/temp-saxproj.png-af13bc1493ed8ba1f089717e56aa4052.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/assets/saxophone attack.PNG"
-dest_files=["res://.godot/imported/saxophone attack.PNG-1fc4bd7c7b23093208ea48ac7008fc36.ctex"]
+source_file="res://entities/player/assets/temp-saxproj.png"
+dest_files=["res://.godot/imported/temp-saxproj.png-af13bc1493ed8ba1f089717e56aa4052.ctex"]
 
 [params]
 

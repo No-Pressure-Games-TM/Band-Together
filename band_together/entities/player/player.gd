@@ -31,6 +31,15 @@ var is_charging: bool = false
 var is_dashing: bool = false
 #endregion
 
+#region Projectile bools
+var was_held: bool = false
+var is_held: bool = false
+var angle: float = 0;
+const inc: float  = 0.025
+var dir: int = 1
+#endregion
+
+
 var direction: int = 0 
 var last_direction: int = 0
 
@@ -58,6 +67,10 @@ var attack_animation: bool = false
 
 var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
 @onready var i_frame_timer: float = default_i_frame_timer
+
+#Signal for sax attack (creation of reed projectiles)
+#https://www.youtube.com/watch?v=7ijfcTN4g0Y
+signal shoot(pos: Vector2, direction: int, angle: float)
 
 func _ready():
 	# Set the camera limits to those in the editor
@@ -99,8 +112,35 @@ func _physics_process(delta):
 		jump(delta)  # All types of jumps (wall jump, double jump, etc!)
 		move_and_animate(delta)  # Sets velocity based on input, changes sprites
 		
-		if is_on_floor():
-			GameManager.save_ground_position(global_position)  # Store last ground position
+	if !was_held and is_held: #start the sax charge
+		angle = 0
+		was_held = true
+		attack_animation = true
+		play_animation("aim")
+	if was_held and is_held: # increment the sax charge
+		$Line2D.clear_points()
+		angle += dir*inc
+		if angle> 1.57:
+			dir = -1
+		if angle < 0:
+			dir = 1
+		$Line2D.add_point(Vector2(0,0))
+		if sprite.flip_h:
+			$Line2D.add_point(Vector2(-cos(angle),sin(angle)))
+		else:
+			$Line2D.add_point(Vector2(cos(angle),sin(angle)))
+			
+	#if was_held and !is_held: # release the sax charge
+		
+		
+	
+	check_input()  # Attacks, direction input, wall attaching
+	gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
+	jump(delta)  # All types of jumps (wall jump, double jump, etc!)
+	move_and_animate(delta)  # Sets velocity based on input, changes sprites
+	
+	if is_on_floor():
+		GameManager.save_ground_position(global_position)  # Store last ground position
 
 		if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 			respawn()
@@ -151,7 +191,18 @@ func check_input() -> void:
 			
 	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
-		use_attack(GameManager.get_current_instrument())
+		if GameManager.get_current_instrument() == "sax":
+			is_held = true
+			return
+			
+		
+		
+		use_attack(GameManager.get_current_instrument(), direction)
+	
+	if Input.is_action_just_released("Decline") and GameManager.get_current_instrument() == "sax":
+		was_held =false
+		is_held = false
+		use_attack(GameManager.get_current_instrument(), direction)
 	
 	direction = sign(round(Input.get_vector("Left", "Right", "Up", "Down")).normalized().x)
 	
@@ -345,7 +396,7 @@ func pause_movement(howlong) -> void:
 	await get_tree().create_timer(howlong, false).timeout
 	moving_allowed = true
 
-func use_attack(instrument: String) -> void:
+func use_attack(instrument: String, direction: int) -> void:
 	$AttackCooldown.start(0.4)
 	weapon_cooling_down = true
 	match instrument:
@@ -362,6 +413,13 @@ func use_attack(instrument: String) -> void:
 			attack_animation = true
 		"sax":
 			# place sax functionality here
+			$SaxAttack.play()
+			shoot.emit(global_position, sprite.flip_h, angle)
+			$Line2D.clear_points()
+			play_animation("shooting")
+			attack_animation = true
+			$"Reed Timer".start()
+			
 			pass
 		"violin":
 			# place violin functionality here
@@ -442,3 +500,24 @@ func _on_drum_knockback_body_entered(body):
 	if body.get_collision_layer() == 32 and body.has_method("knockback"):
 		# Projectile is on collision layer 6 which has a value of 32
 		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
+
+
+func _on_door_body_entered(body):
+	if get_tree().current_scene.name == "Level0":
+		GameManager.furthest_level = "res://scenes/levels/level1_1.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
+	elif get_tree().current_scene.name == "Level11":
+		GameManager.furthest_level = "res://scenes/levels/level1_2.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_2.tscn")
+		GameManager.sax_unlocked = true
+	elif get_tree().current_scene.name == "Level12":
+		GameManager.furthest_level = "res://scenes/levels/level1_3.tscn"
+		SceneTransition.change_scene("res://scenes/levels/level1_3.tscn")
+		GameManager.violin_unlocked = true
+	elif get_tree().current_scene.name == "Level13":
+		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
+		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
+
+
+func _on_reed_timer_timeout() -> void:
+	attack_animation = false # Replace with function body.
