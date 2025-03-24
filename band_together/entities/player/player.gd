@@ -95,6 +95,8 @@ func _physics_process(delta):
 	if !was_held and is_held: #start the sax charge
 		angle = 0
 		was_held = true
+		attack_animation = true
+		play_animation("aim")
 	if was_held and is_held: # increment the sax charge
 		$Line2D.clear_points()
 		angle += dir*inc
@@ -270,6 +272,7 @@ func move_and_animate(delta) -> void:
 		elif is_dashing:
 			play_animation("sprint")
 		
+		
 		if sign(velocity.x) != direction:
 			# Stronger deceleration if turning around
 			velocity.x = move_toward(velocity.x, direction * speed * dash_mult, deceleration * delta * 1.5)
@@ -359,6 +362,10 @@ func use_attack(instrument: String, direction: int) -> void:
 			# place sax functionality here
 			shoot.emit(global_position, sprite.flip_h, angle)
 			$Line2D.clear_points()
+			play_animation("shooting")
+			attack_animation = true
+			$"Reed Timer".start()
+			
 			pass
 		"violin":
 			# place violin functionality here
@@ -456,3 +463,7 @@ func _on_door_body_entered(body):
 	elif get_tree().current_scene.name == "Level13":
 		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
 		SceneTransition.change_scene("res://scenes/interfaces/win/win.tscn")
+
+
+func _on_reed_timer_timeout() -> void:
+	attack_animation = false # Replace with function body.

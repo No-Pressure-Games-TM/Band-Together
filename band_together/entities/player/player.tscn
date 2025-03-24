@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=49 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://5dnnp3572v8l" path="res://entities/player/assets/allegro idle.png" id="3_qj282"]
 [ext_resource type="Texture2D" uid="uid://bvch08qk537ub" path="res://entities/player/assets/allegro walking.png" id="4_06648"]
 [ext_resource type="Texture2D" uid="uid://b83h74p34wdcs" path="res://entities/player/assets/allegro attack.png" id="4_dp6bn"]
+[ext_resource type="Texture2D" uid="uid://dciq4l8a58eed" path="res://entities/player/assets/saxophone attack.PNG" id="4_ugfvk"]
 [ext_resource type="AudioStream" uid="uid://c4efj6bob3ltw" path="res://audio/sfx/saxophone_dash.wav" id="5_be1l6"]
 [ext_resource type="AudioStream" uid="uid://duakab07jpplt" path="res://audio/sfx/saxophone_charge_up.wav" id="6_jgj6o"]
 [ext_resource type="AudioStream" uid="uid://baga0cnj2pr06" path="res://audio/sfx/double_drump.wav" id="7_6icqt"]
@@ -26,6 +27,10 @@ resource_local_to_scene = true
 shader = ExtResource("3_ipirm")
 shader_parameter/flash_color = Color(1, 0.187881, 0.138683, 1)
 shader_parameter/flash_value = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mt2l"]
+atlas = ExtResource("4_ugfvk")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2h6r"]
 atlas = ExtResource("4_dp6bn")
@@ -79,8 +84,24 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("7_48w6e")
 region = Rect2(64, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8rbq"]
+atlas = ExtResource("4_ugfvk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjy8o"]
+atlas = ExtResource("4_ugfvk")
+region = Rect2(64, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_2j7hi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mt2l")
+}],
+"loop": true,
+"name": &"aim",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r2h6r")
@@ -141,6 +162,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8rbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjy8o")
+}],
+"loop": true,
+"name": &"shooting",
 "speed": 5.0
 }, {
 "frames": [{
@@ -286,9 +318,7 @@ shape = SubResource("RectangleShape2D_kco12")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_t3cna")
 sprite_frames = SubResource("SpriteFrames_2j7hi")
-animation = &"jump"
-frame = 1
-frame_progress = 0.241301
+animation = &"shooting"
 
 [node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
@@ -340,6 +370,9 @@ one_shot = true
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 0.25
+
+[node name="Reed Timer" type="Timer" parent="."]
+one_shot = true
 
 [node name="DashExecuteTimer" type="Timer" parent="."]
 wait_time = 2.5
@@ -395,4 +428,5 @@ default_color = Color(1, 0.247059, 1, 1)
 [connection signal="timeout" from="BatonArea/BatonAtack/BatonTimer" to="." method="_on_baton_timer_timeout"]
 [connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="Reed Timer" to="." method="_on_reed_timer_timeout"]
 [connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]
