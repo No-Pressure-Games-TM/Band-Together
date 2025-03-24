@@ -360,6 +360,7 @@ func use_attack(instrument: String, direction: int) -> void:
 			attack_animation = true
 		"sax":
 			# place sax functionality here
+			$SaxAttack.play()
 			shoot.emit(global_position, sprite.flip_h, angle)
 			$Line2D.clear_points()
 			play_animation("shooting")

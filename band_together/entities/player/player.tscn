@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=50 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://wtx0lf8qg43q" path="res://scenes/levels/Beach Track! - Drums.wav" id="14_e0w5o"]
 [ext_resource type="AudioStream" uid="uid://ljtfbhmtk8mp" path="res://audio/music/Beach Track! - Sax.wav" id="15_ms2uu"]
 [ext_resource type="AudioStream" uid="uid://ceh1gap8kgld1" path="res://audio/music/Beach Track! - Strings.wav" id="16_xcjgq"]
+[ext_resource type="AudioStream" uid="uid://d1sfa5qncfetn" path="res://audio/sfx/sax attack.wav" id="19_m4wco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
 size = Vector2(8, 30)
@@ -417,6 +418,9 @@ volume_db = -80.0
 [node name="BeachString" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_xcjgq")
 volume_db = -80.0
+
+[node name="SaxAttack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_m4wco")
 
 [node name="Line2D" type="Line2D" parent="."]
 width = 15.0
