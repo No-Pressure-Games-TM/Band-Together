@@ -16,3 +16,11 @@ func _process(delta: float) -> void:
 	position.x += speedx * delta * direction * sin(angle)
 	position.y -= speedy * delta * cos(angle)
 	speedy -= 10
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("hi!")
+	if body.is_in_group("enemy") and body.has_method("take_damage"):
+		var hit_dir = sign(body.position.x - position.x)
+		body.take_damage(10, hit_dir)
+	
