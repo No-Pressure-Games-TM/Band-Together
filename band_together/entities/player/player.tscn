@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=60 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Script" path="res://entities/player/camera.gd" id="2_a8a0l"]
@@ -9,11 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://dciq4l8a58eed" path="res://entities/player/assets/saxophone attack.PNG" id="4_ugfvk"]
 [ext_resource type="AudioStream" uid="uid://c4efj6bob3ltw" path="res://audio/sfx/saxophone_dash.wav" id="5_be1l6"]
 [ext_resource type="AudioStream" uid="uid://duakab07jpplt" path="res://audio/sfx/saxophone_charge_up.wav" id="6_jgj6o"]
+[ext_resource type="Texture2D" uid="uid://cgr6iicy2glm5" path="res://entities/player/assets/drum attack.PNG" id="6_lgbf4"]
 [ext_resource type="AudioStream" uid="uid://baga0cnj2pr06" path="res://audio/sfx/double_drump.wav" id="7_6icqt"]
 [ext_resource type="Texture2D" uid="uid://bcbuffgbqgav3" path="res://entities/player/assets/allegro jumping.png" id="7_48w6e"]
 [ext_resource type="Texture2D" uid="uid://cnlkdv5kjdria" path="res://entities/player/assets/temp-smear.png" id="7_ynu3v"]
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
 [ext_resource type="Texture2D" uid="uid://c33vr716yilr7" path="res://entities/player/assets/temp-drumwave.png" id="8_8bo1n"]
+[ext_resource type="Texture2D" uid="uid://2yaqpmw67k24" path="res://entities/player/assets/allegro wall hang.PNG" id="8_bs0tv"]
+[ext_resource type="Texture2D" uid="uid://bcj4tw5o18173" path="res://entities/player/assets/saxophone attack.PNG" id="9_bvmgo"]
 [ext_resource type="AudioStream" uid="uid://lovsd56qf0we" path="res://audio/music/Beach Track! - Marimba.wav" id="13_qk1gk"]
 [ext_resource type="AudioStream" uid="uid://wtx0lf8qg43q" path="res://scenes/levels/Beach Track! - Drums.wav" id="14_e0w5o"]
 [ext_resource type="AudioStream" uid="uid://ljtfbhmtk8mp" path="res://audio/music/Beach Track! - Sax.wav" id="15_ms2uu"]
@@ -21,7 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://d1sfa5qncfetn" path="res://audio/sfx/sax attack.wav" id="19_m4wco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
-size = Vector2(8, 30)
+size = Vector2(10, 30)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t3cna"]
 resource_local_to_scene = true
@@ -57,6 +60,18 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("4_06648")
 region = Rect2(64, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfj1h"]
+atlas = ExtResource("6_lgbf4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rmkb"]
+atlas = ExtResource("6_lgbf4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irkow"]
+atlas = ExtResource("7_48w6e")
+region = Rect2(64, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_nupj2"]
 atlas = ExtResource("3_qj282")
 region = Rect2(0, 0, 32, 32)
@@ -73,16 +88,24 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("3_qj282")
 region = Rect2(96, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqux0"]
+atlas = ExtResource("7_48w6e")
+region = Rect2(32, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_1sac8"]
 atlas = ExtResource("7_48w6e")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pba7q"]
-atlas = ExtResource("7_48w6e")
+[sub_resource type="AtlasTexture" id="AtlasTexture_50vfe"]
+atlas = ExtResource("9_bvmgo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjj55"]
+atlas = ExtResource("9_bvmgo")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hyvto"]
-atlas = ExtResource("7_48w6e")
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7hxt"]
+atlas = ExtResource("9_bvmgo")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l8rbq"]
@@ -92,6 +115,18 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjy8o"]
 atlas = ExtResource("4_ugfvk")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb4yu"]
+atlas = ExtResource("9_bvmgo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uaiih"]
+atlas = ExtResource("9_bvmgo")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujqgt"]
+atlas = ExtResource("8_bs0tv")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2j7hi"]
 animations = [{
@@ -114,7 +149,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_wkska")
 }],
 "loop": true,
-"name": &"attack",
+"name": &"baton_attack",
 "speed": 7.0
 }, {
 "frames": [{
@@ -132,7 +167,26 @@ animations = [{
 }],
 "loop": true,
 "name": &"charge_up",
-"speed": 3.0
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfj1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rmkb")
+}],
+"loop": true,
+"name": &"drum_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irkow")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -153,16 +207,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1sac8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pba7q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hyvto")
+"texture": SubResource("AtlasTexture_mqux0")
 }],
 "loop": true,
-"name": &"jump",
+"name": &"jump_apex",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sac8")
+}],
+"loop": true,
+"name": &"jump_start",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50vfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjj55")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7hxt")
+}],
+"loop": true,
+"name": &"sax_attack",
 "speed": 5.0
 }, {
 "frames": [{
@@ -181,13 +251,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_4ltgf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2rnrl")
+"texture": SubResource("AtlasTexture_tb4yu")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pe8mo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2rnrl")
+"texture": SubResource("AtlasTexture_uaiih")
 }],
 "loop": true,
 "name": &"sprint",
@@ -209,10 +279,18 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujqgt")
+}],
+"loop": true,
+"name": &"wall_slide",
+"speed": 5.0
 }]
 
 [sub_resource type="Animation" id="Animation_qrclp"]
-length = 0.001
+length = 0.002
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -366,7 +444,7 @@ wait_time = 0.25
 one_shot = true
 
 [node name="DashChargeTimer" type="Timer" parent="."]
-wait_time = 1.65
+wait_time = 0.8
 one_shot = true
 
 [node name="AttackCooldown" type="Timer" parent="."]
@@ -376,7 +454,7 @@ wait_time = 0.25
 one_shot = true
 
 [node name="DashExecuteTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 1.2
 one_shot = true
 
 [node name="CritText" type="Label" parent="."]

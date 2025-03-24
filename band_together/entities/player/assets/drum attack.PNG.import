@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxj4ptrqs1e3o"
-path="res://.godot/imported/Rock3_Run (22x18).png-41527b6c50076faefe99ce38dbdc0506.ctex"
+uid="uid://cgr6iicy2glm5"
+path="res://.godot/imported/drum attack.PNG-be66c556ca1fdedde189db4a0312e2cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/enemies/rocks/assets/Rock3_Run (22x18).png"
-dest_files=["res://.godot/imported/Rock3_Run (22x18).png-41527b6c50076faefe99ce38dbdc0506.ctex"]
+source_file="res://entities/player/assets/drum attack.PNG"
+dest_files=["res://.godot/imported/drum attack.PNG-be66c556ca1fdedde189db4a0312e2cf.ctex"]
 
 [params]
 

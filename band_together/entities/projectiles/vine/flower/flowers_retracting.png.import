@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsvbgb4atk4rr"
-path="res://.godot/imported/Rock2_Idle (32x28).png-8fc0e1a9737b3851389a10005c92f056.ctex"
+uid="uid://cx70c460ghfsy"
+path="res://.godot/imported/flowers_retracting.png-62a4bf1b0f33f7c972825cc5e734416c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/enemies/rocks/assets/Rock2_Idle (32x28).png"
-dest_files=["res://.godot/imported/Rock2_Idle (32x28).png-8fc0e1a9737b3851389a10005c92f056.ctex"]
+source_file="res://entities/projectiles/vine/flower/flowers_retracting.png"
+dest_files=["res://.godot/imported/flowers_retracting.png-62a4bf1b0f33f7c972825cc5e734416c.ctex"]
 
 [params]
 

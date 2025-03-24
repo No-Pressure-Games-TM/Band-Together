@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://ruixbjv2ev1d" path="res://assets/textures/beach/1 fixed.png" id="5_333s4"]
 
 [node name="BeachParallax" type="Node2D"]
-position = Vector2(0, 2)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_scale = Vector2(0.5, 0.5)
@@ -33,7 +32,7 @@ centered = false
 
 [node name="Water" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(0, -44)
-motion_scale = Vector2(1.25, 1.25)
+motion_scale = Vector2(0.7, 0.7)
 motion_mirroring = Vector2(320, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Water"]
@@ -44,6 +43,7 @@ centered = false
 
 [node name="Sand" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(0, -14)
+motion_scale = Vector2(0.9, 0.9)
 motion_mirroring = Vector2(320, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sand"]
@@ -54,6 +54,7 @@ centered = false
 
 [node name="Foam" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(0, -44)
+motion_scale = Vector2(0.9, 0.9)
 motion_mirroring = Vector2(319, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Foam"]

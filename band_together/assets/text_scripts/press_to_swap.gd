@@ -1,15 +1,15 @@
 extends RichTextLabel
 
 var is_using_controller: bool = false
-var s = "res://assets/control_icons/s.png"
+var q = "res://assets/control_icons/q.png"
 var r_gamepad = "res://assets/control_icons/r_gamepad.png"
-var a = "res://assets/control_icons/a.png"
+var e = "res://assets/control_icons/e.png"
 var l_gamepad = "res://assets/control_icons/l_gamepad.png"
 var scrup = "res://assets/control_icons/scroll_up.png"
 var scrdown = "res://assets/control_icons/scroll_down.png"
 
 func _ready():
-	update_text(is_using_controller)
+	update_text()
 
 func _input(event):
 	## Used for checking what controller player is using
@@ -17,16 +17,16 @@ func _input(event):
 		if not is_using_controller:
 			# Controller
 			is_using_controller = true
-			update_text(is_using_controller)
+			update_text()
 	elif event is InputEventKey:
 		if is_using_controller:
 			# Keyboard
 			is_using_controller = false
-			update_text(is_using_controller)
+			update_text()
 
-func update_text(is_using_controller: bool):
+func update_text():
 	clear()
 	if is_using_controller:
 		append_text("Press [img]%s[/img] [img]%s[/img] to swap\ninstruments." % [l_gamepad, r_gamepad])
 	else:
-		append_text("Press [img]%s[/img] [img]%s[/img] or [img]%s[/img] [img]%s[/img]\nto swap instruments." % [a, s, scrup, scrdown])
+		append_text("Press [img]%s[/img] [img]%s[/img] or [img]%s[/img] [img]%s[/img]\nto swap instruments." % [q, e, scrup, scrdown])

@@ -29,7 +29,7 @@ func reset() -> void:
 		process_mode = PROCESS_MODE_DISABLED
 		self.visible = false
 	else:
-		process_mode = PROCESS_MODE_ALWAYS
+		process_mode = PROCESS_MODE_INHERIT  # Changed this from ALWAYS, change back if issues
 		self.visible = true
 		if lives <= 0:
 			lives = default_lives
@@ -44,6 +44,8 @@ func _process(_delta: float) -> void:
 	
 	if (esc_pressed):
 		resume_btn.grab_focus()
+		if GameManager.in_dialogue == true:
+			Dialogic.Text.hide_textbox()
 		get_tree().paused = true
 		pause_panel.show()
 	
@@ -77,9 +79,12 @@ func _on_resume_pressed() -> void:
 	await get_tree().create_timer(0.05).timeout  # This is because player was jumping when unpausing
 	pause_panel.hide()
 	get_tree().paused = false
+	if GameManager.in_dialogue == true:
+		Dialogic.Text.show_textbox()
 
 
 func _on_main_menu_pressed() -> void:
+	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	get_tree().paused = false
 	pause_panel.hide()
 	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
@@ -95,3 +100,14 @@ func decrease_health():
 		SceneTransition.change_scene("res://scenes/interfaces/game_over/game_over.tscn")
 	else: 
 		print("Lives: ", lives)
+
+
+func _on_reset_pressed():
+	var current_scene = get_tree().current_scene
+	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
+	get_tree().paused = false
+	pause_panel.hide()
+	if current_scene.name == "Level11":
+		GameManager.drum_unlocked = false  # Reset drum unlocked state if this level
+		GameManager.current_instrument = 0  # Reset to baton
+	SceneTransition.change_scene(current_scene.scene_file_path)

@@ -2,13 +2,21 @@ extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
 var drum_unlocked: bool = true
-var sax_unlocked: bool = false
-var violin_unlocked: bool = false
+var sax_unlocked: bool = true
+var violin_unlocked: bool = true
 var current_instrument: int = 0  # Array index of instruments_list
 
 # rudimentary saving system in case players die
 var furthest_level: String = "res://scenes/levels/level_0.tscn"
 var last_ground_position: Vector2 = Vector2.ZERO
+
+# dialogic
+var in_dialogue: bool = false
+var current_dialogue: String = ""
+
+func _ready():
+	Dialogic.timeline_ended.connect(dialogic_signal_end)
+
 
 func get_current_instrument() -> String:
 	return instruments_list[current_instrument]
@@ -47,3 +55,19 @@ func save_ground_position(pos: Vector2) -> void:
 
 func get_last_ground_position() -> Vector2:
 	return last_ground_position
+	
+func start_dialogue(dialogue_name: String):
+	# Start a dialogue. Pause the rest of the game
+	in_dialogue = true
+	current_dialogue = dialogue_name
+	Dialogic.start(dialogue_name)
+
+func dialogic_signal_end():
+	# This is where we choose what happens at the end of dialogs
+	# Only need to add a case if you want something to happen at end of dialogue
+	match current_dialogue:
+		"door1":
+			furthest_level = "res://scenes/levels/level1_1.tscn"
+			SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
+	current_dialogue = ""
+	in_dialogue = false

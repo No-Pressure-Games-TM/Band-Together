@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtwps5tkl8pa4"
-path="res://.godot/imported/Rock2_Hit (32x28).png-d558da989b9ec9241304567d3cd63666.ctex"
+uid="uid://2yaqpmw67k24"
+path="res://.godot/imported/allegro wall hang.PNG-ba08f5e840a79694d9e66307acc381e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/enemies/rocks/assets/Rock2_Hit (32x28).png"
-dest_files=["res://.godot/imported/Rock2_Hit (32x28).png-d558da989b9ec9241304567d3cd63666.ctex"]
+source_file="res://entities/player/assets/allegro wall hang.PNG"
+dest_files=["res://.godot/imported/allegro wall hang.PNG-ba08f5e840a79694d9e66307acc381e4.ctex"]
 
 [params]
 

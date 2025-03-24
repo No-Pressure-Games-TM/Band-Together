@@ -1,0 +1,58 @@
+name: Daily itch.io Release
+
+on:
+  schedule:
+    # Run at 7:00 AM MDT (1:00 PM UTC)
+    - cron: '0 13 * * *'
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  export-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      # Setup Godot
+      - name: Setup Godot
+        uses: pinkeyu7/setup-godot@v1
+        with:
+          version: 4.3
+
+      # Set date for versioning
+      - name: Set Build Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      # Create directory for exports
+      - name: Create Exports Directory
+        run: mkdir -p exports
+
+      # Export the game
+      - name: Build Web Export
+        run: |
+          godot --headless --export-release "Web" ./exports/index.html
+
+      # Package the web export
+      - name: Zip Web Build
+        run: |
+          cd exports
+          zip -r web_build.zip .
+
+      # Install Butler
+      - name: Install Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip -d butler
+          chmod +x butler/butler
+          ./butler/butler -V
+
+      # Push to itch.io
+      - name: Push to itch.io
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+        run: |
+          ./butler/butler push ./exports/web_build.zip yelendrey/band-together:web-build --userversion=${{ steps.date.outputs.date }}
