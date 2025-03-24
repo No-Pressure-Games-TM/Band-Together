@@ -96,11 +96,17 @@ func _physics_process(delta):
 		angle = 0
 		was_held = true
 	if was_held and is_held: # increment the sax charge
+		$Line2D.clear_points()
 		angle += dir*inc
 		if angle> 1.57:
 			dir = -1
 		if angle < 0:
 			dir = 1
+		$Line2D.add_point(Vector2(0,0))
+		if sprite.flip_h:
+			$Line2D.add_point(Vector2(-cos(angle),sin(angle)))
+		else:
+			$Line2D.add_point(Vector2(cos(angle),sin(angle)))
 			
 	#if was_held and !is_held: # release the sax charge
 		
@@ -352,6 +358,7 @@ func use_attack(instrument: String, direction: int) -> void:
 		"sax":
 			# place sax functionality here
 			shoot.emit(global_position, sprite.flip_h, angle)
+			$Line2D.clear_points()
 			pass
 		"violin":
 			# place violin functionality here

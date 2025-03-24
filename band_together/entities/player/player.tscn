@@ -385,6 +385,10 @@ volume_db = -80.0
 stream = ExtResource("16_xcjgq")
 volume_db = -80.0
 
+[node name="Line2D" type="Line2D" parent="."]
+width = 15.0
+default_color = Color(1, 0.247059, 1, 1)
+
 [connection signal="body_entered" from="DrumKnockback" to="." method="_on_drum_knockback_body_entered"]
 [connection signal="timeout" from="DrumKnockback/DrumTimer" to="." method="_on_drum_timer_timeout"]
 [connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
