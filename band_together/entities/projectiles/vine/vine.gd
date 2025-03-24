@@ -1,69 +1,87 @@
 class_name Vine
 extends RigidBody2D
 
+#-------------------------------------------------------------------------------
+# Signals
+#-------------------------------------------------------------------------------
 signal player_hit(damage: int)
 
+#-------------------------------------------------------------------------------
+# Node References
+#-------------------------------------------------------------------------------
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var body_collision: CollisionShape2D = $CollisionShape2D
 @onready var hitbox: Area2D = $Hitbox
 @onready var hitbox_shape: CollisionShape2D = $Hitbox/CollisionShape2D
 
-var original_height: float = 0.0
-var initial_position: Vector2
-var has_hit_player: bool = false
-var has_collapsed: bool = false
-var is_looping: bool = false
-var damage_amount: int = 1
-var loop_delay: float = 3.0  # Time in seconds before resetting for next loop
-var original_body_position: Vector2
-var original_hitbox_position: Vector2
+#-------------------------------------------------------------------------------
+# Persistent Data (survives scene reloads)
+#-------------------------------------------------------------------------------
+static var true_original_height: float = 0.0  # Original height stored once for all vines
+static var dimensions_stored: bool = false    # Whether dimensions have been stored yet
 
-# Add this static variable at the class level
-static var true_original_height: float = 0.0
-static var dimensions_stored: bool = false
+#-------------------------------------------------------------------------------
+# Instance Properties
+#-------------------------------------------------------------------------------
+var original_height: float = 0.0              # This instance's copy of the height
+var initial_position: Vector2                 # Starting position
+var original_body_position: Vector2           # Original collision shape position
+var original_hitbox_position: Vector2         # Original hitbox position
+var damage_amount: int = 1                    # Damage dealt to player
+var loop_delay: float = 3.0                   # Time between collapse cycles
 
+#-------------------------------------------------------------------------------
+# State Tracking
+#-------------------------------------------------------------------------------
+var has_hit_player: bool = false              # Prevents multiple hits in one collapse
+var has_collapsed: bool = false               # Whether vine is currently collapsed
+var is_looping: bool = false                  # Whether vine should loop collapse
+
+#-------------------------------------------------------------------------------
+# Initialization
+#-------------------------------------------------------------------------------
 
 # Called when the node enters the scene tree
 func _ready() -> void:
+	# Initialize basic components
 	setup_animation()
 	connect_signals()
 	
-	# Store dimensions first
+	# Handle dimension storage and scene reload detection
 	store_original_dimensions()
 	
-	# Rest of your setup
+	# Store initial positions
 	original_body_position = body_collision.position
 	original_hitbox_position = hitbox_shape.position
 	initial_position = global_position
 	
-	# Check if this is a scene reload
+	# Handle scene reload case
 	if dimensions_stored:
-		# This isn't the first time, so reset all shapes
-		print("Scene reload detected, resetting vine shapes")
-		# Make sure our height is properly set from the stored value
+		# Reset collision shapes if this is a reload
 		if body_collision.shape is CapsuleShape2D:
 			body_collision.shape.height = original_height
 		if hitbox_shape.shape is CapsuleShape2D:
 			hitbox_shape.shape.height = original_height
+		
 		# Reset positions
 		body_collision.position = original_body_position
 		hitbox_shape.position = original_hitbox_position
 	
-	# Set initial physics state
+	# Start frozen
 	freeze = true
 
+# Store the initial capsule height for later resets
 func store_original_dimensions() -> void:
-	# Only store the first time for any vine instance
+	# First-time storage for any vine
 	if not dimensions_stored:
 		if body_collision.shape is CapsuleShape2D:
 			true_original_height = body_collision.shape.height
-			print("Stored true original height: ", true_original_height)
 			dimensions_stored = true
 	
-	# Always update the instance variable for this specific vine
+	# Always copy to this instance
 	if body_collision.shape is CapsuleShape2D:
 		original_height = true_original_height
-		print("Set this vine's original_height to: ", original_height)
+
 # Set up initial animation state
 func setup_animation() -> void:
 	sprite.animation = "idle"
@@ -74,6 +92,10 @@ func connect_signals() -> void:
 	sprite.frame_changed.connect(_on_frame_changed)
 	sprite.animation_finished.connect(_on_animation_finished)
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
+
+#-------------------------------------------------------------------------------
+# Public API
+#-------------------------------------------------------------------------------
 
 # Trigger the vine to collapse once
 func trigger_collapse() -> void:
@@ -88,6 +110,14 @@ func trigger_collapse_loop() -> void:
 	is_looping = true
 	start_collapse()
 
+# Stop the vine from looping
+func stop_loop() -> void:
+	is_looping = false
+
+#-------------------------------------------------------------------------------
+# Internal Collapse Logic
+#-------------------------------------------------------------------------------
+
 # Start the actual collapse animation and physics
 func start_collapse() -> void:
 	# Reset hit detection
@@ -100,13 +130,6 @@ func start_collapse() -> void:
 	# Enable physics
 	freeze = false
 
-# Handle animation finished
-func _on_animation_finished() -> void:
-	if sprite.animation == "collapse" and is_looping:
-		# Wait before resetting
-		await get_tree().create_timer(loop_delay).timeout
-		reset_vine()
-
 # Reset vine to initial state
 func reset_vine() -> void:
 	# Reset position and physics
@@ -118,17 +141,13 @@ func reset_vine() -> void:
 	
 	# Reset collision shapes size
 	if body_collision and body_collision.shape is CapsuleShape2D:
-		var capsule = body_collision.shape as CapsuleShape2D
-		capsule.height = original_height
-	
+		body_collision.shape.height = original_height
 	if hitbox_shape and hitbox_shape.shape is CapsuleShape2D:
-		var hitbox_capsule = hitbox_shape.shape as CapsuleShape2D
-		hitbox_capsule.height = original_height
+		hitbox_shape.shape.height = original_height
 	
-	# Reset positions to original values 
+	# Reset positions to original values
 	if body_collision:
 		body_collision.position = original_body_position
-	
 	if hitbox_shape:
 		hitbox_shape.position = original_hitbox_position
 	
@@ -144,47 +163,56 @@ func reset_vine() -> void:
 	if is_looping:
 		await get_tree().create_timer(1.0).timeout
 		start_collapse()
-	
-	print("Vine reset complete")
 
-# Update collision based on progress
+#-------------------------------------------------------------------------------
+# Collision Shape Management
+#-------------------------------------------------------------------------------
+
+# Update a single collision shape based on its type
+func update_single_shape(shape: Shape2D, growth: float) -> void:
+	if shape is CapsuleShape2D:
+		shape.height = original_height * growth
+
+# Update both collision shapes based on animation progress
+func update_collision_shapes(progress: float) -> void:
+	# Calculate growth factor
+	var growth = 1.0 + (3.0 * progress)
+	
+	# Update shape sizes
+	update_single_shape(body_collision.shape, growth)
+	update_single_shape(hitbox_shape.shape, growth)
+	
+	# Adjust positions to grow downward from top
+	if body_collision.shape is CapsuleShape2D:
+		var new_height = original_height * growth
+		var height_diff = new_height - original_height
+		
+		# Keep X position the same, only adjust Y to grow downward
+		body_collision.position.y = original_body_position.y + (height_diff / 2)
+		hitbox_shape.position.y = original_hitbox_position.y + (height_diff / 2)
+
+#-------------------------------------------------------------------------------
+# Signal Handlers
+#-------------------------------------------------------------------------------
+
+# Updates collision shape when animation frame changes
 func _on_frame_changed() -> void:
 	if sprite.animation == "collapse":
 		# Calculate animation progress (0.0 to 1.0)
 		var frame_count = sprite.sprite_frames.get_frame_count("collapse")
 		var progress = float(sprite.frame) / max(1, frame_count - 1)
-		
 		update_collision_shapes(progress)
 
-# Calculate collision shape as vine grows
-func update_collision_shapes(progress: float) -> void:
-	# Calculate growth factor
-	var growth = 1.0 + (3.0 * progress)
-	
-	update_single_shape(body_collision.shape, growth)
-	update_single_shape(hitbox_shape.shape, growth)
-	
-	# We need to adjust position to grow from top
-	if body_collision.shape is CapsuleShape2D:
-		# Calculate the anchor point (assuming top of capsule)
-		var capsule = body_collision.shape as CapsuleShape2D
-		var new_height = original_height * growth
-		var height_diff = new_height - original_height
-		
-		# Adjust position to grow downward - keep X the same
-		body_collision.position.y = original_body_position.y + (height_diff / 2)
-		hitbox_shape.position.y = original_hitbox_position.y + (height_diff / 2)
-		
-# Update a single collision shape based on its type
-func update_single_shape(shape: Shape2D, growth: float) -> void:
-	shape.height = original_height * growth
+# Handles animation completion
+func _on_animation_finished() -> void:
+	if sprite.animation == "collapse" and is_looping:
+		# Wait before resetting
+		await get_tree().create_timer(loop_delay).timeout
+		reset_vine()
 
-# Handle player collision with vine
+# Detects when player is hit by vine
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	# If we want to damage the player when they hit the vine, we'd add it here!
+	# Only trigger for players during collapse animation
 	if body.is_in_group("Player") and sprite.animation == "collapse" and not has_hit_player:
 		has_hit_player = true
-		
-# Stop looping if needed
-func stop_loop() -> void:
-	is_looping = false
+		player_hit.emit(damage_amount)
