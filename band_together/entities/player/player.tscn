@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://5dnnp3572v8l" path="res://entities/player/assets/allegro idle.png" id="3_qj282"]
 [ext_resource type="Texture2D" uid="uid://bvch08qk537ub" path="res://entities/player/assets/allegro walking.png" id="4_06648"]
 [ext_resource type="Texture2D" uid="uid://b83h74p34wdcs" path="res://entities/player/assets/allegro attack.png" id="4_dp6bn"]
-[ext_resource type="Texture2D" uid="uid://dciq4l8a58eed" path="res://entities/player/assets/saxophone attack.PNG" id="4_ugfvk"]
 [ext_resource type="AudioStream" uid="uid://c4efj6bob3ltw" path="res://audio/sfx/saxophone_dash.wav" id="5_be1l6"]
 [ext_resource type="AudioStream" uid="uid://duakab07jpplt" path="res://audio/sfx/saxophone_charge_up.wav" id="6_jgj6o"]
 [ext_resource type="Texture2D" uid="uid://cgr6iicy2glm5" path="res://entities/player/assets/drum attack.PNG" id="6_lgbf4"]
@@ -16,7 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
 [ext_resource type="Texture2D" uid="uid://c33vr716yilr7" path="res://entities/player/assets/temp-drumwave.png" id="8_8bo1n"]
 [ext_resource type="Texture2D" uid="uid://2yaqpmw67k24" path="res://entities/player/assets/allegro wall hang.PNG" id="8_bs0tv"]
-[ext_resource type="Texture2D" uid="uid://bcj4tw5o18173" path="res://entities/player/assets/saxophone attack.PNG" id="9_bvmgo"]
+[ext_resource type="Texture2D" uid="uid://dciq4l8a58eed" path="res://entities/player/assets/saxophone attack.PNG" id="9_bvmgo"]
 [ext_resource type="AudioStream" uid="uid://lovsd56qf0we" path="res://audio/music/Beach Track! - Marimba.wav" id="13_qk1gk"]
 [ext_resource type="AudioStream" uid="uid://wtx0lf8qg43q" path="res://scenes/levels/Beach Track! - Drums.wav" id="14_e0w5o"]
 [ext_resource type="AudioStream" uid="uid://ljtfbhmtk8mp" path="res://audio/music/Beach Track! - Sax.wav" id="15_ms2uu"]
@@ -33,7 +32,7 @@ shader_parameter/flash_color = Color(1, 0.187881, 0.138683, 1)
 shader_parameter/flash_value = null
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8mt2l"]
-atlas = ExtResource("4_ugfvk")
+atlas = ExtResource("9_bvmgo")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2h6r"]
@@ -109,11 +108,11 @@ atlas = ExtResource("9_bvmgo")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l8rbq"]
-atlas = ExtResource("4_ugfvk")
+atlas = ExtResource("9_bvmgo")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjy8o"]
-atlas = ExtResource("4_ugfvk")
+atlas = ExtResource("9_bvmgo")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tb4yu"]
@@ -504,6 +503,7 @@ stream = ExtResource("19_m4wco")
 width = 15.0
 default_color = Color(1, 0.247059, 1, 1)
 
+[connection signal="shoot" from="." to="." method="_on_shoot"]
 [connection signal="body_entered" from="DrumKnockback" to="." method="_on_drum_knockback_body_entered"]
 [connection signal="timeout" from="DrumKnockback/DrumTimer" to="." method="_on_drum_timer_timeout"]
 [connection signal="body_entered" from="BatonArea" to="." method="_on_baton_area_body_entered"]
