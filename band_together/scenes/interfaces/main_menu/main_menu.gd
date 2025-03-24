@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 
 func _on_start_pressed() -> void:
 	SceneTransition.change_scene(GameManager.furthest_level)
-
+	
 func _on_options_pressed() -> void:
 	print("Settings pressed")
 
