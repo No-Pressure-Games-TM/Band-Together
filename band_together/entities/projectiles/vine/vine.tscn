@@ -91,6 +91,41 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_logho")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4bbk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wy7ob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elled")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvwjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t06qk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai2st")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3lei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nfv1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj6mk")
+}],
+"loop": true,
+"name": &"retract",
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yqe7a"]
@@ -112,7 +147,7 @@ script = ExtResource("1_ycjs5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q6o2t")
-animation = &"collapse"
+animation = &"retract"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, -15)

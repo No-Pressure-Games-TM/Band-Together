@@ -18,27 +18,52 @@ var loop_delay: float = 3.0  # Time in seconds before resetting for next loop
 var original_body_position: Vector2
 var original_hitbox_position: Vector2
 
+# Add this static variable at the class level
+static var true_original_height: float = 0.0
+static var dimensions_stored: bool = false
+
+
 # Called when the node enters the scene tree
 func _ready() -> void:
 	setup_animation()
 	connect_signals()
 	
-	# Store original positions and dimensions to scale the collision shape later
+	# Store dimensions first
 	store_original_dimensions()
+	
+	# Rest of your setup
 	original_body_position = body_collision.position
 	original_hitbox_position = hitbox_shape.position
-	
-	# Store initial position
 	initial_position = global_position
+	
+	# Check if this is a scene reload
+	if dimensions_stored:
+		# This isn't the first time, so reset all shapes
+		print("Scene reload detected, resetting vine shapes")
+		# Make sure our height is properly set from the stored value
+		if body_collision.shape is CapsuleShape2D:
+			body_collision.shape.height = original_height
+		if hitbox_shape.shape is CapsuleShape2D:
+			hitbox_shape.shape.height = original_height
+		# Reset positions
+		body_collision.position = original_body_position
+		hitbox_shape.position = original_hitbox_position
 	
 	# Set initial physics state
 	freeze = true
 
-# Store the original collision dimensions for scaling later
 func store_original_dimensions() -> void:
+	# Only store the first time for any vine instance
+	if not dimensions_stored:
+		if body_collision.shape is CapsuleShape2D:
+			true_original_height = body_collision.shape.height
+			print("Stored true original height: ", true_original_height)
+			dimensions_stored = true
+	
+	# Always update the instance variable for this specific vine
 	if body_collision.shape is CapsuleShape2D:
-		original_height = body_collision.shape.height
-
+		original_height = true_original_height
+		print("Set this vine's original_height to: ", original_height)
 # Set up initial animation state
 func setup_animation() -> void:
 	sprite.animation = "idle"
@@ -91,24 +116,36 @@ func reset_vine() -> void:
 	linear_velocity = Vector2.ZERO
 	angular_velocity = 0
 	
-	# Reset collision shapes
-	update_single_shape(body_collision.shape, 1.0)
-	update_single_shape(hitbox_shape.shape, 1.0)
-	body_collision.position.y = 0
-	hitbox_shape.position.y = 0
+	# Reset collision shapes size
+	if body_collision and body_collision.shape is CapsuleShape2D:
+		var capsule = body_collision.shape as CapsuleShape2D
+		capsule.height = original_height
+	
+	if hitbox_shape and hitbox_shape.shape is CapsuleShape2D:
+		var hitbox_capsule = hitbox_shape.shape as CapsuleShape2D
+		hitbox_capsule.height = original_height
+	
+	# Reset positions to original values 
+	if body_collision:
+		body_collision.position = original_body_position
+	
+	if hitbox_shape:
+		hitbox_shape.position = original_hitbox_position
 	
 	# Reset animation
 	sprite.animation = "idle"
 	sprite.play()
 	
-	# Allow collapsing again
+	# Reset state flags
 	has_collapsed = false
 	has_hit_player = false
 	
-	# Start a new collapse if looping
+	# Handle looping if needed
 	if is_looping:
 		await get_tree().create_timer(1.0).timeout
 		start_collapse()
+	
+	print("Vine reset complete")
 
 # Update collision based on progress
 func _on_frame_changed() -> void:

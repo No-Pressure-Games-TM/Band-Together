@@ -6,12 +6,9 @@ func _ready() -> void:
 	var vine = $Vine
 	var player = $Player
 	
-	# Debug
-	print("Setting up level connections")
-	
 	# Connect for one-time collapse
 	if flower and vine:
-		flower.hit.connect(vine.trigger_collapse)
+		flower.hit.connect(vine.trigger_collapse_loop)
 		# Or for repeatable:
 		# flower.hit.connect(vine.trigger_collapse_repeatable)
 	
