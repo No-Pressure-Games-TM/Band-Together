@@ -1,0 +1,125 @@
+[gd_scene load_steps=17 format=3 uid="uid://dahrap2v0kbe4"]
+
+[ext_resource type="Texture2D" uid="uid://dy3ef3pdkasol" path="res://entities/projectiles/vine/vine_retracting.png" id="1_asika"]
+[ext_resource type="Script" path="res://entities/projectiles/vine/vine.gd" id="1_ycjs5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oj6mk"]
+atlas = ExtResource("1_asika")
+region = Rect2(36, 50, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfv1d"]
+atlas = ExtResource("1_asika")
+region = Rect2(20, 50, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3lei"]
+atlas = ExtResource("1_asika")
+region = Rect2(4, 50, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai2st"]
+atlas = ExtResource("1_asika")
+region = Rect2(100, 2, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t06qk"]
+atlas = ExtResource("1_asika")
+region = Rect2(84, 2, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvwjb"]
+atlas = ExtResource("1_asika")
+region = Rect2(68, 2, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elled"]
+atlas = ExtResource("1_asika")
+region = Rect2(52, 2, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy7ob"]
+atlas = ExtResource("1_asika")
+region = Rect2(36, 2, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bbk0"]
+atlas = ExtResource("1_asika")
+region = Rect2(20, 2, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_logho"]
+atlas = ExtResource("1_asika")
+region = Rect2(4, 2, 16, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb0mi"]
+atlas = ExtResource("1_asika")
+region = Rect2(52, 50, 16, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6o2t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj6mk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nfv1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3lei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai2st")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t06qk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvwjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elled")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wy7ob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4bbk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_logho")
+}],
+"loop": false,
+"name": &"collapse",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb0mi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yqe7a"]
+radius = 2.5
+height = 10.0751
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wfcmr"]
+radius = 3.0
+height = 10.5
+
+[node name="Vine" type="RigidBody2D" groups=["Vine"]]
+collision_layer = 6
+collision_mask = 2
+gravity_scale = 0.0
+freeze = true
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_ycjs5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q6o2t")
+animation = &"collapse"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, -15)
+shape = SubResource("CapsuleShape2D_yqe7a")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-3, -15)
+shape = SubResource("CapsuleShape2D_wfcmr")
