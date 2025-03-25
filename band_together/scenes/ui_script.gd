@@ -13,6 +13,7 @@ var drum = preload("res://assets/portraits/drum.png")
 var not_allowed_scenes: Array[String] = ["GameOver", "Win", "MainMenu"]
 var default_lives: int = 3  # This allows us to add more hearts if we want!
 var lives: int
+var coins: int = 0
 
 func _ready():
 	lives = default_lives
@@ -32,6 +33,7 @@ func reset() -> void:
 		process_mode = PROCESS_MODE_INHERIT  # Changed this from ALWAYS, change back if issues
 		self.visible = true
 		if lives <= 0:
+			coins = 0  # Reset coins on death
 			lives = default_lives
 			for heart in hearts:
 				heart.show()
@@ -111,3 +113,15 @@ func _on_reset_pressed():
 		GameManager.drum_unlocked = false  # Reset drum unlocked state if this level
 		GameManager.current_instrument = 0  # Reset to baton
 	SceneTransition.change_scene(current_scene.scene_file_path)
+
+func get_coin():
+	coins += 1
+	if coins >= 50 and lives < 3:
+		# get a new life! Currently bonus hearts not implemented
+		lives += 1
+		coins -= 50  # subtract coins
+		for i in range(len(hearts)):
+			hearts[i].visible = i < lives
+		# Play a "healing" sound here!
+	$CoinCount.text = "x%s" % coins
+		

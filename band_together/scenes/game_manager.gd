@@ -2,8 +2,8 @@ extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
 var drum_unlocked: bool = true
-var sax_unlocked: bool = true
-var violin_unlocked: bool = true
+var sax_unlocked: bool = false
+var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
 
 # rudimentary saving system in case players die
@@ -17,6 +17,11 @@ var current_dialogue: String = ""
 func _ready():
 	Dialogic.timeline_ended.connect(dialogic_signal_end)
 
+func show_coins(code: String):
+	# Show all pickups with the given code
+	for coin in get_tree().get_nodes_in_group("coin"):
+		if coin.coin_code == code:
+			coin.enable()
 
 func get_current_instrument() -> String:
 	return instruments_list[current_instrument]
@@ -69,5 +74,8 @@ func dialogic_signal_end():
 		"door1":
 			furthest_level = "res://scenes/levels/level1_1.tscn"
 			SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
+		"finddrum":
+			show_coins("1")
 	current_dialogue = ""
+	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	in_dialogue = false

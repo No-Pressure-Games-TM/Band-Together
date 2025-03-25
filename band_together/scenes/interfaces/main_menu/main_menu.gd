@@ -44,4 +44,5 @@ func _on_reset_game_pressed():
 	GameManager.violin_unlocked = false
 	GameManager.current_instrument = 0  # back to baton
 	UI.lives = -1  # Reset lives
+	UI.coins = 0  # Reset coins
 	SceneTransition.change_scene(get_tree().current_scene.scene_file_path)

@@ -15,3 +15,8 @@ func _on_body_entered(body):
 		elif destination_scene != "":
 			GameManager.furthest_level = destination_scene
 			SceneTransition.change_scene(destination_scene)
+
+func disable():
+	# Disable the current door
+	$CollisionShape2D.disabled = true
+	$AnimatedSprite2D.modulate = Color(0.5, 0.5, 0.5, 0.8)  # Make it look kinda ded
