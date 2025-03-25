@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://bnpo75dm0wp2n"]
+[gd_scene load_steps=19 format=4 uid="uid://bnpo75dm0wp2n"]
 
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="1_1gg8b"]
 [ext_resource type="Script" path="res://scenes/levels/level_0.gd" id="1_h2rrh"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="10_a2864"]
 [ext_resource type="PackedScene" uid="uid://dmwgtnu46pacq" path="res://Environment/mushroom/mushroom.tscn" id="12_ukg0j"]
 [ext_resource type="PackedScene" uid="uid://cgv4mrgji2pi" path="res://Environment/mushroom/mushroom_stem.tscn" id="13_ad7x3"]
+[ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="14_1ggjq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hupb2"]
 texture = ExtResource("1_oparx")
@@ -228,6 +229,8 @@ tile_set = SubResource("TileSet_dcilm")
 [node name="Player" parent="SceneObjects" instance=ExtResource("3_wdqm4")]
 position = Vector2(-149, 144)
 left_limit = -192
+right_limit = 816
+top_limit = -432
 bottom_limit = 192
 
 [node name="Enemies" type="Node" parent="SceneObjects"]
@@ -240,7 +243,8 @@ script = ExtResource("5_m44e5")
 position = Vector2(119, 202)
 shape = SubResource("WorldBoundaryShape2D_n4tob")
 
-[node name="Door" parent="SceneObjects" instance=ExtResource("7_js6hu")]
+[node name="Door1" parent="SceneObjects" instance=ExtResource("7_js6hu")]
+z_index = -2
 position = Vector2(513, 145)
 door_dialogue = "door1"
 
@@ -350,13 +354,103 @@ position = Vector2(0, 215)
 position = Vector2(0, 246)
 
 [node name="Door2" parent="SceneObjects" instance=ExtResource("7_js6hu")]
+z_index = -2
 position = Vector2(549, -79)
 
 [node name="Door3" parent="SceneObjects" instance=ExtResource("7_js6hu")]
+z_index = -2
 position = Vector2(624, -255)
 
 [node name="Rock4" parent="SceneObjects" instance=ExtResource("4_mfn4g")]
 position = Vector2(225, -76)
 scale = Vector2(-1, 1)
+
+[node name="CoinPickup" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(-16, 88)
+coin_code = "1"
+
+[node name="CoinPickup2" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(72, 72)
+coin_code = "1"
+
+[node name="CoinPickup3" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(160, 104)
+coin_code = "1"
+
+[node name="CoinPickup4" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(392, 104)
+coin_code = "1"
+
+[node name="CoinPickup5" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(424, 72)
+coin_code = "1"
+
+[node name="CoinPickup6" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(456, 24)
+coin_code = "1"
+
+[node name="CoinPickup7" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(512, 136)
+coin_code = "2"
+
+[node name="CoinPickup8" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(632, 120)
+coin_code = "2"
+
+[node name="CoinPickup9" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(656, 56)
+coin_code = "2"
+
+[node name="CoinPickup10" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(680, 8)
+coin_code = "2"
+
+[node name="CoinPickup12" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(592, -88)
+coin_code = "2"
+
+[node name="CoinPickup13" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(696, -98)
+coin_code = "2"
+
+[node name="CoinPickup14" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(664, -71)
+coin_code = "2"
+
+[node name="CoinPickup15" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(624, -123)
+coin_code = "2"
+
+[node name="CoinPickup16" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(645, -110)
+coin_code = "2"
+
+[node name="CoinPickup17" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(657, -92)
+coin_code = "2"
+
+[node name="CoinPickup18" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(679, -84)
+coin_code = "2"
+
+[node name="CoinPickup19" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(712, -82)
+coin_code = "2"
+
+[node name="CoinPickup22" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(720, -44)
+coin_code = "2"
+
+[node name="CoinPickup20" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(720, -63)
+coin_code = "2"
+
+[node name="CoinPickup21" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(605, -110)
+coin_code = "2"
+
+[node name="CoinPickup11" parent="." instance=ExtResource("14_1ggjq")]
+position = Vector2(720, -23)
+coin_code = "2"
 
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]

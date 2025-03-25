@@ -12,9 +12,6 @@ func _ready():
 		p.camera.set_limits(p.bottom_limit, p.top_limit, 592, p.left_limit)
 		$SceneObjects/DrumPickup.queue_free()  # Remove drum from the game cuz it's picked up
 		
-		# Debug by gaven, feel free to remove
-		GameManager.sax_unlocked = true
-		
 
 
 #func _on_player_shoot(pos: Vector2, facing_left, angle) -> void:

@@ -77,9 +77,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t0rdk"]
-size = Vector2(17, 15)
+size = Vector2(15, 10)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0k27v"]
+radius = 6.0
 
 [node name="Rock" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 8
@@ -103,7 +104,7 @@ libraries = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 texture_filter = 1
-position = Vector2(-0.5, 0.5)
+position = Vector2(-0.5, 3)
 shape = SubResource("RectangleShape2D_t0rdk")
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -113,6 +114,7 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 light_mask = 5
 visibility_layer = 5
+position = Vector2(2, 3)
 shape = SubResource("CircleShape2D_0k27v")
 
 [node name="DeathTimer" type="Timer" parent="."]

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var hp: float = 14  # 1 baton hit or 2 drum hits kill
+@export var hp: float = 14  # 1 baton hit or 2 drum hits kill
 var spinning = false
 @onready var hit_flash: AnimationPlayer = $AnimatedSprite2D/HitFlash
 
@@ -35,6 +35,9 @@ func die(knockback_dir):
 	velocity = Vector2(knockback_dir * 100, -200)
 	spinning = true
 	$DeathTimer.start()
+	
+	if name == "CoinSnail":
+		GameManager.show_coins("snail")
 
 func _on_hitbox_body_entered(body):
 	if body.name == "Player":

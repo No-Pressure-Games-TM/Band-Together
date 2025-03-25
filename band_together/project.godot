@@ -105,6 +105,7 @@ folder_colors={
 [global_group]
 
 enemy="Enemies that can be hit with attacks!"
+coin="Coin pickups"
 
 [gui]
 
