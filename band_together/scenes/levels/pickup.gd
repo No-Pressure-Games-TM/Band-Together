@@ -16,7 +16,7 @@ func _ready():
 		
 func enable():
 	visible = true
-	$CollisionShape2D.disabled = false
+	$CollisionShape2D.set_deferred("disabled", false)
 
 func _process(delta):
 	time_elapsed += delta

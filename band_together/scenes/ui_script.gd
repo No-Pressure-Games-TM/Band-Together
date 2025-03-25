@@ -34,6 +34,7 @@ func reset() -> void:
 		self.visible = true
 		if lives <= 0:
 			coins = 0  # Reset coins on death
+			$CoinCount.text = "x%s" % coins
 			lives = default_lives
 			for heart in hearts:
 				heart.show()

@@ -26,7 +26,8 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
-"allegro": "res://allegro.dch"
+"allegro": "res://allegro.dch",
+"ghost": "res://ghost.dch"
 }
 directories/dtl_directory={
 "door1": "res://dialogic timelines/door1.dtl",
@@ -34,6 +35,7 @@ directories/dtl_directory={
 "finddrum": "res://dialogic timelines/finddrum.dtl",
 "findsax": "res://dialogic timelines/findsax.dtl",
 "findviolin": "res://dialogic timelines/findviolin.dtl",
+"funny": "res://dialogic timelines/funny.dtl",
 "prologue": "res://dialogic timelines/prologue.dtl"
 }
 glossary/default_case_sensitive=true
@@ -57,7 +59,7 @@ choices/reveal_by_input=false
 save/autosave_delay=60.0
 save/encryption_on_exports_only=true
 text/autopauses={}
-layout/style_list=["res://dialogic timelines/dialogic_style.tres"]
+layout/style_list=["res://dialogic timelines/dialogic_style.tres", "res://dialogic timelines/right_face.tres"]
 layout/default_style="res://dialogic timelines/dialogic_style.tres"
 variables={}
 audio/channel_defaults={

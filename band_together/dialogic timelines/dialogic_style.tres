@@ -63,7 +63,7 @@ overrides = {}
 
 [resource]
 script = ExtResource("10_oo7a0")
-name = "dialogic_style"
+name = "left_face"
 layer_list = Array[String](["10", "11", "12", "13", "14", "15", "16"])
 layer_info = {
 "": SubResource("Resource_8opiq"),

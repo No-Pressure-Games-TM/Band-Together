@@ -2,27 +2,41 @@ extends CharacterBody2D
 
 var random_weight_multiplier: float  # different coconuts fall at different speeds!
 var spawn_pos: Vector2  # The location to spawn this coconut
-var despawn_timer: float = 3.0  # despawn after 3 seconds to reduce lag
+var despawn_timer: float = 5.0  # despawn after 3 seconds to reduce lag
+var grow_time: float = 0  # Time to grow after spawning and before dropping
+var elapsed_grow_time: float = 0
+var grav_div = 2
 
 func _ready():
 	global_position = spawn_pos
 	random_weight_multiplier = randf_range(0.3, 1.4)  # Adjust as needed
+	if grow_time != 0:
+		scale = Vector2(0.1,0.1)  # tiny!
+		$Hitbox.set_collision_layer_value(5, false)  # Disable "hitbox" collision layer
+		$Hitbox.set_collision_mask_value(2, false)  # Disable colliding with player
 
 func _physics_process(delta):
-	velocity += get_gravity() * delta * random_weight_multiplier
-	move_and_slide()
-
-func _process(delta):
-	despawn_timer -= delta
-	if despawn_timer <= 0:
-		queue_free()
+	if scale != Vector2.ONE:
+		elapsed_grow_time += delta
+		var t = clampf(elapsed_grow_time/grow_time, 0.1, 1)
+		scale = lerp(Vector2.ZERO, Vector2.ONE, t)
+		if scale == Vector2.ONE:
+			$Hitbox.set_collision_layer_value(5, true)  # Enable "hitbox" collision layer
+			$Hitbox.set_collision_mask_value(2, true)  # Enable colliding with player
+	else:
+		velocity += get_gravity() * delta * random_weight_multiplier / grav_div
+		move_and_slide()
+		despawn_timer -= delta
+		if despawn_timer <= 0:
+			queue_free()
 
 func knockback(direction: Vector2):
-	velocity.x = direction.x * 500
-	velocity.y = direction.y * 500
-	$Hitbox.set_collision_layer_value(5, false)  # Remove "hitbox" collision layer
-	$Hitbox.set_collision_mask_value(2, false)  # Disable colliding with player
-	$Hitbox.set_collision_mask_value(4, true)  # Enable colliding with enemies
+	if velocity != Vector2.ZERO:
+		velocity.x = direction.x * 350
+		velocity.y = direction.y * 350
+		$Hitbox.set_collision_layer_value(5, false)  # Remove "hitbox" collision layer
+		$Hitbox.set_collision_mask_value(2, false)  # Disable colliding with player
+		$Hitbox.set_collision_mask_value(4, true)  # Enable colliding with enemies
 
 func _on_hitbox_body_entered(body):
 	if body.name == "Player":
