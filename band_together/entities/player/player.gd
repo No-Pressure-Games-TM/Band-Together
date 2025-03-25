@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var right_limit: int = 10000000        # Camera right limit (px)
 @export var top_limit: int = -10000000         # Camera top limit (px)
 @export var bottom_limit: int = 10000000        # Camera bottom limit (px)
+@export var upwards_offset: bool = false  # enable to have upwards cam offset
+@export var downwards_offset: bool = false  # enable to have downwards cam offset
 #endregion
 
 #region Physics
@@ -76,6 +78,8 @@ signal shoot(pos: Vector2, direction: int, angle: float)
 func _ready():
 	# Set the camera limits to those in the editor
 	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
+	camera.upwards_offset = upwards_offset
+	camera.downwards_offset = downwards_offset
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
 	$BeachMarimba.play()
@@ -105,7 +109,8 @@ func _physics_process(delta):
 		
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
-			
+	if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
+		respawn()	
 	if GameManager.in_dialogue == false:
 		# Added this if statement to remove control when in dialogue
 		
@@ -132,13 +137,9 @@ func _physics_process(delta):
 		jump(delta)  # All types of jumps (wall jump, double jump, etc!)
 		move_and_animate(delta)  # Sets velocity based on input, changes sprites
 		
-	
-		if is_on_floor():
+		if is_on_floor() and $HoleDetector.is_colliding() and $HoleDetector2.is_colliding():
 			GameManager.save_ground_position(global_position)  # Store last ground position
 			
-			# commented the following two lines out temporarily. Sometimes sax dash was breaking the game with this
-			if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
-				respawn()
 	else:
 		# We are in a dialogue
 		play_animation("idle")
@@ -152,6 +153,7 @@ func _process(delta):
 		pause_movement(3)  # This makes it so the player cannot walk around if they die (before game over screen)
 
 func respawn() -> void:
+	i_frame_timer = default_i_frame_timer  # I frames after falling
 	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
 	
 func adjust_volumes() -> void:
@@ -189,9 +191,6 @@ func check_input() -> void:
 		if GameManager.get_current_instrument() == "sax":
 			is_held = true
 			return
-			
-		
-		
 		use_attack(GameManager.get_current_instrument(), direction)
 	
 	if Input.is_action_just_released("Decline") and GameManager.get_current_instrument() == "sax":
@@ -367,6 +366,7 @@ func take_damage(knockback_dir=null) -> void:
 	# Direction should == -1 or 1 (direction to launch player when taking damage)
 	if i_frame_timer <= 0:
 		i_frame_timer = default_i_frame_timer
+		
 		$AnimatedSprite2D/HitFlash.play("flash")
 		UI.decrease_health()
 		camera.apply_shake(30)

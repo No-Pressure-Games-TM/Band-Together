@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=4 uid="uid://c4oiwa65qnkwo"]
 
-[ext_resource type="Script" path="res://scenes/levels/level_1_1.gd" id="1_i2g3k"]
+[ext_resource type="Script" path="res://scenes/levels/level1/level_1_1.gd" id="1_i2g3k"]
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="1_mpho6"]
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="2_rugup"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="3_ewj0v"]
@@ -244,7 +244,7 @@ rotation = -3.14159
 scale = Vector2(2, -2)
 
 [node name="Rock1" parent="SceneObjects/Enemies" instance=ExtResource("7_rpstj")]
-position = Vector2(-26, 37)
+position = Vector2(-41, 30)
 rotation = -3.14159
 scale = Vector2(1, -1)
 
@@ -565,7 +565,7 @@ position = Vector2(480, -40)
 
 [node name="Door" parent="." instance=ExtResource("13_rcw31")]
 position = Vector2(546, -351)
-destination_scene = "res://scenes/levels/level1_2.tscn"
+destination_scene = "res://scenes/levels/level1/level1_2.tscn"
 
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="SceneObjects/DrumPickup" to="SceneObjects/DrumPickup" method="_on_body_entered"]

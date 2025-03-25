@@ -72,8 +72,8 @@ func dialogic_signal_end():
 	# Only need to add a case if you want something to happen at end of dialogue
 	match current_dialogue:
 		"door1":
-			furthest_level = "res://scenes/levels/level1_1.tscn"
-			SceneTransition.change_scene("res://scenes/levels/level1_1.tscn")
+			furthest_level = "res://scenes/levels/level1/level1_1.tscn"
+			SceneTransition.change_scene("res://scenes/levels/level1/level1_1.tscn")
 		"finddrum":
 			show_coins("1")
 	current_dialogue = ""

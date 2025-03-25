@@ -421,7 +421,7 @@ collision_layer = 0
 collision_mask = 32
 
 [node name="DrumTimer" type="Timer" parent="DrumKnockback"]
-wait_time = 0.6
+wait_time = 0.3
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrumKnockback"]
@@ -502,6 +502,18 @@ stream = ExtResource("19_m4wco")
 [node name="Line2D" type="Line2D" parent="."]
 width = 15.0
 default_color = Color(1, 0.247059, 1, 1)
+
+[node name="HoleDetector" type="RayCast2D" parent="."]
+position = Vector2(1, 0)
+target_position = Vector2(0, 19)
+collision_mask = 4
+collide_with_areas = true
+
+[node name="HoleDetector2" type="RayCast2D" parent="."]
+position = Vector2(-7, 0)
+target_position = Vector2(0, 19)
+collision_mask = 4
+collide_with_areas = true
 
 [connection signal="shoot" from="." to="." method="_on_shoot"]
 [connection signal="body_entered" from="DrumKnockback" to="." method="_on_drum_knockback_body_entered"]

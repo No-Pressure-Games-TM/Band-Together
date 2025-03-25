@@ -137,6 +137,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Start Game"
 
 [node name="Settings" type="Button" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_top = NodePath("../StartGame")
