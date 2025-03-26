@@ -5,7 +5,6 @@ func _init():
     var err = ProjectSettings.load_resource_pack("res://")
     if err != OK:
         print("Failed to import project")
-        get_tree().quit(1)
-    else:
-        print("Project imported successfully")
-        get_tree().quit(0)
+        quit(1)
+    print("Project imported successfully")
+    quit(0)

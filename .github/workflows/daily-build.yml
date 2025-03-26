@@ -16,19 +16,10 @@ jobs:
         with:
           lfs: true
 
-      - name: Setup export templates
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/4.3.stable
-          wget https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
-          unzip Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/export_templates/4.3.stable
-          mv ~/.local/share/godot/export_templates/4.3.stable/templates/* ~/.local/share/godot/export_templates/4.3.stable/
-          rm Godot_v4.3-stable_export_templates.tpz
-
       - name: Import project
         run: |
           cd band_together
           mkdir -v -p .godot/imported
-          godot --headless --editor --quit
           godot --headless --script import_project.gd
 
       - name: Web Build
