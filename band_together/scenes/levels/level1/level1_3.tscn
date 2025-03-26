@@ -219,7 +219,7 @@ script = ExtResource("1_5lgh0")
 
 [node name="Door" parent="." instance=ExtResource("2_553ov")]
 position = Vector2(-1408, -206)
-destination_scene = "res://scenes/levels/level_1_end.tscn"
+destination_scene = "res://scenes/levels/level1/level_1_end.tscn"
 
 [node name="BeachParallax" parent="." instance=ExtResource("3_8pyb2")]
 position = Vector2(-382, -157)
@@ -301,16 +301,10 @@ max_spawnrate = 0.4
 min_spawnrate = 0.5
 grow_time = 0.4
 
-[node name="CoconutSpawner6" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-809, -372)
-max_spawnrate = 0.4
-moving = true
-sliderange = 300.0
-slidespeed = 10.0
-
 [node name="CoconutSpawner7" parent="." instance=ExtResource("10_gnhgq")]
 position = Vector2(-821, -388)
 max_spawnrate = 0.4
+min_spawnrate = 0.6
 moving = true
 sliderange = 300.0
 slidespeed = -20.0
@@ -318,10 +312,10 @@ slidespeed = -20.0
 [node name="CoconutSpawner8" parent="." instance=ExtResource("10_gnhgq")]
 position = Vector2(-808, -396)
 max_spawnrate = 0.4
-min_spawnrate = 0.7
+min_spawnrate = 0.6
 moving = true
 sliderange = 300.0
-slidespeed = 10.0
+slidespeed = 20.0
 
 [node name="CoconutSpawner10" parent="." instance=ExtResource("10_gnhgq")]
 position = Vector2(-1047, -323)
@@ -379,14 +373,6 @@ moving = true
 sliderange = 128.0
 slidespeed = -10.0
 
-[node name="CoconutSpawner9" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-818, -402)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 300.0
-slidespeed = -10.0
-
 [node name="Coins" type="Node" parent="."]
 
 [node name="CoinPickup" parent="Coins" instance=ExtResource("11_sk0en")]
@@ -439,9 +425,6 @@ position = Vector2(-24, -344)
 
 [node name="CoinPickup14" parent="Coins" instance=ExtResource("11_sk0en")]
 position = Vector2(-24, -360)
-
-[node name="Crab2" parent="." instance=ExtResource("7_svb3d")]
-position = Vector2(-550, -136)
 
 [node name="Rock2" parent="." instance=ExtResource("12_dkluk")]
 position = Vector2(-821, -217)

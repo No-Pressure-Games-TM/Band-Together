@@ -26,6 +26,6 @@ func _on_timer_timeout():
 	instance.spawn_pos = global_position
 	instance.grow_time = grow_time
 	if moving:
-		instance.grav_div = 8
+		instance.grav_div = 20
 	get_tree().get_root().add_child.call_deferred(instance)
 	$Timer.start(grow_time + randf_range(max_spawnrate, min_spawnrate))
