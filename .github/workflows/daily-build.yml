@@ -1,58 +1,42 @@
-name: Daily itch.io Release
-
+name: Godot Web Export and itch.io Deploy
 on:
   schedule:
-    # Run at 7:00 AM MDT (1:00 PM UTC)
-    - cron: '0 13 * * *'
-  workflow_dispatch:  # Allows manual triggering
-
+    - cron: '0 15 * * *'  # Run every day at 9:00 AM MDT (15:00 UTC)
+  workflow_dispatch:
 jobs:
-  export-and-publish:
+  export-web:
+    name: Web Export
     runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
     steps:
-      # Checkout code
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           lfs: true
-
-      # Setup Godot
-      - name: Setup Godot
-        uses: pinkeyu7/setup-godot@v1
-        with:
-          version: 4.3
-
-      # Set date for versioning
-      - name: Set Build Date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
-      # Create directory for exports
-      - name: Create Exports Directory
-        run: mkdir -p exports
-
-      # Export the game
-      - name: Build Web Export
+      - name: Setup Export Templates
         run: |
-          godot --headless --export-release "Web" ./exports/index.html
-
-      # Package the web export
-      - name: Zip Web Build
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          mv /root/.local/share/godot/export_templates/4.3.stable/* ~/.local/share/godot/export_templates/4.3.stable/
+      - name: Check Godot Version
         run: |
-          cd exports
-          zip -r web_build.zip .
-
-      # Install Butler
+          godot --version
+          echo "Godot version should match 4.3"
+      - name: Web Build
+        run: |
+          cd band_together
+          mkdir -v -p ../build/web
+          godot --headless --export-release "Web" ../build/web/index.html
+          ls -R ../build/web
       - name: Install Butler
         run: |
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip -d butler
-          chmod +x butler/butler
-          ./butler/butler -V
-
-      # Push to itch.io
+          wget -O butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          mv butler /usr/local/bin/butler
       - name: Push to itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          ./butler/butler push ./exports/web_build.zip yelendrey/band-together:web-build --userversion=${{ steps.date.outputs.date }}
+          cd band_together
+          butler push ../build/web yelendrey/band-together:web --verbose --userversion=$(date -u +"%Y-%m-%d-%H:%M:%S")
