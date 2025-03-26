@@ -16,24 +16,15 @@ jobs:
         with:
           lfs: true
 
-      - name: Set up project permissions
+      - name: Import project
         run: |
-          chmod -R 777 .
-
-      - name: Change to project directory
-        run: |
-          cd band_together
-          ls -R
+          mkdir -v -p .godot/imported
+          godot --headless --script import_project.gd
 
       - name: Web Build
         run: |
-          mkdir -v -p ../build/web
-          godot --headless --export-release "Web" ../build/web/index.html
-        working-directory: ./band_together
-
-      - name: List build files
-        run: |
-          ls -R ../build/web
+          mkdir -v -p build/web
+          godot --headless --export-release "Web" ./build/web/index.html
 
       - name: Install Butler
         run: |
@@ -46,4 +37,4 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          ./butler push ../build/web yelendrey/band-together:web --userversion=$(date -u +"%Y-%m-%d-%H:%M:%S")
+          ./butler push ./build/web yelendrey/band-together:web --userversion=$(date -u +"%Y-%m-%d-%H:%M:%S")
