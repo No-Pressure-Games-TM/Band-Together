@@ -16,15 +16,24 @@ jobs:
         with:
           lfs: true
 
+      - name: Setup export templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/4.3.stable
+          curl -L https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz --output export_templates.tpz
+          unzip export_templates.tpz -d ~/.local/share/godot/export_templates/4.3.stable
+          rm export_templates.tpz
+
       - name: Import project
         run: |
+          cd band_together
           mkdir -v -p .godot/imported
           godot --headless --script import_project.gd
 
       - name: Web Build
         run: |
-          mkdir -v -p build/web
-          godot --headless --export-release "Web" ./build/web/index.html
+          cd band_together
+          mkdir -v -p ../build/web
+          godot --headless --export-release "Web" ../build/web/index.html
 
       - name: Install Butler
         run: |
