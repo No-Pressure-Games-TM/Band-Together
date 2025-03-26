@@ -19,9 +19,9 @@ jobs:
       - name: Setup export templates
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/4.3.stable
-          curl -L https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz --output export_templates.tpz
-          unzip export_templates.tpz -d ~/.local/share/godot/export_templates/4.3.stable
-          rm export_templates.tpz
+          wget https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
+          unzip Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/export_templates/4.3.stable
+          rm Godot_v4.3-stable_export_templates.tpz
 
       - name: Import project
         run: |
@@ -37,7 +37,7 @@ jobs:
 
       - name: Install Butler
         run: |
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
           unzip butler.zip
           chmod +x butler
           ./butler -V
