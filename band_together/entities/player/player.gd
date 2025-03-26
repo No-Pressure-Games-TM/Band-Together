@@ -11,8 +11,8 @@ extends CharacterBody2D
 
 #region Physics
 @export var speed: float = 100.0               # Player's movespeed
-@export var acceleration: float = 400.0        # The rate at which speeds up from 0
-@export var deceleration: float = 600.0
+@export var acceleration: float = 800.0        # The rate at which speeds up from 0
+@export var deceleration: float = 1200.0
 @export var jump_velocity: float = -325.0      # Player's jump velocity
 @export var jump_buffer: float = 0.2            # Jump buffer
 @export var coyote_time: float = 0.2             # Coyote time
