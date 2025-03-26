@@ -145,13 +145,14 @@ func _physics_process(delta):
 		play_animation("idle")
 
 func _process(delta):
-	print("Player process function called")
-	if Input.is_action_pressed("move_right"):
-		print("Right input detected")
-	if Input.is_action_pressed("move_left"):
-		print("Left input detected")
-	if Input.is_action_pressed("jump"):
-		print("Jump input detected")
+	print("Player position:", global_position)
+	print("Input actions:")
+	print("  move_right:", Input.is_action_pressed("move_right"))
+	print("  move_left:", Input.is_action_pressed("move_left"))
+	print("  jump:", Input.is_action_pressed("jump"))
+	print("  ui_right:", Input.is_action_pressed("ui_right"))
+	print("  ui_left:", Input.is_action_pressed("ui_left"))
+	
 	if i_frame_timer > 0:
 		# Decrease i-frame timer every frame, preventing underflow
 		i_frame_timer -= delta
