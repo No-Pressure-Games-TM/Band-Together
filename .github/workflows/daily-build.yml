@@ -1,46 +1,44 @@
-name: Daily itch.io Release
+name: Godot Web Export and itch.io Deploy
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes to test 
-  workflow_dispatch:
+    - cron: '*/5 * * * *'  # This runs every 5 minutes
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  export-and-publish:
+  export-web:
+    name: Web Export
     runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           lfs: true
 
-      - name: Setup Godot
-        uses: pinkeyu7/setup-godot@v1
-        with:
-          version: 4.3
-
-      - name: Set Build Date
-        id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
-
-      - name: Create Exports Directory
-        run: mkdir -p exports
-
-      - name: Build Web Export
+      - name: Set up project permissions
         run: |
-          godot --headless --export-release "Web" ./exports/index.html
-        continue-on-error: true
+          chmod -R 777 .
 
-      - name: Verify Export Directory
-        run: ls -lah ./exports
-
-      - name: Zip Web Build
+      - name: Change to project directory
         run: |
-          cd exports
-          zip -r web_build.zip .
+          cd band_together
+          ls -R
+
+      - name: Web Build
+        run: |
+          mkdir -v -p ../build/web
+          godot --headless --export-release "Web" ../build/web/index.html
+        working-directory: ./band_together
+
+      - name: List build files
+        run: |
+          ls -R ../build/web
 
       - name: Install Butler
         run: |
-          curl -L -o butler https://broth.itch.ovh/butler/linux-amd64/LATEST/butler
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
           chmod +x butler
           ./butler -V
 
@@ -48,4 +46,4 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          ./butler push ./exports/web_build.zip yelendrey/band-together:web-build --userversion=${{ steps.date.outputs.date }}
+          ./butler push ../build/web yelendrey/band-together:web --userversion=$(date -u +"%Y-%m-%d-%H:%M:%S")
