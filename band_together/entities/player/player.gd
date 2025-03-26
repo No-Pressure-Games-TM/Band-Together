@@ -45,6 +45,7 @@ const reed_scene: PackedScene = preload("res://entities/player/reed.tscn")
 
 var direction: int = 0 
 var last_direction: int = 0
+var vertical_direction: float = 0
 
 # DEBUG
 var path: PackedVector2Array = []
@@ -101,19 +102,19 @@ func _physics_process(delta):
 	if pathing:
 		path.append(global_position)
 		queue_redraw()
+
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
-		
 	if GameManager.violin_unlocked:
 		$BeachString.volume_db = 0
-		
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
+
 	if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
-		respawn()	
+		respawn()
+
 	if GameManager.in_dialogue == false:
 		# Added this if statement to remove control when in dialogue
-		
 		if !was_held and is_held: #start the sax charge
 			angle = 0
 			was_held = true
@@ -121,35 +122,43 @@ func _physics_process(delta):
 			play_animation("aim")
 		if was_held and is_held: # increment the sax charge
 			$Line2D.clear_points()
-			angle += dir*inc
-			if angle> 1.57:
+			angle += dir * inc
+			if angle > 1.57:
 				dir = -1
 			if angle < 0:
 				dir = 1
 			$Line2D.add_point(Vector2(0,0))
 			if sprite.flip_h:
-				$Line2D.add_point(Vector2(-cos(angle),sin(angle)))
+				$Line2D.add_point(Vector2(-cos(angle), sin(angle)))
 			else:
-				$Line2D.add_point(Vector2(cos(angle),sin(angle)))
-		
+				$Line2D.add_point(Vector2(cos(angle), sin(angle)))
+
 		check_input()  # Attacks, direction input, wall attaching
 		gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
 		jump(delta)  # All types of jumps (wall jump, double jump, etc!)
 		move_and_animate(delta)  # Sets velocity based on input, changes sprites
-		
+
 		if is_on_floor() and $HoleDetector.is_colliding() and $HoleDetector2.is_colliding():
 			GameManager.save_ground_position(global_position)  # Store last ground position
-			
 	else:
 		# We are in a dialogue
 		play_animation("idle")
 
+	print("Debug - Physics Process:")
+	print("  Direction:", direction)
+	print("  Vertical Direction:", vertical_direction)
+	print("  Position:", global_position)
+	print("  Velocity:", velocity)
+	print("  Is on floor:", is_on_floor())
+	print("  Is on wall:", is_on_wall())
+	print("  In dialogue:", GameManager.in_dialogue)
+
 
 func _process(delta):
-	print("Player position:", global_position)
-	print("Input actions:")
-	print("  ui_right:", Input.is_action_pressed("ui_right"))
-	print("  ui_left:", Input.is_action_pressed("ui_left"))
+	#print("Player position:", global_position)
+	#print("Input actions:")
+	#print("  ui_right:", Input.is_action_pressed("ui_right"))
+	#print("  ui_left:", Input.is_action_pressed("ui_left"))
 	
 	if i_frame_timer > 0:
 		# Decrease i-frame timer every frame, preventing underflow
@@ -174,44 +183,46 @@ func adjust_volumes() -> void:
 
 
 func check_input() -> void:
-	## DELETE THE NEXT 2 IF STATEMENTS BEFORE SHIPPING GAME
-	#if Input.is_action_just_pressed("Path"):
-		#pathing = true
-		#print_debug("Pathing started")
-	#if Input.is_action_just_pressed("StopPath"):
-		#pathing = false
-		#print_debug("Pathing stopped")
-		#path.clear()
+	var input_vector = Vector2.ZERO
+	input_vector.x = Input.get_axis("Left", "Right")
+	input_vector.y = Input.get_axis("Up", "Down")
+	
+	direction = sign(input_vector.x)  # This keeps direction as -1, 0, or 1
+	vertical_direction = input_vector.y
+
+	# DELETE THE NEXT 2 IF STATEMENTS BEFORE SHIPPING GAME
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
 		adjust_volumes()
-	
 	if Input.is_action_just_pressed("CycleR"):
 		GameManager.set_current_instrument(1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
 		adjust_volumes()
-			
-	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
+
+	# When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
 		if GameManager.get_current_instrument() == "sax":
 			is_held = true
 			return
 		use_attack(GameManager.get_current_instrument(), direction)
-	
 	if Input.is_action_just_released("Decline") and GameManager.get_current_instrument() == "sax":
-		was_held =false
+		was_held = false
 		is_held = false
 		use_attack(GameManager.get_current_instrument(), direction)
-	
-	direction = sign(round(Input.get_vector("Left", "Right", "Up", "Down")).normalized().x)
-	
+
 	# Wall attaching
 	if is_on_wall_only() and direction == -get_wall_normal().x and velocity.y > -10 and !is_charging:
 		# Added velocity.y > -10 to allow player to jump when beside wall
 		attached_to_wall = true
 	elif direction == get_wall_normal().x or Input.is_action_just_pressed("Down") or !is_on_wall() or is_charging:
 		attached_to_wall = false
+
+	print("Debug - Direction:", direction)
+	print("Debug - Vertical Direction:", vertical_direction)
+	print("Debug - Input Vector:", input_vector)
+	print("Debug - Is on wall:", is_on_wall())
+	print("Debug - Attached to wall:", attached_to_wall)
 
 func gravity(delta) -> void:
 	if knocked:
@@ -290,27 +301,21 @@ func move_and_animate(delta) -> void:
 	# only walk when there is a direction input and the player is not clinging to a wall
 	smear.visible = !$BatonArea/BatonAtack.disabled
 	drum_wave.visible = !$DrumKnockback/CollisionShape2D.disabled
-	
+
 	if knocked:
 		velocity.x = 0
+		move_and_slide()
 		return  # NO MOVING WHEN KNOCKED
-	
+
 	if direction != 0:
 		last_direction = direction
 		# Flip the sprite based on direction
-		if direction > 0:
-			sprite.flip_h = false  # Face right
-			$CollisionShape2D.position.x = -3
-			$BatonArea.scale.x = 1
-			smear.scale.x = 0.2
-			smear.position.x = 29
-		elif direction < 0:
-			sprite.flip_h = true # Face left
-			$CollisionShape2D.position.x = 3
-			$BatonArea.scale.x = -1
-			smear.scale.x = -0.2
-			smear.position.x = -29
-	
+		sprite.flip_h = (direction < 0)
+		$CollisionShape2D.position.x = 3 if sprite.flip_h else -3
+		$BatonArea.scale.x = -1 if sprite.flip_h else 1
+		smear.scale.x = -0.2 if sprite.flip_h else 0.2
+		smear.position.x = -29 if sprite.flip_h else 29
+
 	if is_dashing:
 		# no need to use move_toward so they can turn on a dime
 		velocity.x = last_direction * speed * dash_mult
@@ -326,16 +331,23 @@ func move_and_animate(delta) -> void:
 			else:
 				velocity.x = move_toward(velocity.x, direction * speed, deceleration * delta * 1.5)
 		else:
-			velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta) 
+			velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
 	elif moving_allowed:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
-	
+
+	# Vertical movement (if needed)
+	if vertical_direction != 0 and moving_allowed:
+		velocity.y = move_toward(velocity.y, vertical_direction * speed, acceleration * delta)
+	elif !is_on_floor() and moving_allowed:
+		# Apply gravity if not on floor
+		velocity.y += get_gravity() * delta
+
 	if attack_animation:
 		# Attack animations need to be handled elsewhere. So I added this
 		move_and_slide()
 		return  # Don't play the other animations if we are attacking
-	
-	## Animations go here
+
+	# Animations go here
 	if attached_to_wall and GameManager.get_current_instrument() == "violin":
 		play_animation("wall_slide")
 		# The next 2 if statements are to fix a graphical bug (sliding backwards on walls)
@@ -361,8 +373,14 @@ func move_and_animate(delta) -> void:
 		else:
 			# There is no other states. Just idle
 			play_animation("idle")
-			
+
 	move_and_slide()
+
+	print("Debug - After move_and_slide:")
+	print("  Position:", global_position)
+	print("  Velocity:", velocity)
+	print("  Is on floor:", is_on_floor())
+	print("  Is on wall:", is_on_wall())
 
 func play_animation(animation_name) -> void:
 	if sprite.animation != animation_name:
