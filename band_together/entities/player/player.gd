@@ -147,9 +147,6 @@ func _physics_process(delta):
 func _process(delta):
 	print("Player position:", global_position)
 	print("Input actions:")
-	print("  move_right:", Input.is_action_pressed("move_right"))
-	print("  move_left:", Input.is_action_pressed("move_left"))
-	print("  jump:", Input.is_action_pressed("jump"))
 	print("  ui_right:", Input.is_action_pressed("ui_right"))
 	print("  ui_left:", Input.is_action_pressed("ui_left"))
 	
