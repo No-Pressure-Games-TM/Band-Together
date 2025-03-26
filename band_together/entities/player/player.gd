@@ -144,11 +144,22 @@ func _physics_process(delta):
 		# We are in a dialogue
 		play_animation("idle")
 
+func check_input() -> void:
+	direction = Input.get_axis("Left", "Right")
+	
+	if Input.is_action_just_pressed("Accept"):
+		jump_buffer_counter = jump_buffer
+
 func _process(delta):
 	print("Player position:", global_position)
 	print("Input actions:")
-	print("  ui_right:", Input.is_action_pressed("ui_right"))
-	print("  ui_left:", Input.is_action_pressed("ui_left"))
+	print("  Right:", Input.is_action_pressed("Right"))
+	print("  Left:", Input.is_action_pressed("Left"))
+	print("  Up:", Input.is_action_pressed("Up"))
+	print("  Down:", Input.is_action_pressed("Down"))
+	print("  Accept:", Input.is_action_pressed("Accept"))
+	print("Velocity:", velocity)
+	print("Is on floor:", is_on_floor())
 	
 	if i_frame_timer > 0:
 		# Decrease i-frame timer every frame, preventing underflow
