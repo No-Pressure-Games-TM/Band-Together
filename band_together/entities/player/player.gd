@@ -144,22 +144,12 @@ func _physics_process(delta):
 		# We are in a dialogue
 		play_animation("idle")
 
-func check_input() -> void:
-	direction = Input.get_axis("Left", "Right")
-	
-	if Input.is_action_just_pressed("Accept"):
-		jump_buffer_counter = jump_buffer
 
 func _process(delta):
 	print("Player position:", global_position)
 	print("Input actions:")
-	print("  Right:", Input.is_action_pressed("Right"))
-	print("  Left:", Input.is_action_pressed("Left"))
-	print("  Up:", Input.is_action_pressed("Up"))
-	print("  Down:", Input.is_action_pressed("Down"))
-	print("  Accept:", Input.is_action_pressed("Accept"))
-	print("Velocity:", velocity)
-	print("Is on floor:", is_on_floor())
+	print("  ui_right:", Input.is_action_pressed("ui_right"))
+	print("  ui_left:", Input.is_action_pressed("ui_left"))
 	
 	if i_frame_timer > 0:
 		# Decrease i-frame timer every frame, preventing underflow
@@ -184,14 +174,14 @@ func adjust_volumes() -> void:
 
 
 func check_input() -> void:
-	# DELETE THE NEXT 2 IF STATEMENTS BEFORE SHIPPING GAME
-	if Input.is_action_just_pressed("Path"):
-		pathing = true
-		print_debug("Pathing started")
-	if Input.is_action_just_pressed("StopPath"):
-		pathing = false
-		print_debug("Pathing stopped")
-		path.clear()
+	## DELETE THE NEXT 2 IF STATEMENTS BEFORE SHIPPING GAME
+	#if Input.is_action_just_pressed("Path"):
+		#pathing = true
+		#print_debug("Pathing started")
+	#if Input.is_action_just_pressed("StopPath"):
+		#pathing = false
+		#print_debug("Pathing stopped")
+		#path.clear()
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
