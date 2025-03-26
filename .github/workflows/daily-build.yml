@@ -1,4 +1,4 @@
-name: Godot Web Export and Deploy
+name: Godot Web Export and itch.io Deploy
 on:
   schedule:
     - cron: '*/5 * * * *'  # This runs every 5 minutes
@@ -20,22 +20,6 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot --headless --export-release "Web" ./build/web/index.html
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: web
-          path: build/web
-
-      - name: Install rsync
-        run: |
-          apt-get update && apt-get install -y rsync
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@releases/v4
-        with:
-          branch: gh-pages
-          folder: build/web
 
       - name: Install Butler
         run: |
