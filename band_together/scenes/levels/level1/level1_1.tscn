@@ -312,10 +312,10 @@ shape = SubResource("RectangleShape2D_dgh4a")
 
 [node name="PressToDoubleJump" type="RichTextLabel" parent="SceneObjects"]
 visible = false
-offset_left = 6.0
-offset_top = -288.0
-offset_right = 184.0
-offset_bottom = -240.0
+offset_left = -34.0
+offset_top = -444.0
+offset_right = 144.0
+offset_bottom = -396.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Press O in the air
 to double jump."

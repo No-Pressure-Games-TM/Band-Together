@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/ui_script.gd" id="1_kp52i"]
 [ext_resource type="Texture2D" uid="uid://dnldkpuhl5sx6" path="res://assets/arrow-left.png" id="2_2runv"]
-[ext_resource type="Texture2D" uid="uid://ijjot86jaukj" path="res://assets/health/heart.png" id="3_sn8k0"]
+[ext_resource type="Texture2D" uid="uid://bxvgfvjhveo77" path="res://assets/health/music note heart.PNG" id="3_wxx78"]
 [ext_resource type="Texture2D" uid="uid://bqpuadd0cdidg" path="res://assets/portraits/baton.png" id="4_5fklh"]
 [ext_resource type="Texture2D" uid="uid://ciwd014dller2" path="res://entities/coins/MonedaP.png" id="5_fynjt"]
 
@@ -267,19 +267,19 @@ alignment = 2
 [node name="Heart" type="TextureRect" parent="Hearts/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("3_sn8k0")
+texture = ExtResource("3_wxx78")
 expand_mode = 2
 
 [node name="Heart2" type="TextureRect" parent="Hearts/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("3_sn8k0")
+texture = ExtResource("3_wxx78")
 expand_mode = 2
 
 [node name="Heart3" type="TextureRect" parent="Hearts/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("3_sn8k0")
+texture = ExtResource("3_wxx78")
 expand_mode = 2
 
 [node name="CurrentWeapon" type="TextureRect" parent="."]

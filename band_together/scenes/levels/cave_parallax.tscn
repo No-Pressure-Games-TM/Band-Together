@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://biul7qy05yj0l"]
+
+[ext_resource type="Texture2D" uid="uid://cvof50f0mw31q" path="res://assets/textures/cave/sky.png" id="1_myrsj"]
+[ext_resource type="Texture2D" uid="uid://5b8e8wg3iurt" path="res://assets/textures/cave/4.png" id="2_onfwo"]
+[ext_resource type="Texture2D" uid="uid://bc7fjp4mylshp" path="res://assets/textures/cave/3.png" id="3_wslm6"]
+[ext_resource type="Texture2D" uid="uid://bfqvkiii6imy6" path="res://assets/textures/cave/2.png" id="4_2uxhh"]
+[ext_resource type="Texture2D" uid="uid://b7l701hy8sk6i" path="res://assets/textures/cave/1.png" id="5_rtqyq"]
+
+[node name="CaveParallax" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_base_scale = Vector2(0.5, 0.5)
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sky"]
+texture_filter = 1
+texture = ExtResource("1_myrsj")
+centered = false
+
+[node name="4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 0)
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/4"]
+texture_filter = 1
+texture = ExtResource("2_onfwo")
+centered = false
+
+[node name="3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/3"]
+texture_filter = 1
+texture = ExtResource("3_wslm6")
+centered = false
+
+[node name="2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 0)
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/2"]
+texture_filter = 1
+texture = ExtResource("4_2uxhh")
+centered = false
+
+[node name="1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.9, 0)
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/1"]
+texture_filter = 1
+texture = ExtResource("5_rtqyq")
+centered = false
