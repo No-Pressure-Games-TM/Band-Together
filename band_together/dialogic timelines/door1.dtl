@@ -1,7 +1,8 @@
-allegro: No one's on the beach. 
+allegro: No one's on the beach.
 allegro: We must have wrecked on a deserted island...
 allegro: But if I'm here, then the band must be somewhere nearby!
 allegro: There were four of us\: me, our drummer Breve, our saxophonist Forte, and our violinist Arco.
 allegro: And then there was our leader, the Conductor.
 allegro: They've treated me so well over these past months, despite my inexperience...
 allegro: I have to go deeper into the island to find them.
+do GameManager.dialogic_signal_end()

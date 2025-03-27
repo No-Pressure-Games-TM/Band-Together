@@ -4,9 +4,11 @@
 "_translation_id": "",
 "color": Color(1, 1, 1, 1),
 "custom_info": {
+"prefix": "",
 "sound_mood_default": "",
 "sound_moods": {},
-"style": "right_face"
+"style": "right_face",
+"suffix": ""
 },
 "default_portrait": "blue portrait",
 "description": "",

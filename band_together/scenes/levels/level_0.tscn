@@ -213,6 +213,7 @@ sources/1 = SubResource("TileSetAtlasSource_3r05t")
 sources/0 = SubResource("TileSetAtlasSource_hupb2")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4tob"]
+distance = -32.0
 
 [node name="Level0" type="Node2D"]
 script = ExtResource("1_h2rrh")
@@ -240,7 +241,7 @@ collision_mask = 3
 script = ExtResource("5_m44e5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Area2D"]
-position = Vector2(119, 202)
+position = Vector2(120, 283)
 shape = SubResource("WorldBoundaryShape2D_n4tob")
 
 [node name="Door1" parent="SceneObjects" instance=ExtResource("7_js6hu")]
