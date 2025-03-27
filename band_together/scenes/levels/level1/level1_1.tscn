@@ -290,6 +290,7 @@ position = Vector2(425, -188)
 direction = 1
 
 [node name="Area2D" type="Area2D" parent="SceneObjects"]
+position = Vector2(7, 107)
 collision_mask = 3
 script = ExtResource("5_5ohx6")
 

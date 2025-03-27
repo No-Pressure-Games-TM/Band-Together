@@ -112,7 +112,7 @@ func _physics_process(delta):
 		$BeachSax.volume_db = 0
 	#if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 		#respawn()	
-	if GameManager.in_dialogue == false and not respawning:
+	if GameManager.in_dialogue == false and not respawning and not SceneTransition.transitioning:
 		# Added this if statement to remove control when in dialogue
 		if !was_held and is_held: #start the sax charge
 			angle = 0
@@ -140,10 +140,13 @@ func _physics_process(delta):
 		if is_on_floor() and $HoleDetector.is_colliding() and $HoleDetector2.is_colliding() and not respawning:
 			GameManager.save_ground_position(global_position)  # Store last ground position
 			
-	elif not respawning:
+	elif not respawning and not SceneTransition.transitioning:
 		# We are in a dialogue
+		gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
+		move_and_slide()  # Allows gravity to work
 		play_animation("idle")
-	# Else the player is respawning. No physics, no gravity, no nuthin!
+	# Else the player is respawning or transitioning scenes.
+	# No physics, no gravity, no nuthin!
 
 func _process(delta):
 	if i_frame_timer > 0:

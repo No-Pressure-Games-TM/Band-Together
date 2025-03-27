@@ -5,3 +5,4 @@ allegro: The Band was boarding a ship to sail to the Kingdom of Paladi, and then
 allegro: ...It's too warm to be Paladi, though. The ship must have gotten into a terrible wreck on the way.
 allegro: That would explain why I am on a beach.
 allegro: But where is everyone? I should go look for them.
+do GameManager.dialogic_signal_end()
