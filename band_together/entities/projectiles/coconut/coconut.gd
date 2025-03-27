@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-var random_weight_multiplier: float  # different coconuts fall at different speeds!
 var spawn_pos: Vector2  # The location to spawn this coconut
 var despawn_timer: float = 5.0  # despawn after 3 seconds to reduce lag
 var grow_time: float = 0  # Time to grow after spawning and before dropping
@@ -9,7 +8,6 @@ var grav_div = 2
 
 func _ready():
 	global_position = spawn_pos
-	random_weight_multiplier = randf_range(0.3, 1.4)  # Adjust as needed
 	if grow_time != 0:
 		scale = Vector2(0.1,0.1)  # tiny!
 		$Hitbox.set_collision_layer_value(5, false)  # Disable "hitbox" collision layer
@@ -24,7 +22,7 @@ func _physics_process(delta):
 			$Hitbox.set_collision_layer_value(5, true)  # Enable "hitbox" collision layer
 			$Hitbox.set_collision_mask_value(2, true)  # Enable colliding with player
 	else:
-		velocity += get_gravity() * delta * random_weight_multiplier / grav_div
+		velocity += get_gravity() * delta / grav_div
 		move_and_slide()
 		despawn_timer -= delta
 		if despawn_timer <= 0:

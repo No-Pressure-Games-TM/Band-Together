@@ -1,11 +1,13 @@
 # Godot 4+ specific ignores
-.godot/
-/android/
+.godot/*
+!.godot/imported/
+!.godot/exported/
+!.godot/global_script_class_cache.cfg
 
 # Godot-specific ignores
 .import/
 export.cfg
-export_credentials.cfg
+export_presets.cfg
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -15,5 +17,5 @@ export_credentials.cfg
 data_*/
 mono_crash.*.json
 
-# Dialogic
-addons/dialogic/*
+# Include all resource import files
+!*.import

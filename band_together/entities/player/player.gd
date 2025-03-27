@@ -11,8 +11,8 @@ extends CharacterBody2D
 
 #region Physics
 @export var speed: float = 100.0               # Player's movespeed
-@export var acceleration: float = 400.0        # The rate at which speeds up from 0
-@export var deceleration: float = 600.0
+@export var acceleration: float = 800.0        # The rate at which speeds up from 0
+@export var deceleration: float = 1200.0
 @export var jump_velocity: float = -325.0      # Player's jump velocity
 @export var jump_buffer: float = 0.2            # Jump buffer
 @export var coyote_time: float = 0.2             # Coyote time
@@ -70,6 +70,7 @@ var attack_animation: bool = false
 
 var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
 @onready var i_frame_timer: float = default_i_frame_timer
+var respawning: bool = false
 
 #Signal for sax attack (creation of reed projectiles)
 #https://www.youtube.com/watch?v=7ijfcTN4g0Y
@@ -109,11 +110,10 @@ func _physics_process(delta):
 		
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
-	if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
-		respawn()	
-	if GameManager.in_dialogue == false:
+	#if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
+		#respawn()	
+	if GameManager.in_dialogue == false and not respawning and not SceneTransition.transitioning:
 		# Added this if statement to remove control when in dialogue
-		
 		if !was_held and is_held: #start the sax charge
 			angle = 0
 			was_held = true
@@ -137,12 +137,16 @@ func _physics_process(delta):
 		jump(delta)  # All types of jumps (wall jump, double jump, etc!)
 		move_and_animate(delta)  # Sets velocity based on input, changes sprites
 		
-		if is_on_floor() and $HoleDetector.is_colliding() and $HoleDetector2.is_colliding():
+		if is_on_floor() and $HoleDetector.is_colliding() and $HoleDetector2.is_colliding() and not respawning:
 			GameManager.save_ground_position(global_position)  # Store last ground position
 			
-	else:
+	elif not respawning and not SceneTransition.transitioning:
 		# We are in a dialogue
+		gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
+		move_and_slide()  # Allows gravity to work
 		play_animation("idle")
+	# Else the player is respawning or transitioning scenes.
+	# No physics, no gravity, no nuthin!
 
 func _process(delta):
 	if i_frame_timer > 0:
@@ -153,8 +157,21 @@ func _process(delta):
 		pause_movement(3)  # This makes it so the player cannot walk around if they die (before game over screen)
 
 func respawn() -> void:
+	# STOP ALL MOVEMENT, INCLUDING DASHES AND WALL SLIDES
+	is_charging = false
+	is_dashing = false
+	speed = 100
+	dash_mult = 1
+	grav_div = 1
+	$DashChargeTimer.stop()
+	$DashExecuteTimer.stop()
+	attached_to_wall = false
+	respawning = true
+	await get_tree().create_timer(1).timeout  # Short delay after death
 	i_frame_timer = default_i_frame_timer  # I frames after falling
 	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
+	respawning = false
+	velocity = Vector2.ZERO
 	
 func adjust_volumes() -> void:
 	if GameManager.get_current_instrument() == "drum":
@@ -296,12 +313,16 @@ func move_and_animate(delta) -> void:
 			sprite.flip_h = false  # Face right
 			$CollisionShape2D.position.x = -3
 			$BatonArea.scale.x = 1
+			$HoleDetector.position.x = 1
+			$HoleDetector2.position.x = -7
 			smear.scale.x = 0.2
 			smear.position.x = 29
 		elif direction < 0:
 			sprite.flip_h = true # Face left
 			$CollisionShape2D.position.x = 3
 			$BatonArea.scale.x = -1
+			$HoleDetector.position.x = -1
+			$HoleDetector2.position.x = 7
 			smear.scale.x = -0.2
 			smear.position.x = -29
 	

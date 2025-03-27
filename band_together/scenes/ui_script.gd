@@ -8,6 +8,8 @@ extends Node
 #region weapon icons
 var baton = preload("res://assets/portraits/baton.png")
 var drum = preload("res://assets/portraits/drum.png")
+var sax = preload("res://assets/portraits/saxophone item.PNG")
+var violin = preload("res://assets/portraits/violin item.PNG")
 #endregion
 
 var not_allowed_scenes: Array[String] = ["GameOver", "Win", "MainMenu"]
@@ -58,9 +60,9 @@ func _process(_delta: float) -> void:
 		"drum":
 			current_weapon_display.texture = drum
 		"sax":
-			pass
+			current_weapon_display.texture = sax
 		"violin":
-			pass
+			current_weapon_display.texture = violin
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:

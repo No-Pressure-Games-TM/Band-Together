@@ -1,7 +1,7 @@
 extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
-var drum_unlocked: bool = true
+var drum_unlocked: bool = false
 var sax_unlocked: bool = false
 var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
@@ -13,9 +13,6 @@ var last_ground_position: Vector2 = Vector2.ZERO
 # dialogic
 var in_dialogue: bool = false
 var current_dialogue: String = ""
-
-func _ready():
-	Dialogic.timeline_ended.connect(dialogic_signal_end)
 
 func show_coins(code: String):
 	# Show all pickups with the given code
@@ -76,6 +73,8 @@ func dialogic_signal_end():
 			SceneTransition.change_scene("res://scenes/levels/level1/level1_1.tscn")
 		"finddrum":
 			show_coins("1")
+		"findviolin":
+			show_coins("violin")
 	current_dialogue = ""
 	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	in_dialogue = false

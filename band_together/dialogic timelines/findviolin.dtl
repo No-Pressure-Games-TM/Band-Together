@@ -6,3 +6,4 @@ breve: There's only one way to find out.
 forte: She must be further into this cave!
 forte: It’s pretty dark in here, Allegro, so be careful! Don’t get stabbed by a stalactite, okay?
 allegro: I’ll do my best.
+do GameManager.dialogic_signal_end()

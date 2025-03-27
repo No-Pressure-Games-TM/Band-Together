@@ -1,3 +1,4 @@
 allegro: This is where I will put a ghost cutscene!
 ghost (orange portrait): FUCK YOU I'M A GHOST XD
 ghost (blue portrait): HOLY SHIT IM FUCKING BLUE XD
+do GameManager.dialogic_signal_end()
