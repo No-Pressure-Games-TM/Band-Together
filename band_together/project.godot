@@ -26,13 +26,21 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
+"Arco": "res://dialogic timelines/Arco.dch",
 "allegro": "res://allegro.dch",
+"arco": "res://dialogic timelines/arco.dch",
+"breve": "res://dialogic timelines/breve.dch",
+"forte": "res://dialogic timelines/forte.dch",
 "ghost": "res://ghost.dch"
 }
 directories/dtl_directory={
 "door1": "res://dialogic timelines/door1.dtl",
+"ending": "res://dialogic timelines/ending.dtl",
+"findarco": "res://dialogic timelines/findarco.dtl",
 "findbaton": "res://dialogic timelines/findbaton.dtl",
+"findbreve": "res://dialogic timelines/findbreve.dtl",
 "finddrum": "res://dialogic timelines/finddrum.dtl",
+"findforte": "res://dialogic timelines/findforte.dtl",
 "findsax": "res://dialogic timelines/findsax.dtl",
 "findviolin": "res://dialogic timelines/findviolin.dtl",
 "funny": "res://dialogic timelines/funny.dtl",
