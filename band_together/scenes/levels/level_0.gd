@@ -6,6 +6,7 @@ func _ready():
 		$SceneObjects/Player.position = Vector2(499, -80)  # Move player
 		$SceneObjects/Door1.disable()
 		$SceneObjects/Door2.disable()
+		GameManager.show_coins("3")
 	elif GameManager.is_instrument_unlocked(1):
 		# Drum is unlocked
 		$SceneObjects/Player.position = Vector2(560, 144)  # Move player

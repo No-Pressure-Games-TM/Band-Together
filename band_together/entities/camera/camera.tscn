@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5uad3lvhkmr6"]
+
+[ext_resource type="Script" path="res://entities/camera/newcamera.gd" id="1_s5fsc"]
+
+[node name="Camera" type="Camera2D"]
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_top_margin = 0.35
+drag_bottom_margin = 0.3
+script = ExtResource("1_s5fsc")

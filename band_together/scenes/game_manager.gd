@@ -1,8 +1,8 @@
 extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
-var drum_unlocked: bool = false
-var sax_unlocked: bool = false
+var drum_unlocked: bool = true
+var sax_unlocked: bool = true
 var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
 
@@ -76,6 +76,8 @@ func dialogic_signal_end():
 			SceneTransition.change_scene("res://scenes/levels/level1/level1_1.tscn")
 		"finddrum":
 			show_coins("1")
+		"findviolin":
+			show_coins("violin")
 	current_dialogue = ""
 	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	in_dialogue = false
