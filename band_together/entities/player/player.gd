@@ -162,7 +162,7 @@ func respawn() -> void:
 	$DashExecuteTimer.stop()
 	attached_to_wall = false
 	respawning = true
-	camera.add_trauma(0.3)
+	camera.add_trauma(0.2)
 	await get_tree().create_timer(1).timeout  # Short delay after death
 	i_frame_timer = default_i_frame_timer  # I frames after falling
 	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
@@ -387,7 +387,7 @@ func take_damage(knockback_dir=null) -> void:
 		
 		$AnimatedSprite2D/HitFlash.play("flash")
 		UI.decrease_health()
-		camera.add_trauma(0.3)
+		camera.add_trauma(0.2)
 		
 		# Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
 		Engine.time_scale = 0.1
@@ -506,7 +506,7 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 			# Regular damage :(
 			body.take_damage(damage, hit_dir)
 		
-		camera.add_trauma(0.2)
+		camera.add_trauma(0.15)
 		velocity.x += -hit_dir * 10  # knock the player back a tiny bit too
 
 func _on_attack_cooldown_timeout():
@@ -552,7 +552,7 @@ func _on_violin_area_body_entered(body):
 			# Regular damage :(
 			body.take_damage(damage, hit_dir)
 		
-		camera.add_trauma(0.2)
+		camera.add_trauma(0.15)
 
 func _on_violin_or_baton_area_area_entered(area):
 	# I added this specifically to destroy stalactites lol
