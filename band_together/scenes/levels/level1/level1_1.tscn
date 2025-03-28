@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://c4oiwa65qnkwo"]
+[gd_scene load_steps=21 format=4 uid="uid://c4oiwa65qnkwo"]
 
 [ext_resource type="Script" path="res://scenes/levels/level1/level_1_1.gd" id="1_i2g3k"]
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="1_mpho6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="3_ewj0v"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="4_ipv16"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="5_5ohx6"]
+[ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="5_b632a"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="7_rpstj"]
 [ext_resource type="Script" path="res://scenes/levels/pickup.gd" id="8_2imuc"]
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="8_g87ce"]
@@ -231,10 +232,12 @@ tile_set = SubResource("TileSet_jd540")
 
 [node name="Player" parent="SceneObjects" instance=ExtResource("4_ipv16")]
 position = Vector2(-136, 143)
-left_limit = -192
-right_limit = 192
-top_limit = -624
-bottom_limit = 192
+
+[node name="Camera" parent="SceneObjects" instance=ExtResource("5_b632a")]
+limit_left = -192
+limit_top = -624
+limit_right = 192
+limit_bottom = 192
 
 [node name="Enemies" type="Node" parent="SceneObjects"]
 

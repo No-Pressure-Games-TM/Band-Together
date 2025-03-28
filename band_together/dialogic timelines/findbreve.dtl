@@ -10,18 +10,19 @@ breve: I… remember now.
 breve: I am… Breve. Drummer for the Band.
 allegro: Breve! What happened to you?
 breve: I’m… not sure. We all split up to get help, but… I must have died.
-breve: I think… Forte and Arco went further than me. 
+breve: I think… Forte and Arco went further than me.
 breve: They were trying to find help.
 allegro: No… This can’t be!
 allegro: Why did they leave you behind? Why did they leave me behind?
-breve: They were only trying to help. 
+breve: They were only trying to help.
 allegro: But now you’re dead, and they both might be too!
-breve: Calm down, Allegro. There’s no use in raising your voice now; it’ll only alert the wildlife. 
-breve: What’s done is done. You have to keep moving. 
-breve: If you can find the others, you might be able to find a way to escape this island. 
-allegro: You’re right… but I don’t want to leave you all alone here. 
+breve: Calm down, Allegro. There’s no use in raising your voice now; it’ll only alert the wildlife.
+breve: What’s done is done. You have to keep moving.
+breve: If you can find the others, you might be able to find a way to escape this island.
+allegro: You’re right… but I don’t want to leave you all alone here.
 breve: Don’t fret, Allegro. I will keep watching you, even if this spirit of mine fades away.
-breve: And while I am still here, I will help you as best I can. 
+breve: And while I am still here, I will help you as best I can.
 allegro: …
-allegro: Thank you, Breve. 
-allegro: Let’s go find the other band members. 
+allegro: Thank you, Breve.
+allegro: Let’s go find the other band members.
+do GameManager.dialogic_signal_end()

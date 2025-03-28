@@ -1,12 +1,7 @@
 extends CharacterBody2D
 
 #region Camera
-@export var left_limit: int = -10000000        # Camera left limit (px)
-@export var right_limit: int = 10000000        # Camera right limit (px)
-@export var top_limit: int = -10000000         # Camera top limit (px)
-@export var bottom_limit: int = 10000000        # Camera bottom limit (px)
-@export var upwards_offset: bool = false  # enable to have upwards cam offset
-@export var downwards_offset: bool = false  # enable to have downwards cam offset
+@onready var camera = get_parent().get_node("Camera")
 #endregion
 
 #region Physics
@@ -46,7 +41,7 @@ const reed_scene: PackedScene = preload("res://entities/player/reed.tscn")
 var direction: int = 0 
 var last_direction: int = 0
 
-# DEBUG
+# DEBUG - DELETE ME BEFORE RELEASE
 var path: PackedVector2Array = []
 var pathing: bool = false
 
@@ -65,7 +60,7 @@ var attached_to_wall: bool = false
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var smear: AnimatedSprite2D = $AnimatedSprite2D/SwordSmear
 @onready var drum_wave: Sprite2D = $AnimatedSprite2D/DrumWave
-@onready var camera: Camera2D = $Camera2D
+#@onready var camera: Camera2D = $Camera2D
 var attack_animation: bool = false
 
 var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
@@ -78,9 +73,9 @@ signal shoot(pos: Vector2, direction: int, angle: float)
 
 func _ready():
 	# Set the camera limits to those in the editor
-	camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
-	camera.upwards_offset = upwards_offset
-	camera.downwards_offset = downwards_offset
+	#camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
+	#camera.upwards_offset = upwards_offset
+	#camera.downwards_offset = downwards_offset
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
 	$BeachMarimba.play()
@@ -167,6 +162,7 @@ func respawn() -> void:
 	$DashExecuteTimer.stop()
 	attached_to_wall = false
 	respawning = true
+	camera.add_trauma(0.3)
 	await get_tree().create_timer(1).timeout  # Short delay after death
 	i_frame_timer = default_i_frame_timer  # I frames after falling
 	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
@@ -301,6 +297,7 @@ func move_and_animate(delta) -> void:
 	# only walk when there is a direction input and the player is not clinging to a wall
 	smear.visible = !$BatonArea/BatonAtack.disabled
 	drum_wave.visible = !$DrumKnockback/CollisionShape2D.disabled
+	$AnimatedSprite2D/ViolinSpike.visible = !$ViolinArea/ViolinAttackBottom.disabled
 	
 	if knocked:
 		velocity.x = 0
@@ -390,7 +387,7 @@ func take_damage(knockback_dir=null) -> void:
 		
 		$AnimatedSprite2D/HitFlash.play("flash")
 		UI.decrease_health()
-		camera.apply_shake(30)
+		camera.add_trauma(0.3)
 		
 		# Hit freeze effect https://www.youtube.com/watch?v=44YpRF5FZDc
 		Engine.time_scale = 0.1
@@ -436,11 +433,14 @@ func use_attack(instrument: String, direction: int) -> void:
 			play_animation("shooting")
 			attack_animation = true
 			$"Reed Timer".start()
-			
-			pass
 		"violin":
 			# place violin functionality here
-			pass
+			$ViolinArea/ViolinAttackTop.disabled = false
+			$ViolinArea/ViolinAttackBottom.disabled = false
+			$ViolinArea/ViolinTimer.start()
+			#play_animation("violin_attack") # uncomment when it exists
+			play_animation("baton_attack")
+			attack_animation = true
 		_:
 			print_debug("player.use_attack called with unknown instrument! How did you get here?")
 	
@@ -506,7 +506,7 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 			# Regular damage :(
 			body.take_damage(damage, hit_dir)
 		
-		camera.apply_shake(5)
+		camera.add_trauma(0.2)
 		velocity.x += -hit_dir * 10  # knock the player back a tiny bit too
 
 func _on_attack_cooldown_timeout():
@@ -517,7 +517,6 @@ func _on_drum_knockback_body_entered(body):
 	if body.get_collision_layer() == 32 and body.has_method("knockback"):
 		# Projectile is on collision layer 6 which has a value of 32
 		body.knockback(Vector2(body.position.x - position.x, body.position.y - position.y).normalized())
-
 
 func _on_reed_timer_timeout() -> void:
 	attack_animation = false # Replace with function body.
@@ -535,3 +534,27 @@ func _on_shoot(pos, facing_left, angle):
 	reed.angle = angle
 	get_tree().get_root().add_child(reed)
 	reed.global_position = pos + Vector2(16*shoot_dir , 0)
+
+
+func _on_violin_timer_timeout():
+	$ViolinArea/ViolinAttackBottom.disabled = true
+	$ViolinArea/ViolinAttackTop.disabled = true
+	attack_animation = false
+
+func _on_violin_area_body_entered(body):
+	if body.is_in_group("enemy") and body.has_method("take_damage"):
+		var hit_dir = sign(body.position.x - position.x)
+		if randf() < 0.1:
+			# Critical strike! maybe play diff noise?
+			crit_label.visible = true
+			body.take_damage(2*damage, hit_dir)
+		else:
+			# Regular damage :(
+			body.take_damage(damage, hit_dir)
+		
+		camera.add_trauma(0.2)
+
+func _on_violin_or_baton_area_area_entered(area):
+	# I added this specifically to destroy stalactites lol
+	if area.get_collision_layer() == 64:
+		area.get_parent().queue_free()

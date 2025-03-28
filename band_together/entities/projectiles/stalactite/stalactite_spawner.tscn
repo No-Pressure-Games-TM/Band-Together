@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5oa5irdgfm5c"]
+
+[ext_resource type="Texture2D" uid="uid://mrh2ecxokga8" path="res://entities/projectiles/stalactite/stalactite.PNG" id="1_ll6c2"]
+[ext_resource type="Script" path="res://entities/projectiles/stalactite/stalactite_spawner.gd" id="2_hoduq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26sin"]
+atlas = ExtResource("1_ll6c2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5r6x"]
+atlas = ExtResource("1_ll6c2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mp0sn"]
+atlas = ExtResource("1_ll6c2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yhfyu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26sin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5r6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mp0sn")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="StalactiteSpawner" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_yhfyu")
+script = ExtResource("2_hoduq")
+
+[node name="GrowNew" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="frame_changed" from="." to="." method="_on_frame_changed"]
+[connection signal="timeout" from="GrowNew" to="." method="_on_grow_new_timeout"]

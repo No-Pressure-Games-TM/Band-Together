@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b62cxv5lmoeu3"]
+
+[ext_resource type="Script" path="res://entities/projectiles/stalactite/stalactite.gd" id="1_togfr"]
+[ext_resource type="Texture2D" uid="uid://mrh2ecxokga8" path="res://entities/projectiles/stalactite/stalactite.PNG" id="2_etitj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxkpq"]
+atlas = ExtResource("2_etitj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_esbso"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxkpq")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Stalactite" type="CharacterBody2D"]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_togfr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_esbso")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 0, 9)
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

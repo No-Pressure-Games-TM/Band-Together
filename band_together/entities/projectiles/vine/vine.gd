@@ -68,7 +68,7 @@ func _ready() -> void:
 		hitbox_shape.position = original_hitbox_position
 	
 	# Start frozen
-	freeze = true
+	set_deferred("freeze", true)
 
 # Store the initial capsule height for later resets
 func store_original_dimensions() -> void:
@@ -129,13 +129,13 @@ func start_collapse() -> void:
 	sprite.play()
 	
 	# Enable physics
-	freeze = false
+	set_deferred("freeze", false)
 
 # Reset vine to initial state with retraction
 func reset_vine() -> void:
 	# Reset position and physics
 	global_position = initial_position
-	freeze = true
+	set_deferred("freeze", true)
 	gravity_scale = 0
 	linear_velocity = Vector2.ZERO
 	angular_velocity = 0
@@ -234,7 +234,7 @@ func _on_frame_changed() -> void:
 func _on_animation_finished() -> void:
 	if sprite.animation == "collapse":
 		# Freeze vine in collapsed state
-		freeze = true
+		set_deferred("freeze", true)
 		
 		# If looping, wait then reset
 		if is_looping:

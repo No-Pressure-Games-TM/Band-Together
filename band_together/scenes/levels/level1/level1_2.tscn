@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=4 uid="uid://3p6qwyqkvjao"]
+[gd_scene load_steps=18 format=4 uid="uid://3p6qwyqkvjao"]
 
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="1_5f51l"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="2_2kmip"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="3_idffw"]
+[ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="4_uswpf"]
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="4_woktj"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="5_xrwjy"]
 [ext_resource type="PackedScene" uid="uid://dmwgtnu46pacq" path="res://Environment/mushroom/mushroom.tscn" id="6_xbm83"]
@@ -226,9 +227,11 @@ tile_set = SubResource("TileSet_jd540")
 
 [node name="Player" parent="SceneObjects" instance=ExtResource("3_idffw")]
 position = Vector2(-152, 47)
-left_limit = -208
-right_limit = 1152
-bottom_limit = 176
+
+[node name="Camera" parent="SceneObjects" instance=ExtResource("4_uswpf")]
+limit_left = -208
+limit_right = 1152
+limit_bottom = 176
 
 [node name="Enemies" type="Node" parent="SceneObjects"]
 
