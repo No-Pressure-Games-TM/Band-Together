@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=4 uid="uid://b00i485c1lqvr"]
+
+[ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="1_oesnm"]
+[ext_resource type="PackedScene" uid="uid://biul7qy05yj0l" path="res://scenes/levels/cave_parallax.tscn" id="2_gk5jv"]
+[ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="2_sneah"]
+[ext_resource type="Texture2D" uid="uid://h1k6jfp0w7rn" path="res://Environment/cave tileset.png" id="3_j3tsy"]
+[ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="4_3wq06"]
+[ext_resource type="PackedScene" uid="uid://c5oa5irdgfm5c" path="res://entities/projectiles/stalactite/stalactite_spawner.tscn" id="7_rqswp"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdvyj"]
+texture = ExtResource("3_j3tsy")
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:1/next_alternative_id = 2
+5:1/0 = 0
+5:1/0/z_index = 50
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:1/0 = 0
+8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:1/0 = 0
+9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:1/0 = 0
+11:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:2/next_alternative_id = 3
+5:2/0 = 0
+5:2/0/z_index = 50
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:3/0 = 0
+8:3/0 = 0
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:5/0 = 0
+2:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:5/0 = 0
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:5/0 = 0
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:5/0 = 0
+6:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:6/0 = 0
+6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_2e5ob"]
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 0
+sources/1 = SubResource("TileSetAtlasSource_bdvyj")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3p2mr"]
+distance = 35.0
+
+[node name="Level32" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_oesnm")]
+position = Vector2(70, -50)
+
+[node name="Camera" parent="." instance=ExtResource("2_sneah")]
+position = Vector2(70, -50)
+
+[node name="CaveParallax" parent="." instance=ExtResource("2_gk5jv")]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAABAP7/AQADAAIAAAACAP7/AQADAAIAAAADAP7/AQADAAIAAAAEAP7/AQADAAIAAAAFAP7/AQADAAIAAAAGAP7/AQADAAIAAAAHAP7/AQADAAIAAAAIAP7/AQADAAIAAAAJAP7/AQADAAIAAAAKAP7/AQADAAIAAAALAP7/AQADAAMAAAAMAP7/AQADAAMAAAANAP3/AQADAAMAAAAIAPr/AQADAAMAAAA=")
+tile_set = SubResource("TileSet_2e5ob")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(6, -127)
+collision_mask = 3
+script = ExtResource("4_3wq06")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(122, 244)
+shape = SubResource("WorldBoundaryShape2D_3p2mr")
+
+[node name="StalactiteSpawner" parent="." instance=ExtResource("7_rqswp")]
+position = Vector2(136, -72)
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

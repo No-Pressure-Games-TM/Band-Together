@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=4 uid="uid://c4r83c3cy7rd4"]
+[gd_scene load_steps=17 format=4 uid="uid://c4r83c3cy7rd4"]
 
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="1_emu5x"]
 [ext_resource type="PackedScene" uid="uid://biul7qy05yj0l" path="res://scenes/levels/cave_parallax.tscn" id="2_uw0pk"]
+[ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="2_w473b"]
 [ext_resource type="Texture2D" uid="uid://h1k6jfp0w7rn" path="res://Environment/cave tileset.png" id="3_cektk"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="4_xvj5k"]
 [ext_resource type="Script" path="res://scenes/levels/pickup.gd" id="5_31np6"]
@@ -9,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bd8nsthm65gag" path="res://Environment/spikes/spike.tscn" id="7_xbsvf"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="8_m8w2n"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="9_u4x2u"]
+[ext_resource type="PackedScene" uid="uid://dahrap2v0kbe4" path="res://entities/projectiles/vine/vine.tscn" id="10_rcf6a"]
+[ext_resource type="PackedScene" uid="uid://b7iycfk7stsf1" path="res://entities/projectiles/vine/flower/flower.tscn" id="11_8p7wo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bdvyj"]
 texture = ExtResource("3_cektk")
@@ -83,11 +86,14 @@ size = Vector2(7, 16)
 [node name="Level31" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_emu5x")]
-position = Vector2(59, -29)
-left_limit = 0
-right_limit = 672
-top_limit = -400
-bottom_limit = 32
+position = Vector2(521, -129)
+
+[node name="Camera" parent="." instance=ExtResource("2_w473b")]
+position = Vector2(6, -127)
+limit_left = 0
+limit_top = -400
+limit_right = 672
+limit_bottom = 32
 
 [node name="CaveParallax" parent="." instance=ExtResource("2_uw0pk")]
 
@@ -146,7 +152,7 @@ position = Vector2(440, -184)
 position = Vector2(424, -216)
 
 [node name="Door" parent="." instance=ExtResource("8_m8w2n")]
-position = Vector2(600, -126)
+position = Vector2(809, -128)
 
 [node name="CoinPickup" parent="." instance=ExtResource("9_u4x2u")]
 position = Vector2(360, -120)
@@ -284,6 +290,12 @@ position = Vector2(360, -88)
 [node name="CoinPickup22" parent="." instance=ExtResource("9_u4x2u")]
 position = Vector2(504, -169)
 coin_code = "violin"
+
+[node name="Vine" parent="." instance=ExtResource("10_rcf6a")]
+position = Vector2(604, -135)
+
+[node name="Flower" parent="." instance=ExtResource("11_8p7wo")]
+position = Vector2(567, -122)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="ViolinPickup" to="ViolinPickup" method="_on_body_entered"]
