@@ -26,7 +26,6 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
-"Arco": "res://dialogic timelines/Arco.dch",
 "allegro": "res://allegro.dch",
 "arco": "res://dialogic timelines/arco.dch",
 "breve": "res://dialogic timelines/breve.dch",
@@ -249,6 +248,7 @@ StopPath={
 2d_physics/layer_4="Enemies"
 2d_physics/layer_5="Enemy Hitboxes"
 2d_physics/layer_6="Projectiles"
+2d_physics/layer_7="Stalactite"
 
 [rendering]
 

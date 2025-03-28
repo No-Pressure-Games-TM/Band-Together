@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3jwyfd8edea3"
-path="res://.godot/imported/spider up_down.png-dd5dbf0b82c8d2153f28de262d665ad8.ctex"
+uid="uid://dxbtremw1nnpn"
+path="res://.godot/imported/spider legs moving.png-23975bd23ea3df2fb77b144da5d738cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/enemies/spider/assets/spider up_down.png"
-dest_files=["res://.godot/imported/spider up_down.png-dd5dbf0b82c8d2153f28de262d665ad8.ctex"]
+source_file="res://entities/enemies/spider/spider legs moving.png"
+dest_files=["res://.godot/imported/spider legs moving.png-23975bd23ea3df2fb77b144da5d738cc.ctex"]
 
 [params]
 

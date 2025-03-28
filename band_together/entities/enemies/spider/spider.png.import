@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5hh3vmiv3c0o"
-path="res://.godot/imported/spider idle.png-3aaab4968dc14afebed497cd3fc495b8.ctex"
+uid="uid://bjjqjuh0jm7e8"
+path="res://.godot/imported/spider.png-54fe0eb50ba70f7e6f34ea2ef41996ad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/enemies/spider/assets/spider idle.png"
-dest_files=["res://.godot/imported/spider idle.png-3aaab4968dc14afebed497cd3fc495b8.ctex"]
+source_file="res://entities/enemies/spider/spider.png"
+dest_files=["res://.godot/imported/spider.png-54fe0eb50ba70f7e6f34ea2ef41996ad.ctex"]
 
 [params]
 

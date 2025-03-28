@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://va3v00ta5dpc"]
+
+[ext_resource type="Texture2D" uid="uid://nrmjoxkajccg" path="res://entities/enemies/spider/spider_web.png" id="1_iastk"]
+[ext_resource type="PackedScene" uid="uid://d3mn16507o0jw" path="res://entities/enemies/spider/spider.tscn" id="2_i12tc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7645s"]
+radius = 1.0
+height = 16.0
+
+[node name="SpiderWebStart" type="Node2D"]
+
+[node name="Static Base MUAHAHA" type="StaticBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Static Base MUAHAHA"]
+position = Vector2(0, 16)
+scale = Vector2(0.5, 1)
+texture = ExtResource("1_iastk")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="WebSegment" type="RigidBody2D" parent="."]
+mass = 0.1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WebSegment"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_7645s")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="WebSegment"]
+node_a = NodePath("../../Static Base MUAHAHA")
+node_b = NodePath("..")
+
+[node name="Line2D" type="Line2D" parent="WebSegment"]
+points = PackedVector2Array(0, 0, 0, 16)
+width = 1.0
+
+[node name="WebSegment2" type="RigidBody2D" parent="."]
+position = Vector2(0, 16)
+mass = 0.1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WebSegment2"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_7645s")
+
+[node name="Line2D" type="Line2D" parent="WebSegment2"]
+points = PackedVector2Array(0, 0, 0, 16)
+width = 1.0
+
+[node name="PinJoint2D" type="PinJoint2D" parent="WebSegment2"]
+node_a = NodePath("../../WebSegment")
+node_b = NodePath("..")
+
+[node name="WebSegment3" type="RigidBody2D" parent="."]
+position = Vector2(0, 32)
+mass = 0.1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WebSegment3"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_7645s")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="WebSegment3"]
+node_a = NodePath("../../WebSegment2")
+node_b = NodePath("..")
+
+[node name="Line2D" type="Line2D" parent="WebSegment3"]
+points = PackedVector2Array(0, 0, 0, 16)
+width = 1.0
+
+[node name="SpiderJoint" type="PinJoint2D" parent="."]
+position = Vector2(0, 48)
+node_a = NodePath("../WebSegment3")
+node_b = NodePath("../Spider")
+
+[node name="Spider" parent="." instance=ExtResource("2_i12tc")]
+position = Vector2(0, 55)
