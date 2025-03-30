@@ -31,7 +31,7 @@ func _on_body_entered(body):
 			get_parent().get_node("PressToDoubleJump").visible = true
 			get_parent().get_node("PressToSwap").visible = true
 			# Change camera bounds
-			body.camera.set_limits(body.bottom_limit, body.top_limit, 592, body.left_limit)
+			body.camera.limit_right = 592
 			queue_free()  # Remove drum from the game cuz it's picked up
 			GameManager.start_dialogue("finddrum")
 		

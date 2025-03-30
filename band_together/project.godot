@@ -26,6 +26,7 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
+"Arco": "res://dialogic timelines/arco.dch",
 "allegro": "res://allegro.dch",
 "arco": "res://dialogic timelines/arco.dch",
 "breve": "res://dialogic timelines/breve.dch",
@@ -42,7 +43,6 @@ directories/dtl_directory={
 "findforte": "res://dialogic timelines/findforte.dtl",
 "findsax": "res://dialogic timelines/findsax.dtl",
 "findviolin": "res://dialogic timelines/findviolin.dtl",
-"funny": "res://dialogic timelines/funny.dtl",
 "prologue": "res://dialogic timelines/prologue.dtl"
 }
 glossary/default_case_sensitive=true

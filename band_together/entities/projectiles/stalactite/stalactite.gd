@@ -3,7 +3,8 @@ extends CharacterBody2D
 var despawn_timer: float = 5.0  # despawn after 5 seconds to reduce lag
 
 func _physics_process(delta):
-	velocity += get_gravity() * delta
+	if velocity.y < 200:
+		velocity += get_gravity() * delta
 	move_and_slide()
 	despawn_timer -= delta
 	if despawn_timer <= 0:
