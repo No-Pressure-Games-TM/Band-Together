@@ -1,35 +1,45 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3mn16507o0jw"]
+[gd_scene load_steps=13 format=3 uid="uid://e6pdpjfi37yb"]
 
-[ext_resource type="Script" path="res://entities/enemies/spider/spider.gd" id="1_03a21"]
-[ext_resource type="Texture2D" uid="uid://dxbtremw1nnpn" path="res://entities/enemies/spider/spider legs moving.png" id="2_snqvm"]
-[ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="2_uowna"]
+[ext_resource type="Script" path="res://entities/enemies/bat/bat.gd" id="1_5lpxl"]
+[ext_resource type="Texture2D" uid="uid://dcmxkoduopn68" path="res://entities/enemies/bat/bat.PNG" id="1_lntw4"]
+[ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="2_w4b3t"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o5oh7"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0oen4"]
 resource_local_to_scene = true
-shader = ExtResource("2_uowna")
+shader = ExtResource("2_w4b3t")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_value = null
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ibwq"]
-atlas = ExtResource("2_snqvm")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_nd868"]
+atlas = ExtResource("1_lntw4")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uqyve"]
-atlas = ExtResource("2_snqvm")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qf1e8"]
+atlas = ExtResource("1_lntw4")
+region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ahs5x"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fixok"]
+atlas = ExtResource("1_lntw4")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c51lr"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4ibwq")
+"texture": SubResource("AtlasTexture_nd868")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uqyve")
+"texture": SubResource("AtlasTexture_qf1e8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fixok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qf1e8")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 20.0
 }]
 
 [sub_resource type="Animation" id="Animation_qrclp"]
@@ -69,29 +79,28 @@ _data = {
 "flash": SubResource("Animation_568ff")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_sf763"]
-radius = 8.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_ygfxf"]
+radius = 4.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_uiglt"]
-radius = 8.0
-
-[node name="Spider" type="RigidBody2D" groups=["enemy"]]
+[node name="Bat" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 8
-collision_mask = 4
-script = ExtResource("1_03a21")
+collision_mask = 0
+script = ExtResource("1_5lpxl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_o5oh7")
-sprite_frames = SubResource("SpriteFrames_ahs5x")
-frame_progress = 0.674574
+material = SubResource("ShaderMaterial_0oen4")
+sprite_frames = SubResource("SpriteFrames_c51lr")
+frame_progress = 0.144149
 
 [node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_armpr")
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_sf763")
+[node name="ChangeDirection" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
 
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -99,13 +108,17 @@ wait_time = 2.0
 [node name="KnockbackTimer" type="Timer" parent="."]
 wait_time = 0.2
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ygfxf")
+
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CircleShape2D_uiglt")
+shape = SubResource("CircleShape2D_ygfxf")
 
+[connection signal="timeout" from="ChangeDirection" to="." method="_on_change_direction_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
