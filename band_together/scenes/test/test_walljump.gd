@@ -25,3 +25,4 @@ func _ready() -> void:
 		# Example 3: Retraction
 		# When the flower is hit, vine_3 will retract (opposite of collapse)
 		flower.hit.connect(vine_3.trigger_retract)
+	
