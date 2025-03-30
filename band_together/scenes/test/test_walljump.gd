@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var vine: Vine
+
 func _ready() -> void:
 	# Get references
 	var flower = $Flower
@@ -7,4 +9,4 @@ func _ready() -> void:
 	
 	# Connect for collapse loop
 	if flower and vine:
-		flower.hit.connect(vine.trigger_collapse_loop)
+		flower.hit.connect(vine.trigger_collapse)

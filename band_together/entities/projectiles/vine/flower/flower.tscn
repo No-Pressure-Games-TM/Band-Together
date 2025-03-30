@@ -122,7 +122,7 @@ radius = 4.0
 height = 10.0
 
 [node name="Flower" type="StaticBody2D" groups=["Flowers"]]
-collision_layer = 4
+collision_layer = 6
 script = ExtResource("1_d2jwi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -141,3 +141,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_nmokh")
+
+[connection signal="area_shape_entered" from="Hitbox" to="." method="_on_hitbox_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_entered"]

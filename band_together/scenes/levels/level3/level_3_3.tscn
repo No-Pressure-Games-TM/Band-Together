@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://blj2twe0n8h1t"]
+[gd_scene load_steps=10 format=4 uid="uid://ksos5gk54nt"]
 
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="1_yx484"]
 [ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="2_8ttxf"]
 [ext_resource type="PackedScene" uid="uid://biul7qy05yj0l" path="res://scenes/levels/cave_parallax.tscn" id="3_e533i"]
 [ext_resource type="Texture2D" uid="uid://h1k6jfp0w7rn" path="res://Environment/cave tileset.png" id="4_7k1gm"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="5_y0pl2"]
-[ext_resource type="PackedScene" uid="uid://va3v00ta5dpc" path="res://entities/enemies/spider/spider_web_start.tscn" id="6_k1pbl"]
+[ext_resource type="PackedScene" path="res://entities/enemies/spider/spider_web_start.tscn" id="6_k1pbl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2sh26"]
 texture = ExtResource("4_7k1gm")

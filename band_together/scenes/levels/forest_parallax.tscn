@@ -14,7 +14,7 @@ position = Vector2(0, 2)
 scroll_base_scale = Vector2(0.5, 0.5)
 
 [node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, -2)
+position = Vector2(0, -1)
 motion_scale = Vector2(0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sky"]
@@ -23,7 +23,7 @@ texture = ExtResource("1_wtp8s")
 centered = false
 
 [node name="TreeBacks" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, -2)
+position = Vector2(0, -1)
 motion_scale = Vector2(0.5, 0.5)
 motion_mirroring = Vector2(320, 0)
 
@@ -33,42 +33,39 @@ texture = ExtResource("2_45nal")
 centered = false
 
 [node name="TreeFronts" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, -44)
+position = Vector2(0, -1)
 motion_scale = Vector2(1.25, 1.25)
 motion_mirroring = Vector2(320, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/TreeFronts"]
 texture_filter = 1
-position = Vector2(0, 42)
 texture = ExtResource("3_cqb8i")
 centered = false
 
 [node name="Trees" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, -14)
+position = Vector2(0, -1)
 motion_mirroring = Vector2(320, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Trees"]
 texture_filter = 1
-position = Vector2(0, 13)
 texture = ExtResource("4_bff15")
 centered = false
 
 [node name="TreeTops" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, -44)
+position = Vector2(0, -1)
 motion_mirroring = Vector2(319, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/TreeTops"]
 texture_filter = 1
-position = Vector2(0, 42)
 texture = ExtResource("5_rs6w4")
 centered = false
 
 [node name="Bushes" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, -44)
+position = Vector2(0, -1)
 motion_mirroring = Vector2(319, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Bushes"]
 texture_filter = 1
-position = Vector2(0, 42)
+position = Vector2(0, 1)
 texture = ExtResource("6_ip78d")
 centered = false

@@ -35,6 +35,14 @@ func _on_body_entered(body):
 			queue_free()  # Remove drum from the game cuz it's picked up
 			GameManager.start_dialogue("finddrum")
 		
+		elif name == "SaxPickup":
+			GameManager.sax_unlocked = true
+			GameManager.current_instrument = 2  # Force set instrument to "violin
+			#Show tutorials
+			get_parent().get_node("SaxTip").visible = true
+			queue_free()
+			#GameManager.start_dialogue("findviolin")
+		
 		elif name == "ViolinPickup":
 			GameManager.violin_unlocked = true
 			GameManager.current_instrument = 3  # Force set instrument to "violin

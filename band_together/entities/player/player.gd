@@ -105,8 +105,10 @@ func _physics_process(delta):
 		
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
+		
 	#if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 		#respawn()	
+		
 	if GameManager.in_dialogue == false and not respawning and not SceneTransition.transitioning:
 		# Added this if statement to remove control when in dialogue
 		if !was_held and is_held: #start the sax charge
