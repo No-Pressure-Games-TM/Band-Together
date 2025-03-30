@@ -36,21 +36,14 @@ var is_expanded: bool = false                 # Whether vine is in expanded stat
 # Initialization
 #-------------------------------------------------------------------------------
 func _ready() -> void:
-	store_original_dimensions()
+	initial_position = global_position
 	original_body_position = body_collision.position
 	original_hitbox_position = hitbox_shape.position
-	initial_position = global_position
-	setup_animation()  # Start with idle animation by default
-	connect_signals()
-	freeze = true
-
-func store_original_dimensions() -> void:
-	if not dimensions_stored:
-		if body_collision.shape is CapsuleShape2D:
-			true_original_height = body_collision.shape.height
-		dimensions_stored = true
 	if body_collision.shape is CapsuleShape2D:
-		original_height = true_original_height
+		original_height = body_collision.shape.height
+	setup_animation("idle")
+	connect_signals()
+	set_deferred("freeze", true)
 
 func setup_animation(animation: String = "idle") -> void:
 	sprite.animation = animation
@@ -59,15 +52,7 @@ func setup_animation(animation: String = "idle") -> void:
 	is_expanded = (animation == "expanded")
 	
 	var growth = 4.0 if animation == "expanded" else 1.0
-	
-	if body_collision.shape is CapsuleShape2D:
-		body_collision.shape.height = original_height * growth
-	if hitbox_shape.shape is CapsuleShape2D:
-		hitbox_shape.shape.height = original_height * growth
-	
-	var height_diff = (original_height * growth) - original_height
-	body_collision.position.y = original_body_position.y + (height_diff / 2)
-	hitbox_shape.position.y = original_hitbox_position.y + (height_diff / 2)
+	update_collision_shapes(growth)
 
 func connect_signals() -> void:
 	sprite.frame_changed.connect(_on_frame_changed)
@@ -77,21 +62,25 @@ func connect_signals() -> void:
 # External Methods
 #-------------------------------------------------------------------------------
 func trigger_collapse() -> void:
+	print("Vine: trigger_collapse called")
 	if not has_collapsed and not is_retracting:
 		has_collapsed = true
 		is_looping = false
 		start_collapse()
 
 func trigger_collapse_loop() -> void:
+	print("Vine: trigger_collapse_loop called")
 	if not is_retracting:
 		has_collapsed = false
 		is_looping = true
 		start_collapse()
 
 func stop_loop() -> void:
+	print("Vine: stop_loop called")
 	is_looping = false
 
 func trigger_retract() -> void:
+	print("Vine: trigger_retract called")
 	if has_collapsed and not is_retracting:
 		start_retract()
 
@@ -99,46 +88,45 @@ func trigger_retract() -> void:
 # Internal Collapse Logic
 #-------------------------------------------------------------------------------
 func start_collapse() -> void:
+	print("Vine: start_collapse called")
 	sprite.animation = "collapse"
 	sprite.play()
-	freeze = false
+	set_deferred("freeze", false)
 	is_expanded = false
+	
 
 func start_retract() -> void:
 	sprite.animation = "retract"
 	sprite.play()
-	freeze = true
+	set_deferred("freeze", true)
 	is_retracting = true
 	has_collapsed = false
 
 func reset_vine() -> void:
 	global_position = initial_position
-	freeze = true
-	gravity_scale = 0
-	linear_velocity = Vector2.ZERO
-	angular_velocity = 0
-	setup_animation("expanded")
-	is_retracting = true
-	has_collapsed = false
+	set_deferred("freeze", true)
+	set_deferred("gravity_scale", 0)
+	set_deferred("linear_velocity", Vector2.ZERO)
+	set_deferred("angular_velocity", 0)
+	setup_animation("retract")
+	is_retracting = false
+	has_collapsed = true
+	is_expanded = true
 
 func complete_reset() -> void:
 	setup_animation("idle")
 	is_retracting = false
 	is_expanded = false
+	has_collapsed = false
 	if is_looping:
+		print("Vine: Looping, waiting ", loop_delay, " seconds")
 		await get_tree().create_timer(loop_delay).timeout
 		start_collapse()
 
 #-------------------------------------------------------------------------------
 # Collision Shape Management
 #-------------------------------------------------------------------------------
-func update_collision_shapes(progress: float, grow: bool) -> void:
-	var growth
-	if grow:
-		growth = 1.0 + (3.0 * progress)  # Grow from 1x to 4x
-	else:
-		growth = 4.0 - (3.0 * progress)  # Shrink from 4x to 1x
-	
+func update_collision_shapes(growth: float) -> void:
 	if body_collision.shape is CapsuleShape2D:
 		body_collision.shape.height = original_height * growth
 	if hitbox_shape.shape is CapsuleShape2D:
@@ -153,21 +141,23 @@ func update_collision_shapes(progress: float, grow: bool) -> void:
 #-------------------------------------------------------------------------------
 func _on_frame_changed() -> void:
 	if sprite.animation == "collapse":
-		var frame_count = sprite.sprite_frames.get_frame_count("collapse")
-		var progress = float(sprite.frame) / max(1, frame_count - 1)
-		update_collision_shapes(progress, true)
+		var progress = float(sprite.frame) / max(1, sprite.sprite_frames.get_frame_count("collapse") - 1)
+		update_collision_shapes(1.0 + (3.0 * progress))
 	elif sprite.animation == "retract":
-		var frame_count = sprite.sprite_frames.get_frame_count("retract")
-		var progress = float(sprite.frame) / max(1, frame_count - 1)
-		update_collision_shapes(progress, false)
+		var progress = float(sprite.frame) / max(1, sprite.sprite_frames.get_frame_count("retract") - 1)
+		update_collision_shapes(4.0 - (3.0 * progress))
 
 func _on_animation_finished() -> void:
 	if sprite.animation == "collapse":
-		freeze = true
-		has_collapsed = true
-		is_expanded = false
+		# Freeze vine in collapsed state
+		set_deferred("freeze", true)
+		
+		# If looping, wait then reset
 		if is_looping:
+			# Wait before resetting (full cycle)
 			await get_tree().create_timer(loop_delay).timeout
 			reset_vine()
+	
 	elif sprite.animation == "retract":
+		# Only happens for looping vines that are retracting
 		complete_reset()
