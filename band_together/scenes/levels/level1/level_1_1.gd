@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var p: CharacterBody2D = $SceneObjects/Player
+@onready var cam = $SceneObjects/Camera
 
 func _ready():
 	if GameManager.drum_unlocked:
@@ -9,7 +9,7 @@ func _ready():
 		$SceneObjects/PressToDoubleJump.visible = true
 		$SceneObjects/PressToSwap.visible = true
 		# Change camera bounds
-		p.camera.set_limits(p.bottom_limit, p.top_limit, 592, p.left_limit)
+		cam.limit_right = 592
 		$SceneObjects/DrumPickup.queue_free()  # Remove drum from the game cuz it's picked up
 		
 

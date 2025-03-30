@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=4 uid="uid://k4oxl1qa80ur"]
+[gd_scene load_steps=18 format=4 uid="uid://k4oxl1qa80ur"]
 
 [ext_resource type="Script" path="res://scenes/levels/level1/level_1_3.gd" id="1_5lgh0"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="2_553ov"]
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="3_8pyb2"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="4_6vl7m"]
+[ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="5_e3q6s"]
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="5_s1vyt"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="6_a5x8y"]
 [ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="7_svb3d"]
@@ -226,11 +227,14 @@ position = Vector2(-382, -157)
 
 [node name="Player" parent="." instance=ExtResource("4_6vl7m")]
 position = Vector2(-55, -83)
-left_limit = -1536
-right_limit = 0
-top_limit = -400
-bottom_limit = 0
-upwards_offset = true
+
+[node name="Camera" parent="." instance=ExtResource("5_e3q6s")]
+position = Vector2(-1307, -249)
+limit_left = -1536
+limit_top = -400
+limit_right = 0
+limit_bottom = 0
+camera_offset_y = -30
 
 [node name="Ground" type="TileMapLayer" parent="."]
 z_index = -5
