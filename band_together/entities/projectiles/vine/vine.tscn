@@ -86,6 +86,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_logho")
+}],
+"loop": true,
+"name": &"expanded",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_mb0mi")
 }],
 "loop": true,
@@ -129,12 +137,12 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yqe7a"]
-radius = 2.5
-height = 10.0751
+radius = 3.0
+height = 10.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wfcmr"]
 radius = 3.0
-height = 10.5
+height = 10.0
 
 [node name="Vine" type="RigidBody2D" groups=["Vine"]]
 collision_layer = 6
@@ -147,14 +155,14 @@ script = ExtResource("1_ycjs5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q6o2t")
-animation = &"retract"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -15)
+position = Vector2(-2, -14)
 shape = SubResource("CapsuleShape2D_yqe7a")
 
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-3, -15)
+position = Vector2(-2, -15)
 shape = SubResource("CapsuleShape2D_wfcmr")

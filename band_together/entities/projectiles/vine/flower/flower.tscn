@@ -128,7 +128,6 @@ script = ExtResource("1_d2jwi")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ski6w")
 animation = &"idle"
-frame_progress = 0.779912
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -141,6 +140,3 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_nmokh")
-
-[connection signal="area_shape_entered" from="Hitbox" to="." method="_on_hitbox_entered"]
-[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_entered"]
