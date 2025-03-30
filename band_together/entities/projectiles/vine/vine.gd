@@ -41,7 +41,7 @@ func _ready() -> void:
 	original_hitbox_position = hitbox_shape.position
 	if body_collision.shape is CapsuleShape2D:
 		original_height = body_collision.shape.height
-	setup_animation("idle")
+	setup_animation()
 	connect_signals()
 	set_deferred("freeze", true)
 
