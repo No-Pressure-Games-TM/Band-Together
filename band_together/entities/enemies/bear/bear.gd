@@ -5,46 +5,59 @@ const GRAVITY_ACCELERATION = 980.0
 
 # Bear movement and behavior configuration
 # --------------------------------------
-# Initial movement direction (-1 = left, 1 = right)
-@export var direction: int = -1
-# Normal walking speed when patrolling
-@export var speed: float = 40.0
-# Increased speed when actively chasing the player
-@export var chase_speed: float = 55.0
-# Maximum distance at which bear can detect and chase player
-@export var chase_distance: float = 150.0
-# Close distance at which bear switches to attack mode
-@export var attack_distance: float = 50.0
-# Bear's health points - how much damage it can take before dying
-@export var hp: float = 60.0
-# Whether the bear should stop at platform edges
-@export var avoid_falls: bool = true
+@export var direction: int = -1 # Initial movement direction (-1 = left, 1 = right)
+@export var speed: float = 40.0 # Normal walking speed when patrolling
+@export var chase_speed: float = 75.0 # Increased speed when actively chasing the player
+@export var chase_distance: float = 150.0 # Maximum distance at which bear can detect and chase player
+@export var attack_distance: float = 60.0 # Close distance at which bear switches to attack mode
+@export var hp: float = 60.0 # Bear's health points - how much damage it can take before dying
+@export var avoid_falls: bool = true # Whether the bear should stop at platform edges
+@export var idle_telegraph_duration: float = 1.2 # How long to play the idle animation telegraph (seconds)
+
+# Patrol area configuration
+# --------------------------------------
+@export var restrict_to_area: bool = true # Whether to restrict the bear to a set patrol area
+@export var patrol_range: float = 100.0 # Distance bear can move left/right from its starting position
+@export var return_to_center: bool = true # Whether bear should return to center when not chasing
 
 # Node references for easy access
 # --------------------------------------
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var raycast: RayCast2D = $RayCast2D  # Used for edge detection
-@onready var hitbox: Area2D = $Hitbox         # Used for attacking the player
+@onready var raycast: RayCast2D = $RayCast2D # Used for edge detection
+@onready var hitbox: Area2D = $Hitbox # Used for attacking the player
 
 # State tracking variables
 # --------------------------------------
-var player = null                 # Reference to the player character
-var stopped: bool = false         # Whether bear is in idle state during patrol
-var knocked_back: bool = false    # Whether bear is currently in knockback state
-var spinning: bool = false        # Used during death animation
-var is_chasing: bool = false      # Whether bear is actively chasing player
-var is_attacking: bool = false    # Whether bear is in attack mode
-var debug_tick: int = 0           # Counter used for periodic debug operations
+var player = null # Reference to the player character
+var stopped: bool = false # Whether bear is in idle state during patrol
+var knocked_back: bool = false # Whether bear is currently in knockback state
+var spinning: bool = false # Used during death animation
+var is_chasing: bool = false # Whether bear is actively chasing player
+var is_attacking: bool = false # Whether bear is in attack mode
+var has_telegraphed: bool = false # Whether bear has ever played the telegraph
+var is_telegraphing: bool = false # Whether bear is currently telegraphing
+var telegraph_timer: float = 0.0 # Timer for current telegraph animation
+
+# Patrol area variables
+# --------------------------------------
+var start_position: Vector2 # Starting position of the bear
+var left_boundary: float # Left boundary of patrol area
+var right_boundary: float # Right boundary of patrol area
+var returning_to_center: bool = false # Whether bear is currently returning to center
 
 func _ready():
+	# Store starting position for patrol boundaries
+	start_position = global_position
+	left_boundary = start_position.x - patrol_range
+	right_boundary = start_position.x + patrol_range
+	
 	# Setup required timers for bear behavior
 	# --------------------------------------
-	
 	# Timer for random stopping during patrol
 	if not has_node("StopMoving"):
 		var timer = Timer.new()
 		timer.name = "StopMoving"
-		timer.wait_time = randf_range(2.5, 4)  # Random initial patrol time
+		timer.wait_time = randf_range(2.5, 4)
 		add_child(timer)
 		timer.timeout.connect(_on_stop_moving_timeout)
 		timer.start()
@@ -53,268 +66,305 @@ func _ready():
 	if not has_node("KnockbackTimer"):
 		var timer = Timer.new()
 		timer.name = "KnockbackTimer"
-		timer.one_shot = true     # Only fires once when started
+		timer.one_shot = true
+		timer.wait_time = 0.7
 		add_child(timer)
 		timer.timeout.connect(_on_knockback_timer_timeout)
 	
-	# Timer for death sequence duration
+	# Timer for death sequence
 	if not has_node("DeathTimer"):
 		var timer = Timer.new()
 		timer.name = "DeathTimer"
-		timer.wait_time = 2.0     # Time before removing bear after death
+		timer.wait_time = 2.0
 		timer.one_shot = true
 		add_child(timer)
 		timer.timeout.connect(_on_death_timer_timeout)
 	
-	# Create edge detection raycast if it doesn't exist
-	# --------------------------------------
+	# Create edge detection raycast if needed
 	if not raycast:
 		raycast = RayCast2D.new()
 		raycast.name = "RayCast2D"
-		raycast.position = Vector2(15, 0)       # Position in front of bear
-		raycast.target_position = Vector2(0, 20) # Points downward to detect floor edges
+		raycast.position = Vector2(15, 0)
+		raycast.target_position = Vector2(0, 20)
 		raycast.enabled = true
 		add_child(raycast)
 	
 	# Initialize animation
 	sprite.play("walk")
 	
-	# Set up initial direction and orientation
-	if direction > 0:  # If starting direction is right
-		sprite.flip_h = !sprite.flip_h  # Flip sprite horizontally
-		raycast.position.x *= -1        # Mirror raycast position
+	# Set up initial direction
+	if direction > 0:
+		sprite.flip_h = !sprite.flip_h
+		raycast.position.x *= -1
 	
-	# Find the player object in the scene
+	# Find the player
 	_find_player()
 	
-	# Register this bear as an enemy for group-based targeting
+	# Register as enemy
 	add_to_group("enemy")
 
-# Attempts to locate the player character in the scene
-# Called periodically to ensure bear can find player
-# --------------------------------------
+# Find the player in the scene
 func _find_player():
-	# First check if player is in the "player" group
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		player = players[0]
-		print("Found player in group: ", player)
 		return
 	
-	# If not found by group, try a direct path
-	player = get_node_or_null("/root/Level/Player")
-	if player:
-		print("Found player by path: ", player)
-		return
-	
-	print("Failed to find player!")
+	# Try common paths as fallback
+	var paths = ["/root/Level/Player", "/root/Main/Player", "../../Player"]
+	for path in paths:
+		player = get_node_or_null(path)
+		if player:
+			return
 
-# Main physics update - handles movement and state changes
-# --------------------------------------
+# Main physics update
 func _physics_process(delta):
-	# Periodically check if we need to find the player
-	debug_tick += 1
-	if debug_tick >= 60:  # Every ~1 second at 60fps
-		debug_tick = 0
-		if not player:
-			_find_player()
+	# Try to find player if not found yet
+	if not player and Engine.get_frames_drawn() % 60 == 0:
+		_find_player()
 	
-	# Apply gravity when not on floor
+	# Apply gravity
 	if not is_on_floor():
 		velocity.y += GRAVITY_ACCELERATION * delta
 	
-	# If being knocked back, don't apply normal movement logic
+	# Skip normal logic if knocked back
 	if knocked_back:
 		move_and_slide()
 		return
 	
-	# Player detection and state determination
-	# --------------------------------------
+	# Handle player detection
 	var should_chase = false
 	var should_attack = false
+	var should_return = false
 	
 	if player:
 		var distance = global_position.distance_to(player.global_position)
 		
-		# Player is very close - enter attack mode
-		if distance < attack_distance:
-			should_attack = true
-			should_chase = false
-			direction = sign(player.global_position.x - global_position.x)
-			sprite.flip_h = (direction > 0)
-		
-		# Player is within chase range but not attack range
-		elif distance < chase_distance:
-			should_chase = true
-			should_attack = false
+		# Update direction to face player only when in detection range
+		if distance < chase_distance:
 			direction = sign(player.global_position.x - global_position.x)
 			sprite.flip_h = (direction > 0)
 			
-			# Update raycast direction to match movement direction
-			if raycast:
-				if (direction > 0 and raycast.position.x < 0) or (direction < 0 and raycast.position.x > 0):
-					raycast.position.x *= -1
+			# Update raycast direction
+			if raycast and ((direction > 0 and raycast.position.x < 0) or
+			   (direction < 0 and raycast.position.x > 0)):
+				raycast.position.x *= -1
+			
+			# Determine state based on distance
+			if distance < attack_distance:
+				should_attack = true
+			else:
+				should_chase = true
 	
-	# Edge detection to prevent falling off platforms
-	# --------------------------------------
+	# Check if bear should return to center when not chasing
+	if restrict_to_area and return_to_center and not should_chase and not should_attack and not is_attacking and not is_chasing:
+		var distance_to_center = abs(global_position.x - start_position.x)
+		if distance_to_center > 20:  # Small threshold to avoid jittering
+			returning_to_center = true
+			direction = sign(start_position.x - global_position.x)
+			sprite.flip_h = (direction > 0)
+		else:
+			returning_to_center = false
+	
+	# Check for edges
 	var will_fall = false
 	if avoid_falls and raycast and is_on_floor():
 		will_fall = not raycast.is_colliding()
-		
-		# Stop at platform edge when chasing or attacking
-		if will_fall and (should_chase or should_attack):
-			velocity.x = 0
-			sprite.play("idle")  # Look like it's thinking about what to do
-			move_and_slide()
-			return
 	
-	# State-based movement behavior
-	# --------------------------------------
+	# Stop at edges when chasing or attacking
+	if will_fall and (should_chase or should_attack):
+		velocity.x = 0
+		sprite.play("idle")
+		move_and_slide()
+		return
 	
-	# Attack state - very close to player
+	# Check patrol boundaries
+	var at_boundary = false
+	if restrict_to_area and not should_chase and not should_attack and not returning_to_center:
+		if (direction < 0 and global_position.x <= left_boundary) or (direction > 0 and global_position.x >= right_boundary):
+			at_boundary = true
+			flip()
+	
+	# Handle movement based on state
 	if should_attack:
 		is_attacking = true
 		is_chasing = false
+		returning_to_center = false
 		
-		# Don't walk off edges
 		if will_fall:
 			velocity.x = 0
 		else:
-			# Use idle animation when preparing to attack
-			sprite.play("idle")
-			# Slow approach toward player
-			velocity.x = direction * speed * 0.3
+			# If bear hasn't telegraphed yet
+			if not has_telegraphed and not is_telegraphing:
+				# Start telegraph
+				is_telegraphing = true
+				telegraph_timer = 0.0
+				sprite.play("idle")
+				sprite.speed_scale = 0.4  # Slow motion
+				velocity.x = direction * speed * 0.1  # Very slow movement
+			
+			# During telegraph animation
+			elif is_telegraphing:
+				telegraph_timer += delta
+				velocity.x = direction * speed * 0.1  # Very slow
+				
+				# Check if telegraph is complete
+				if telegraph_timer >= idle_telegraph_duration:
+					is_telegraphing = false
+					has_telegraphed = true  # Never telegraph again
+			
+			# Normal attack - already telegraphed once
+			else:
+				sprite.play("walk")
+				sprite.speed_scale = 1.0
+				velocity.x = direction * speed * 1.2  # Faster charge
 	
-	# Chase state - player is in sight but not close enough to attack
+	# Chase state
 	elif should_chase:
-		is_chasing = true
 		is_attacking = false
+		is_chasing = true
+		is_telegraphing = false
+		returning_to_center = false
 		
-		# Don't walk off edges
 		if will_fall:
 			velocity.x = 0
 			sprite.play("idle")
 		else:
-			# Use walk animation during chase
 			sprite.play("walk")
+			sprite.speed_scale = 1.0
 			velocity.x = direction * chase_speed
 	
-	# Stopped state - random pauses during patrol
-	elif stopped:
-		is_chasing = false
+	# Returning to center state
+	elif returning_to_center:
 		is_attacking = false
+		is_chasing = false
+		is_telegraphing = false
+		stopped = false
+		
+		if will_fall:
+			velocity.x = 0
+			sprite.play("idle")
+		else:
+			sprite.play("walk")
+			sprite.speed_scale = 0.8  # Slightly slower return
+			velocity.x = direction * speed * 0.8
+	
+	# Idle/stopped state
+	elif stopped:
+		is_attacking = false
+		is_chasing = false
+		returning_to_center = false
 		sprite.play("idle")
+		sprite.speed_scale = 1.0
 		velocity.x = 0
 	
-	# Normal patrol state - default behavior
+	# Normal patrol state
 	else:
-		is_chasing = false
 		is_attacking = false
+		is_chasing = false
+		is_telegraphing = false
 		
-		# Check for obstacles or edges during patrol
-		if raycast and ((not raycast.is_colliding() and is_on_floor()) or is_on_wall()):
-			flip()  # Turn around when hitting wall or reaching edge
+		# Check for edges or walls during patrol
+		if (raycast and ((not raycast.is_colliding() and is_on_floor()) or is_on_wall())) or at_boundary:
+			flip()
 		
 		sprite.play("walk")
+		sprite.speed_scale = 1.0
 		velocity.x = direction * speed
 	
-	# Apply the calculated movement
+	# Apply movement
 	move_and_slide()
 	
-	# Check if we directly collided with player during movement
-	# --------------------------------------
+	# Check for collisions with player
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
 		if collider and (collider.name == "Player" or collider.is_in_group("player")):
 			if collider.has_method("take_damage"):
-				# Direction for knockback is based on relative positions
-				collider.take_damage(sign(collider.global_position.x - global_position.x))
+				collider.take_damage(sign(collider.global_position.x - position.x))
 
-# Changes the bear's direction and flips visuals accordingly
-# --------------------------------------
+# Flip direction
 func flip():
-	direction = -direction  # Reverse direction
-	sprite.flip_h = !sprite.flip_h  # Flip sprite horizontally
+	direction = -direction
+	sprite.flip_h = !sprite.flip_h
 	if raycast:
-		raycast.position.x *= -1  # Mirror raycast position
+		raycast.position.x *= -1
 
-# Called when player attacks the bear
-# --------------------------------------
+# Handle damage
 func take_damage(amount, knockback_dir):
-	# Play hit flash animation if available
 	if has_node("AnimatedSprite2D/HitFlash"):
 		$AnimatedSprite2D/HitFlash.play("flash")
 	
-	hp -= amount  # Reduce health
+	# Reset telegraph state if in progress
+	is_telegraphing = false
+	
+	hp -= amount
 	
 	if hp <= 0:
-		# Bear has died
 		die(knockback_dir)
 	else:
-		# Apply knockback effect
 		knocked_back = true
-		velocity.x = knockback_dir * 150  # Horizontal knockback
-		velocity.y = -120  # Small upward bounce
-		$KnockbackTimer.start(0.2)  # Short knockback duration
+		velocity.x = knockback_dir * 150
+		velocity.y = -120
+		$KnockbackTimer.start()
 
-# Handles bear death sequence
-# --------------------------------------
+# Handle death
 func die(knockback_dir):
-	# Disable collisions with world and player
+	# Disable collisions
 	set_collision_layer_value(4, false)
 	set_collision_mask_value(3, false)
 	
-	# Disable hitbox if it exists
 	if hitbox:
 		hitbox.set_collision_layer_value(5, false)
 		hitbox.set_collision_mask_value(2, false)
 	
-	# Apply death knockback
 	knocked_back = true
-	velocity = Vector2(knockback_dir * 300, -200)  # Stronger knockback on death
-	
-	# Start spinning animation
+	velocity = Vector2(knockback_dir * 300, -200)
 	spinning = true
 	$DeathTimer.start()
 
-# Called when hitbox overlaps with player's body
-# --------------------------------------
+# Handle hitbox collision
 func _on_hitbox_body_entered(body):
 	if body.name == "Player" or body.is_in_group("player"):
 		if body.has_method("take_damage"):
-			# Attack the player
 			body.take_damage(sign(body.position.x - position.x))
 		
-		# If we hit player during normal patrol, turn around
 		if not is_chasing and not is_attacking:
 			flip()
 
-# Timer callback for the patrol stop/start cycle
-# --------------------------------------
+# Timer callbacks
 func _on_stop_moving_timeout():
-	# Only change state if not already chasing or attacking
 	if not is_chasing and not is_attacking:
-		stopped = !stopped  # Toggle between stopped and moving
-		
-		# Set appropriate wait time for next state change
+		stopped = !stopped
 		$StopMoving.wait_time = randf_range(0.5, 1.5) if stopped else randf_range(2.5, 4)
 		$StopMoving.start()
 
-# Timer callback for ending knockback state
-# --------------------------------------
 func _on_knockback_timer_timeout():
-	knocked_back = false  # Return to normal movement
+	knocked_back = false
 
-# Timer callback for removing bear after death
-# --------------------------------------
 func _on_death_timer_timeout():
-	queue_free()  # Remove bear from scene
+	queue_free()
 
-# Called every frame for animations and visual effects
-# --------------------------------------
 func _process(delta):
-	# Handle spinning death animation
+	# Death spinning animation
 	if spinning:
-		rotation_degrees += 360 * delta * 2  # Spin at 2 full rotations per second
+		rotation_degrees += 360 * delta * 2
+		
+	# Draw patrol boundaries in editor only
+	if Engine.is_editor_hint() or OS.is_debug_build():
+		queue_redraw()
+
+# Draw debug visuals for patrol area in editor
+#func _draw():
+	#if Engine.is_editor_hint() or OS.is_debug_build():
+		#if restrict_to_area:
+			## Draw left boundary
+			#draw_line(to_local(Vector2(left_boundary, global_position.y - 50)), 
+					 #to_local(Vector2(left_boundary, global_position.y + 50)), 
+					 #Color.RED, 2.0)
+			#
+			## Draw right boundary
+			#draw_line(to_local(Vector2(right_boundary, global_position.y - 50)), 
+					 #to_local(Vector2(right_boundary, global_position.y + 50)), 
+					 #Color.RED, 2.0)
