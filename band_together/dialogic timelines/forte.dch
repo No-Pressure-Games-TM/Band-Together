@@ -10,12 +10,22 @@
 "style": "",
 "suffix": ""
 },
-"default_portrait": "",
+"default_portrait": "forte",
 "description": "",
 "display_name": "Forte",
 "mirror": false,
 "nicknames": [""],
 "offset": Vector2(0, 0),
-"portraits": {},
+"portraits": {
+"forte": {
+"export_overrides": {
+"image": "\"res://assets/portraits/orange portrait.PNG\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
 "scale": 1.0
 }

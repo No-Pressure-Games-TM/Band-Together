@@ -42,10 +42,6 @@ const reed_scene: PackedScene = preload("res://entities/player/reed.tscn")
 var direction: int = 0 
 var last_direction: int = 0
 
-# DEBUG - DELETE ME BEFORE RELEASE
-var path: PackedVector2Array = []
-var pathing: bool = false
-
 #region combat
 var damage: int = 15
 var weapon_cooling_down: bool = false
@@ -86,22 +82,10 @@ func _ready():
 	$BeachMarimba.volume_db = 0
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
-
-func _draw():
-	# delete this before shipping
-	if path.size() >= 2:
-		for i in range(path.size() -1):
-			draw_line(to_local(path[i]), to_local(path[i+1]), Color.RED, 30)
+		
 
 func _physics_process(delta):
-	if GameManager.in_dialogue:
-		play_animation("idle")  # Ensure the player stays in idle animation
-		return  # Skip all movement processing if in dialogue
-	
-	# delete this pathing part before shipping
-	if pathing:
-		path.append(global_position)
-		queue_redraw()
+
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
 		
@@ -189,14 +173,6 @@ func adjust_volumes() -> void:
 
 
 func check_input() -> void:
-	# DELETE THE NEXT 2 IF STATEMENTS BEFORE SHIPPING GAME
-	if Input.is_action_just_pressed("Path"):
-		pathing = true
-		print_debug("Pathing started")
-	if Input.is_action_just_pressed("StopPath"):
-		pathing = false
-		print_debug("Pathing stopped")
-		path.clear()
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
