@@ -67,6 +67,11 @@ func trigger_collapse() -> void:
 		has_collapsed = true
 		is_looping = false
 		start_collapse()
+		
+func trigger_retract() -> void:
+	print("Vine: trigger_retract called")
+	if has_collapsed and not is_retracting:
+		start_retract()
 
 func trigger_collapse_loop() -> void:
 	print("Vine: trigger_collapse_loop called")
@@ -78,11 +83,6 @@ func trigger_collapse_loop() -> void:
 func stop_loop() -> void:
 	print("Vine: stop_loop called")
 	is_looping = false
-
-func trigger_retract() -> void:
-	print("Vine: trigger_retract called")
-	if has_collapsed and not is_retracting:
-		start_retract()
 
 #-------------------------------------------------------------------------------
 # Internal Collapse Logic
