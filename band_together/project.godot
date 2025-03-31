@@ -34,6 +34,7 @@ directories/dch_directory={
 "ghost": "res://ghost.dch"
 }
 directories/dtl_directory={
+"dashtiptrigger": "res://dialogic timelines/dashtiptrigger.dtl",
 "door1": "res://dialogic timelines/door1.dtl",
 "ending": "res://dialogic timelines/ending.dtl",
 "findarco": "res://dialogic timelines/findarco.dtl",

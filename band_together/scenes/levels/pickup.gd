@@ -35,6 +35,14 @@ func _on_body_entered(body):
 			queue_free()  # Remove drum from the game cuz it's picked up
 			GameManager.start_dialogue("finddrum")
 		
+		elif name == "SaxPickup":
+			GameManager.sax_unlocked = true
+			GameManager.current_instrument = 2  # Force set instrument to "violin
+			#Show tutorials
+			queue_free()
+			GameManager.start_dialogue("findsax")
+			get_parent().get_node("SaxTip").visible = true
+		
 		elif name == "ViolinPickup":
 			GameManager.violin_unlocked = true
 			GameManager.current_instrument = 3  # Force set instrument to "violin
@@ -48,4 +56,10 @@ func _on_body_entered(body):
 			UI.get_coin()
 			# play a sound here
 			queue_free()
+		
+		elif name == "DashTipTrigger":
+			GameManager.start_dialogue("dashtiptrigger")
+			queue_free()
+			get_parent().get_node("DashTip").visible = true
+			get_parent().get_node("Player").enable_dash()
 			
