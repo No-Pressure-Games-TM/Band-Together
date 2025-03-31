@@ -41,7 +41,6 @@ func _on_death_timer_timeout():
 	queue_free()  # Should be off screen by now, delete!
 
 func _on_hitbox_body_entered(body):
-	print("ENTERED")
 	if body.name == "Player":
 		body.take_damage(sign(body.position.x - position.x))
 

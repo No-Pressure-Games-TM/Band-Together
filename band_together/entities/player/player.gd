@@ -145,6 +145,7 @@ func _physics_process(delta):
 	elif not respawning and not SceneTransition.transitioning:
 		# We are in a dialogue
 		gravity(delta)  # Slow fall, wall slide, jump buffer, coyote time is also in here!
+		velocity.x = 0  # Player would infinitely slide based on last pressed direction
 		move_and_slide()  # Allows gravity to work
 		play_animation("idle")
 	# Else the player is respawning or transitioning scenes.

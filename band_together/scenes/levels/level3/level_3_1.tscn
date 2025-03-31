@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://c4r83c3cy7rd4"]
+[gd_scene load_steps=16 format=4 uid="uid://c4r83c3cy7rd4"]
 
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="1_emu5x"]
 [ext_resource type="PackedScene" uid="uid://biul7qy05yj0l" path="res://scenes/levels/cave_parallax.tscn" id="2_uw0pk"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dahrap2v0kbe4" path="res://entities/projectiles/vine/vine.tscn" id="10_rcf6a"]
 [ext_resource type="PackedScene" uid="uid://b7iycfk7stsf1" path="res://entities/projectiles/vine/flower/flower.tscn" id="11_8p7wo"]
 [ext_resource type="PackedScene" path="res://entities/enemies/bat/bat.tscn" id="13_ak3x3"]
+[ext_resource type="PackedScene" uid="uid://e6pdpjfi37yb" path="res://entities/enemies/bat/bat.tscn" id="13_ak3x3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ila1o"]
 texture = ExtResource("3_cektk")
@@ -126,11 +127,11 @@ shape = SubResource("RectangleShape2D_n7uvi")
 
 [node name="WallJumpTip" type="RichTextLabel" parent="."]
 visible = false
-offset_left = 376.0
-offset_top = -164.0
-offset_right = 464.0
-offset_bottom = -79.0
-text = "Jump into a wall to slide.
+offset_left = 373.0
+offset_top = -172.0
+offset_right = 469.0
+offset_bottom = -72.0
+text = "Jump into a wall to slide with violin.
 Jump off walls to wall jump."
 
 [node name="WallJumpTip2" type="RichTextLabel" parent="."]
@@ -153,7 +154,7 @@ position = Vector2(440, -184)
 position = Vector2(424, -216)
 
 [node name="Door" parent="." instance=ExtResource("8_m8w2n")]
-position = Vector2(809, -128)
+position = Vector2(601, -127)
 
 [node name="CoinPickup" parent="." instance=ExtResource("9_u4x2u")]
 position = Vector2(360, -120)
@@ -291,12 +292,6 @@ position = Vector2(360, -88)
 [node name="CoinPickup22" parent="." instance=ExtResource("9_u4x2u")]
 position = Vector2(504, -169)
 coin_code = "violin"
-
-[node name="Vine" parent="." instance=ExtResource("10_rcf6a")]
-position = Vector2(604, -135)
-
-[node name="Flower" parent="." instance=ExtResource("11_8p7wo")]
-position = Vector2(567, -122)
 
 [node name="Bat" parent="." instance=ExtResource("13_ak3x3")]
 position = Vector2(216, -167)

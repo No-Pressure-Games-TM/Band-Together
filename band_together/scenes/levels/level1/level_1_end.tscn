@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=4 uid="uid://dk02alnggwq4m"]
+[gd_scene load_steps=12 format=4 uid="uid://dk02alnggwq4m"]
 
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="1_4tjar"]
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="2_06h0e"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="3_o2jr6"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="4_iu5ak"]
+[ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="4_mvqyh"]
 [ext_resource type="Script" path="res://scenes/levels/level1/ghostcutscene.gd" id="5_6glee"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="6_rond2"]
 
@@ -220,10 +221,11 @@ rotation = -0.000836422
 tile_map_data = PackedByteArray("AAADAP3/AAACAAEAAAACAP3/AAAFAAEAAAACAP7/AAAFAAIAAAABAP3/AAAFAAEAAAABAP7/AAAFAAIAAAAAAP3/AAAFAAEAAAAAAP7/AAAFAAIAAAAAAP//AAAFAAIAAAABAP//AAAFAAIAAAACAP//AAAFAAIAAAADAP7/AAACAAIAAAADAP//AAACAAIAAAAEAP3/AAADAAEAAAAFAP3/AAADAAEAAAAGAP3/AAADAAEAAAAHAP3/AAADAAEAAAAIAP3/AAADAAEAAAAJAP3/AAADAAEAAAAKAP3/AAADAAEAAAALAP3/AAADAAEAAAAMAP3/AAADAAEAAAANAP3/AAADAAEAAAAOAP3/AAADAAEAAAAPAP3/AAADAAEAAAAQAP3/AAADAAEAAAARAP3/AAADAAEAAAASAP3/AAADAAEAAAATAP3/AAADAAEAAAAUAP3/AAADAAEAAAAVAP3/AAADAAEAAAAWAP3/AAADAAEAAAAXAP3/AAADAAEAAAAYAP3/AAADAAEAAAAZAP3/AAADAAEAAAAaAP3/AAADAAEAAAAEAP7/AAADAAIAAAAEAP//AAADAAIAAAAFAP//AAADAAIAAAAFAP7/AAADAAIAAAAGAP7/AAADAAIAAAAHAP7/AAADAAIAAAAIAP7/AAADAAIAAAAJAP7/AAADAAIAAAAKAP7/AAADAAIAAAALAP7/AAADAAIAAAAMAP7/AAADAAIAAAANAP7/AAADAAIAAAAOAP7/AAADAAIAAAAPAP7/AAADAAIAAAAQAP7/AAADAAIAAAARAP7/AAADAAIAAAASAP7/AAADAAIAAAATAP7/AAADAAIAAAAUAP7/AAADAAIAAAAVAP7/AAADAAIAAAAWAP7/AAADAAIAAAAXAP7/AAADAAIAAAAYAP7/AAADAAIAAAAZAP7/AAADAAIAAAAZAP//AAADAAIAAAAaAP//AAADAAIAAAAaAP7/AAADAAIAAAAYAP//AAADAAIAAAAXAP//AAADAAIAAAAWAP//AAADAAIAAAAVAP//AAADAAIAAAAUAP//AAADAAIAAAATAP//AAADAAIAAAASAP//AAADAAIAAAARAP//AAADAAIAAAAQAP//AAADAAIAAAAPAP//AAADAAIAAAAOAP//AAADAAIAAAANAP//AAADAAIAAAAMAP//AAADAAIAAAALAP//AAADAAIAAAAKAP//AAADAAIAAAAJAP//AAADAAIAAAAIAP//AAADAAIAAAAHAP//AAADAAIAAAAGAP//AAADAAIAAAA=")
 tile_set = SubResource("TileSet_mawbn")
 
+[node name="Camera" parent="." instance=ExtResource("4_mvqyh")]
+position = Vector2(25, -80)
+
 [node name="Player" parent="." instance=ExtResource("4_iu5ak")]
 position = Vector2(81, -68)
-left_limit = 0
-bottom_limit = 0
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(174, -60)
@@ -236,7 +238,7 @@ position = Vector2(0, -31.5)
 shape = SubResource("RectangleShape2D_yhoel")
 
 [node name="Door" parent="." instance=ExtResource("6_rond2")]
-position = Vector2(236, -64)
+position = Vector2(267, -63)
 destination_scene = "res://scenes/levels/level_0.tscn"
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

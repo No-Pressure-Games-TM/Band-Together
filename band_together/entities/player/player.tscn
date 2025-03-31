@@ -479,13 +479,13 @@ collision_layer = 2
 collision_mask = 72
 
 [node name="ViolinAttackTop" type="CollisionPolygon2D" parent="ViolinArea"]
-polygon = PackedVector2Array(-8, -9, 5, -9, -2, -42)
+polygon = PackedVector2Array(-10, -9, 7, -9, -2, -42)
 disabled = true
 
 [node name="ViolinAttackBottom" type="CollisionPolygon2D" parent="ViolinArea"]
 position = Vector2(-3, 7)
 rotation = 3.14159
-polygon = PackedVector2Array(-8, -9, 5, -9, -2, -42)
+polygon = PackedVector2Array(-9.99998, -9.00002, 7.00002, -8.99998, -2, -42)
 disabled = true
 
 [node name="ViolinTimer" type="Timer" parent="ViolinArea"]
