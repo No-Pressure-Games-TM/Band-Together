@@ -93,6 +93,10 @@ func _draw():
 			draw_line(to_local(path[i]), to_local(path[i+1]), Color.RED, 30)
 
 func _physics_process(delta):
+	if GameManager.in_dialogue:
+		play_animation("idle")  # Ensure the player stays in idle animation
+		return  # Skip all movement processing if in dialogue
+	
 	# delete this pathing part before shipping
 	if pathing:
 		path.append(global_position)

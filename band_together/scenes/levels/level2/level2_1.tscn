@@ -191,12 +191,11 @@ texture = ExtResource("8_7jh7f")
 shape = SubResource("RectangleShape2D_gfi7t")
 
 [node name="SaxTip" type="RichTextLabel" parent="."]
-visible = false
 z_index = 1
-offset_left = 281.0
-offset_top = 160.0
-offset_right = 391.0
-offset_bottom = 208.0
+offset_left = 460.0
+offset_top = 78.0
+offset_right = 570.0
+offset_bottom = 126.0
 text = "Hit the flower to 
 retract the vine."
 fit_content = true
@@ -216,4 +215,26 @@ z_index = 1
 position = Vector2(469, 90)
 scale = Vector2(3, 3)
 
+[node name="DashTipTrigger" type="Area2D" parent="."]
+position = Vector2(269, 129)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_6p2k0")
+bob_height = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashTipTrigger"]
+position = Vector2(633, 8)
+shape = SubResource("RectangleShape2D_gfi7t")
+
+[node name="DashTip" type="RichTextLabel" parent="."]
+z_index = 1
+offset_left = 1026.0
+offset_top = 160.0
+offset_right = 1169.0
+offset_bottom = 180.0
+text = "Press space to dash"
+fit_content = true
+autowrap_mode = 0
+
 [connection signal="body_entered" from="SaxPickup" to="SaxPickup" method="_on_body_entered"]
+[connection signal="body_entered" from="DashTipTrigger" to="DashTipTrigger" method="_on_body_entered"]

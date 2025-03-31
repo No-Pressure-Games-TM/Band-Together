@@ -39,9 +39,9 @@ func _on_body_entered(body):
 			GameManager.sax_unlocked = true
 			GameManager.current_instrument = 2  # Force set instrument to "violin
 			#Show tutorials
-			get_parent().get_node("SaxTip").visible = true
 			queue_free()
-			#GameManager.start_dialogue("findviolin")
+			GameManager.start_dialogue("findsax")
+			get_parent().get_node("SaxTip").visible = true
 		
 		elif name == "ViolinPickup":
 			GameManager.violin_unlocked = true
@@ -56,4 +56,9 @@ func _on_body_entered(body):
 			UI.get_coin()
 			# play a sound here
 			queue_free()
+		
+		elif name == "DashTipTrigger":
+			GameManager.start_dialogue("dashtiptrigger")
+			queue_free()
+			get_parent().get_node("DashTip").visible = true
 			
