@@ -8,9 +8,9 @@
 [ext_resource type="Script" path="res://scenes/levels/pickup.gd" id="6_2gasb"]
 [ext_resource type="PackedScene" uid="uid://drgq6uc3w23m0" path="res://scenes/levels/forest_parallax.tscn" id="6_77arb"]
 [ext_resource type="PackedScene" uid="uid://bd8nsthm65gag" path="res://Environment/spikes/spike.tscn" id="8_pop3m"]
-[ext_resource type="Texture2D" uid="uid://bi1ytnk42eeah" path="res://assets/portraits/saxophone item.PNG" id="9_lm511"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="9_oy1y0"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="10_csd8f"]
+[ext_resource type="PackedScene" uid="uid://cjuxwn44aqtdl" path="res://entities/enemies/bear/bear.tscn" id="11_3u0tx"]
 [ext_resource type="PackedScene" uid="uid://dahrap2v0kbe4" path="res://entities/projectiles/vine/vine.tscn" id="11_u8xum"]
 [ext_resource type="PackedScene" uid="uid://b7iycfk7stsf1" path="res://entities/projectiles/vine/flower/flower.tscn" id="12_fyubh"]
 [ext_resource type="PackedScene" uid="uid://c4aeoqgffqsbq" path="res://entities/enemies/spider/spider_web_start.tscn" id="14_y5jen"]
@@ -183,6 +183,86 @@ position = Vector2(782, 152)
 [node name="CoinPickup9" parent="Coins" instance=ExtResource("10_csd8f")]
 position = Vector2(735, 152)
 
+[node name="CoinPickup10" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(902, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup11" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(927, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup12" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(953, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup13" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1025, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup14" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1051, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup15" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1076, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup16" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1152, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup17" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1177, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup18" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1203, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup19" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1270, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup20" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1296, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup21" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(1321, 201)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup22" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(718, 443)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup23" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(743, 443)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup24" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(769, 443)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup25" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(794, 443)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup26" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(819, 443)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup27" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(844, 443)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup28" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(870, 443)
+scale = Vector2(1, 0.952034)
+
+[node name="CoinPickup29" parent="Coins" instance=ExtResource("10_csd8f")]
+position = Vector2(895, 443)
+scale = Vector2(1, 0.952034)
+
 [node name="Spikes" type="Node" parent="."]
 
 [node name="Spike" parent="Spikes" instance=ExtResource("8_pop3m")]
@@ -286,30 +366,16 @@ position = Vector2(649, 209)
 z_index = 1
 position = Vector2(667, 209)
 
-[node name="SaxPickup" type="Area2D" parent="."]
-visible = false
-position = Vector2(269, 129)
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("6_2gasb")
-bob_height = 4
+[node name="Bears" type="Node" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="SaxPickup"]
-texture = ExtResource("9_lm511")
+[node name="Bear" parent="Bears" instance=ExtResource("11_3u0tx")]
+position = Vector2(90, 154)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SaxPickup"]
-shape = SubResource("RectangleShape2D_gfi7t")
+[node name="Bear2" parent="Bears" instance=ExtResource("11_3u0tx")]
+position = Vector2(657, 73)
 
-[node name="SaxTip" type="RichTextLabel" parent="."]
-z_index = 1
-offset_left = 633.0
-offset_top = 290.0
-offset_right = 743.0
-offset_bottom = 338.0
-text = "Hit the flower to 
-retract the vine."
-fit_content = true
-autowrap_mode = 0
+[node name="Bear3" parent="Bears" instance=ExtResource("11_3u0tx")]
+position = Vector2(1412, 202)
 
 [node name="Level2_2_Flower" parent="." instance=ExtResource("12_fyubh")]
 position = Vector2(65, 138)
@@ -340,107 +406,6 @@ bob_height = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashTipTrigger"]
 position = Vector2(633, 8)
 shape = SubResource("RectangleShape2D_gfi7t")
-
-[node name="DashTip" type="RichTextLabel" parent="."]
-z_index = 1
-offset_left = 633.0
-offset_top = 338.0
-offset_right = 776.0
-offset_bottom = 358.0
-text = "Press space to dash"
-fit_content = true
-autowrap_mode = 0
-
-[node name="DashCoins" type="Node" parent="."]
-
-[node name="CoinPickup10" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(902, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup11" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(927, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup12" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(953, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup13" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1025, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup14" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1051, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup15" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1076, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup16" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1152, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup17" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1177, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup18" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1203, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup19" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1270, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup20" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1296, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup21" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(1321, 201)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup22" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(718, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup23" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(743, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup24" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(769, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup25" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(794, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup26" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(819, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup27" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(844, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup28" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(870, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="CoinPickup29" parent="DashCoins" instance=ExtResource("10_csd8f")]
-position = Vector2(895, 443)
-scale = Vector2(1, 0.952034)
-
-[node name="LongJumpTip" type="RichTextLabel" parent="."]
-z_index = 1
-offset_left = 633.0
-offset_top = 369.0
-offset_right = 814.0
-offset_bottom = 401.0
-text = "While dashing, swap instruments to dash jump"
-fit_content = true
 
 [node name="LongJumpCoins" type="Node" parent="."]
 
@@ -617,5 +582,4 @@ scale = Vector2(1, 0.952034)
 [node name="Door" parent="." instance=ExtResource("9_oy1y0")]
 position = Vector2(2612, 138)
 
-[connection signal="body_entered" from="SaxPickup" to="SaxPickup" method="_on_body_entered"]
 [connection signal="body_entered" from="DashTipTrigger" to="DashTipTrigger" method="_on_body_entered"]

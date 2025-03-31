@@ -26,7 +26,7 @@ var cutting_enabled = true                     # true if jump cutting is enabled
 #region Dash bools
 var is_charging: bool = false
 var is_dashing: bool = false
-var dash_enabled: bool = false
+var dash_enabled: bool = true # TODO: SET TO FALSE
 #endregion
 
 #region Projectile bools

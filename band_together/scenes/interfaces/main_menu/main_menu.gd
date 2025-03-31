@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 
 func _on_start_pressed() -> void:
 	#SceneTransition.change_scene(GameManager.furthest_level)
-	SceneTransition.change_scene("res://scenes/levels/level2/level2_1.tscn")
+	SceneTransition.change_scene("res://scenes/levels/level2/level2_2.tscn")
 	#SceneTransition.change_scene("res://scenes/test/test_walljump.tscn")
 	
 func _on_options_pressed() -> void:

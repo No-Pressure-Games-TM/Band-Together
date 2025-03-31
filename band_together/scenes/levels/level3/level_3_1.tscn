@@ -10,10 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bd8nsthm65gag" path="res://Environment/spikes/spike.tscn" id="7_xbsvf"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="8_m8w2n"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="9_u4x2u"]
-[ext_resource type="PackedScene" uid="uid://dahrap2v0kbe4" path="res://entities/projectiles/vine/vine.tscn" id="10_rcf6a"]
-[ext_resource type="PackedScene" uid="uid://b7iycfk7stsf1" path="res://entities/projectiles/vine/flower/flower.tscn" id="11_8p7wo"]
-[ext_resource type="PackedScene" path="res://entities/enemies/bat/bat.tscn" id="13_ak3x3"]
-[ext_resource type="PackedScene" uid="uid://e6pdpjfi37yb" path="res://entities/enemies/bat/bat.tscn" id="13_ak3x3"]
+[ext_resource type="PackedScene" uid="uid://ys8uycg700nt" path="res://entities/enemies/bat/bat.tscn" id="13_ak3x3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ila1o"]
 texture = ExtResource("3_cektk")
