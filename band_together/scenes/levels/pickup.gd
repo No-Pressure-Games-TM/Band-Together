@@ -61,4 +61,5 @@ func _on_body_entered(body):
 			GameManager.start_dialogue("dashtiptrigger")
 			queue_free()
 			get_parent().get_node("DashTip").visible = true
+			get_parent().get_node("Player").enable_dash()
 			

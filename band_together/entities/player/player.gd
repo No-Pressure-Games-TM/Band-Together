@@ -26,6 +26,7 @@ var cutting_enabled = true                     # true if jump cutting is enabled
 #region Dash bools
 var is_charging: bool = false
 var is_dashing: bool = false
+var dash_enabled: bool = false
 #endregion
 
 #region Projectile bools
@@ -285,7 +286,7 @@ func jump(delta) -> void:
 		$DrumJump.play()
 	
 	## Dash
-	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing:
+	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing and dash_enabled:
 		#Start charging up a dash
 		print("DASH STARTING")
 		is_charging = true
@@ -298,6 +299,10 @@ func jump(delta) -> void:
 	## Jump Cutting
 	if Input.is_action_just_released("Accept") and velocity.y < -30 and cutting_enabled:
 		velocity.y = - 30
+
+func enable_dash() -> void:
+	dash_enabled = true
+	print("Dash enabled!")
 
 func move_and_animate(delta) -> void:
 	# only walk when there is a direction input and the player is not clinging to a wall
