@@ -3,6 +3,7 @@ extends Node2D
 @onready var flower: Flower = $Level2_1_Flower
 @onready var vine1: Vine = $Level2_1_Vine
 @onready var vine2: Vine = $Level2_1_Vine2
+@onready var door: Area2D = $Door
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
