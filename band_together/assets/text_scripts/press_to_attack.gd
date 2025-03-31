@@ -25,4 +25,4 @@ func update_text(is_using_controller: bool):
 	if is_using_controller:
 		append_text("Press [img]%s[/img] to swing your baton." % b_gamepad)
 	else:
-		append_text("Press [img]%s[/img] to swing your baton." % left_click)
+		append_text("Press [img]%s[/img] or SHIFT to swing your baton." % left_click)

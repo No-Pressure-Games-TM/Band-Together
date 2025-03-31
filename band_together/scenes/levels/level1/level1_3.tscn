@@ -234,7 +234,6 @@ limit_left = -1536
 limit_top = -400
 limit_right = 0
 limit_bottom = 0
-camera_offset_y = -30
 
 [node name="Ground" type="TileMapLayer" parent="."]
 z_index = -5

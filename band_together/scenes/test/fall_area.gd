@@ -13,6 +13,8 @@ func _process(_delta: float) -> void:
 # When player falls off scene, reload.
 func _on_body_entered(body: Node2D) -> void:
 	if (body.name == "Player"):
-		UI.decrease_health()
+		if body.i_frame_timer < 0:
+			# only lose health if not in i-frames
+			UI.decrease_health()
 		body.respawn()
 		
