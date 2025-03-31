@@ -26,7 +26,7 @@ var cutting_enabled = true                     # true if jump cutting is enabled
 #region Dash bools
 var is_charging: bool = false
 var is_dashing: bool = false
-var dash_enabled: bool = true # TODO: SET TO FALSE
+var dash_enabled: bool = false
 #endregion
 
 #region Projectile bools
@@ -99,6 +99,10 @@ func _physics_process(delta):
 		play_animation("idle")  # Ensure the player stays in idle animation
 		return  # Skip all movement processing if in dialogue
 	
+	if GameManager.in_dialogue:
+		play_animation("idle")  # Ensure the player stays in idle animation
+		return  # Skip all movement processing if in dialogue
+	
 	# delete this pathing part before shipping
 	if pathing:
 		path.append(global_position)
@@ -112,8 +116,10 @@ func _physics_process(delta):
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
 		
+		
 	#if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 		#respawn()	
+		
 		
 	if GameManager.in_dialogue == false and not respawning and not SceneTransition.transitioning:
 		# Added this if statement to remove control when in dialogue
@@ -289,6 +295,7 @@ func jump(delta) -> void:
 	
 	## Dash
 	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing and dash_enabled:
+	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing and dash_enabled:
 		#Start charging up a dash
 		print("DASH STARTING")
 		is_charging = true
@@ -301,6 +308,10 @@ func jump(delta) -> void:
 	## Jump Cutting
 	if Input.is_action_just_released("Accept") and velocity.y < -30 and cutting_enabled:
 		velocity.y = - 30
+
+func enable_dash() -> void:
+	dash_enabled = true
+	print("Dash enabled!")
 
 func enable_dash() -> void:
 	dash_enabled = true
