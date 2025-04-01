@@ -131,7 +131,7 @@ size = Vector2(7, 16)
 script = ExtResource("1_ixlj2")
 
 [node name="Player" parent="." instance=ExtResource("1_icqny")]
-position = Vector2(33, 134)
+position = Vector2(33, 137)
 
 [node name="Camera" parent="." instance=ExtResource("2_07p6q")]
 position = Vector2(160.993, 2.36489)
@@ -573,6 +573,7 @@ scale = Vector2(1, 0.952034)
 
 [node name="Door" parent="." instance=ExtResource("9_4gi4w")]
 position = Vector2(2612, 138)
+destination_scene = "res://scenes/levels/level2/level2_2.tscn"
 
 [connection signal="body_entered" from="SaxPickup" to="SaxPickup" method="_on_body_entered"]
 [connection signal="body_entered" from="DashTipTrigger" to="DashTipTrigger" method="_on_body_entered"]

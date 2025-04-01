@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://h1k6jfp0w7rn" path="res://Environment/cave tileset.png" id="3_j3tsy"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="4_3wq06"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="6_ytim7"]
-[ext_resource type="PackedScene" uid="uid://e6pdpjfi37yb" path="res://entities/enemies/bat/bat.tscn" id="7_07b6s"]
+[ext_resource type="PackedScene" uid="uid://ys8uycg700nt" path="res://entities/enemies/bat/bat.tscn" id="7_07b6s"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="8_7mogx"]
 [ext_resource type="PackedScene" uid="uid://c4aeoqgffqsbq" path="res://entities/enemies/spider/spider_web_start.tscn" id="9_y0akr"]
 
@@ -87,6 +87,7 @@ sources/1 = SubResource("TileSetAtlasSource_54s3i")
 distance = 35.0
 
 [node name="Level32" type="Node2D"]
+position = Vector2(-33, -50)
 
 [node name="Player" parent="." instance=ExtResource("1_oesnm")]
 position = Vector2(61, -50)

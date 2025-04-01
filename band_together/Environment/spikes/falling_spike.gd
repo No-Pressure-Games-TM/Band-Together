@@ -3,7 +3,7 @@ extends Area2D
 # Configuration variables
 @export var is_falling_spike: bool = true
 @export var fall_speed: float = 300.0
-@export var fall_trigger_distance: float = 60.0
+@export var fall_trigger_distance: float = 15.0  # SEVERELY REDUCED to just 15 units (immediate proximity)
 @export var trigger_delay: float = 0.5
 @export var warning_time: float = 0.5
 @export var reset_time: float = 2.0
@@ -35,20 +35,27 @@ func _ready():
 	_setup_detection_area()
 
 func _setup_detection_area():
+	# If detection area already exists, remove it to recreate with new size
 	if has_node("DetectionArea"):
-		return
+		get_node("DetectionArea").queue_free()
+		await get_tree().process_frame  # Wait one frame to ensure removal
 	
+	# Create new detection area with MUCH smaller size
 	var area = Area2D.new()
 	area.name = "DetectionArea"
 	add_child(area)
 	
 	var shape = CollisionShape2D.new()
 	var rect = RectangleShape2D.new()
-	rect.size = Vector2(fall_trigger_distance * 2, 500)
+	
+	# Make detection area VERY narrow - only right beneath the spike
+	rect.size = Vector2(fall_trigger_distance * 2, 200)  # Reduced height too
+	
 	shape.shape = rect
-	shape.position = Vector2(0, 250)
+	shape.position = Vector2(0, 100)  # Positioned much closer to the spike
 	area.add_child(shape)
 	
+	# Connect the signal
 	area.body_entered.connect(_on_detection_area_body_entered)
 
 func _on_detection_area_body_entered(body):
@@ -67,12 +74,13 @@ func _physics_process(delta):
 		if players.size() > 0:
 			player = players[0]
 	
-	# Direct detection backup
+	# Direct detection backup - STRICT PROXIMITY CHECK
 	if player and not is_falling and not has_hit and not is_warning and not is_delaying:
 		var x_distance = abs(player.global_position.x - global_position.x)
-		var player_is_below = player.global_position.y > global_position.y
+		var y_distance = player.global_position.y - global_position.y
 		
-		if x_distance < fall_trigger_distance and player_is_below:
+		# Only trigger if player is DIRECTLY beneath the spike and very close
+		if x_distance < fall_trigger_distance and y_distance > 0 and y_distance < 100:
 			_start_fall_sequence()
 	
 	# Delay phase
@@ -146,6 +154,7 @@ func _on_body_entered(body):
 	elif body.is_in_group("enemy") and body.has_method("take_damage"):
 		var dir = sign(body.position.x - position.x)
 		body.take_damage(10000, dir)
+		
 		_spike_hit()
 	
 	# Ground/wall collision

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://383gib38h6jc"]
+[gd_scene load_steps=3 format=3 uid="uid://b0awn5kbv3bb5"]
 
 [ext_resource type="Script" path="res://Environment/spikes/falling_spike.gd" id="1_22ubt"]
 [ext_resource type="Texture2D" uid="uid://d3p8yy8ndlq7u" path="res://Environment/spikes/spike.PNG" id="2_ylit2"]

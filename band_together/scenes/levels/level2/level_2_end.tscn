@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cp4bunb3l0flt"]
+[gd_scene load_steps=15 format=4 uid="uid://bleudlj1070a1"]
 
 [ext_resource type="PackedScene" uid="uid://drgq6uc3w23m0" path="res://scenes/levels/forest_parallax.tscn" id="1_b617m"]
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="2_fkoe6"]
@@ -282,13 +282,13 @@ lock_y = true
 position = Vector2(60, -65)
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(174, -60)
+position = Vector2(189, -60)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("6_mtqtu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(199, -82)
+position = Vector2(192, -71)
 shape = SubResource("RectangleShape2D_yhoel")
 
 [node name="Door" parent="." instance=ExtResource("7_krrb6")]
@@ -301,7 +301,7 @@ yellow_ghost = true
 moving = true
 
 [node name="Forte" parent="." node_paths=PackedStringArray("player_node") instance=ExtResource("8_2c5je")]
-position = Vector2(452, -64)
+position = Vector2(550, -61)
 orange_ghost = true
 player_node = NodePath("../Breve")
 

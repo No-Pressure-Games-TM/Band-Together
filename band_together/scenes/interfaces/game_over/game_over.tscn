@@ -3,10 +3,10 @@
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="1_2afko"]
 [ext_resource type="Script" path="res://scenes/interfaces/game_over/game_over.gd" id="1_ljw15"]
 [ext_resource type="PackedScene" uid="uid://l0oouukr5bwn" path="res://scenes/scene_transition/scene_transition.tscn" id="2_0nc2f"]
-[ext_resource type="Texture2D" uid="uid://fq6qg6ww7bo5" path="res://assets/backgrounds/game_over.jpg" id="2_o65wy"]
+[ext_resource type="Texture2D" uid="uid://bhd1ejk3hwh4n" path="res://assets/backgrounds/game_over.png" id="3_w2aie"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lng4i"]
-texture = ExtResource("2_o65wy")
+texture = ExtResource("3_w2aie")
 expand_margin_left = 20.0
 modulate_color = Color(0.460347, 0.460347, 0.460347, 1)
 
