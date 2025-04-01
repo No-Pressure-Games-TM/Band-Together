@@ -4,8 +4,8 @@ extends CharacterBody2D
 @export var yellow_ghost: bool = false
 @export var orange_ghost: bool = false
 @export var player_node: CharacterBody2D
-
 @export var moving: bool = false
+
 var target_pos: Vector2
 var follow_range: float = 5.0  # 5 pixels
 var follow_speed: float = 111.0
@@ -18,6 +18,21 @@ func _ready():
 	else:
 		# orange or unspecified
 		$AnimatedSprite2D.play("orange")
+	
+	# Try to find player if not already set
+	if player_node == null:
+		player_node = find_player()
+		
+# Attempt to find the player if not set in editor
+
+func find_player():
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		player_node = players[0]
+		return player_node
+
+	print("Ghost couldn't find player! Will try again next frame.")
+	return null
 
 func _physics_process(delta):
 	if moving:

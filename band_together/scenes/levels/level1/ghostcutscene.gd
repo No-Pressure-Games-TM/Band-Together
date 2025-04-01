@@ -5,7 +5,9 @@ func _on_body_entered(body):
 		if get_parent().name == "Level1End":
 			get_parent().get_node("Breve").get_child(0).flip_h = true
 			GameManager.start_dialogue("findbreve")
-		# put level2 stuff here
+		if get_parent().name == "Level2End":
+			get_parent().get_node("Forte").get_child(0).flip_h = true
+			GameManager.start_dialogue("findforte")
 		elif get_parent().name == "Level3End":
 			GameManager.start_dialogue("findarco")
 			
