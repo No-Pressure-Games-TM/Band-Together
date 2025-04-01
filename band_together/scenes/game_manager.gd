@@ -78,6 +78,8 @@ func dialogic_signal_end():
 			show_coins("violin")
 		"findarco":
 			get_tree().current_scene.find_child("Arco").moving = true
+		"findforte":
+			get_tree().current_scene.find_child("Forte").moving = true
 		"findbreve":
 			get_tree().current_scene.find_child("Breve").moving = true
 		"ending":
