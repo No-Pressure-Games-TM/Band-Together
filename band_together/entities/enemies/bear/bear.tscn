@@ -49,7 +49,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 20.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -111,29 +111,23 @@ size = Vector2(28, 22)
 
 [node name="Bear" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 4
 script = ExtResource("1_t5wfx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_0oen4")
 sprite_frames = SubResource("SpriteFrames_c51lr")
-animation = &"walk"
+animation = &"idle"
 
 [node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_armpr")
 }
 
-[node name="ChangeDirection" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
-autostart = true
-
-[node name="DeathTimer" type="Timer" parent="."]
-wait_time = 2.0
-
-[node name="KnockbackTimer" type="Timer" parent="."]
-wait_time = 0.2
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-10, 0)
+target_position = Vector2(0, 17)
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 5)
@@ -147,7 +141,22 @@ collision_mask = 2
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_api6m")
 
+[node name="ChangeDirection" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="KnockbackTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="StopMoving" type="Timer" parent="."]
+wait_time = 2.206
+one_shot = true
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="ChangeDirection" to="." method="_on_change_direction_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
-[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
