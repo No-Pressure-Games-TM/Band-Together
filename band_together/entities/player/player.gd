@@ -74,6 +74,9 @@ func _ready():
 	#camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
 	#camera.upwards_offset = upwards_offset
 	#camera.downwards_offset = downwards_offset
+	if GameManager.sax_unlocked:
+		enable_dash()
+	
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
 	parent_node = get_parent()
