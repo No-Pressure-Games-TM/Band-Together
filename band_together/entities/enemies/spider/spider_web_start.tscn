@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://va3v00ta5dpc"]
+[gd_scene load_steps=4 format=3 uid="uid://c4aeoqgffqsbq"]
 
 [ext_resource type="Texture2D" uid="uid://nrmjoxkajccg" path="res://entities/enemies/spider/spider_web.png" id="1_iastk"]
 [ext_resource type="PackedScene" uid="uid://d3mn16507o0jw" path="res://entities/enemies/spider/spider.tscn" id="2_i12tc"]

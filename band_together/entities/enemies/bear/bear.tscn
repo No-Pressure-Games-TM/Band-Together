@@ -1,0 +1,163 @@
+[gd_scene load_steps=18 format=3 uid="uid://cjuxwn44aqtdl"]
+
+[ext_resource type="Script" path="res://entities/enemies/bear/bear.gd" id="1_t5wfx"]
+[ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="2_xsxp0"]
+[ext_resource type="Texture2D" uid="uid://bp00rk6fe2hnf" path="res://entities/enemies/bear/bear_idle.PNG" id="3_7fs48"]
+[ext_resource type="Texture2D" uid="uid://cg6w83jwnkj06" path="res://entities/enemies/bear/bear_walk.PNG" id="4_tkwqt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0oen4"]
+resource_local_to_scene = true
+shader = ExtResource("2_xsxp0")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvcsi"]
+atlas = ExtResource("3_7fs48")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf3f0"]
+atlas = ExtResource("3_7fs48")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qn66h"]
+atlas = ExtResource("3_7fs48")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68t82"]
+atlas = ExtResource("4_tkwqt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbxo1"]
+atlas = ExtResource("4_tkwqt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wj3bi"]
+atlas = ExtResource("4_tkwqt")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c51lr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvcsi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf3f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn66h")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_68t82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xbxo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wj3bi")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_qrclp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_568ff"]
+resource_name = "flash"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_armpr"]
+_data = {
+"RESET": SubResource("Animation_qrclp"),
+"flash": SubResource("Animation_568ff")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t3fnm"]
+size = Vector2(27, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_api6m"]
+size = Vector2(28, 22)
+
+[node name="Bear" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_t5wfx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_0oen4")
+sprite_frames = SubResource("SpriteFrames_c51lr")
+animation = &"idle"
+frame_progress = 0.85049
+
+[node name="HitFlash" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_armpr")
+}
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-10, 0)
+target_position = Vector2(0, 17)
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_t3fnm")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_api6m")
+
+[node name="ChangeDirection" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="KnockbackTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="StopMoving" type="Timer" parent="."]
+wait_time = 2.206
+one_shot = true
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="ChangeDirection" to="." method="_on_change_direction_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]

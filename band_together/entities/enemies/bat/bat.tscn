@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://e6pdpjfi37yb"]
+[gd_scene load_steps=13 format=3 uid="uid://ys8uycg700nt"]
 
 [ext_resource type="Script" path="res://entities/enemies/bat/bat.gd" id="1_5lpxl"]
 [ext_resource type="Texture2D" uid="uid://dcmxkoduopn68" path="res://entities/enemies/bat/bat.PNG" id="1_lntw4"]
