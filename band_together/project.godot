@@ -26,9 +26,8 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
-"Arco": "res://dialogic timelines/arco.dch",
+"Arco": "res://dialogic timelines/Arco.dch",
 "allegro": "res://allegro.dch",
-"arco": "res://dialogic timelines/arco.dch",
 "breve": "res://dialogic timelines/breve.dch",
 "forte": "res://dialogic timelines/forte.dch",
 "ghost": "res://ghost.dch"

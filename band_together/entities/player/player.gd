@@ -63,6 +63,7 @@ var attack_animation: bool = false
 var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
 @onready var i_frame_timer: float = default_i_frame_timer
 var respawning: bool = false
+var parent_node
 
 #Signal for sax attack (creation of reed projectiles)
 #https://www.youtube.com/watch?v=7ijfcTN4g0Y
@@ -75,13 +76,20 @@ func _ready():
 	#camera.downwards_offset = downwards_offset
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
-	$BeachMarimba.play()
-	$BeachDrum.play()
-	$BeachSax.play()
-	$BeachString.play()
-	$BeachMarimba.volume_db = 0
-	if GameManager.drum_unlocked:
-		$BeachDrum.volume_db = 0
+	parent_node = get_parent()
+	if parent_node:
+		var parent_name = parent_node.name
+	
+		if parent_name == "Level31" or parent_name == "Level32" or parent_name == "Level3_3" or parent_name == "Level3End":
+			$Waltz.play()
+		else:
+			$BeachMarimba.play()
+			$BeachDrum.play()
+			$BeachSax.play()
+			$BeachString.play()
+			$BeachMarimba.volume_db = 0
+		if GameManager.drum_unlocked:
+			$BeachDrum.volume_db = 0
 		
 
 func _physics_process(delta):
@@ -403,12 +411,14 @@ func use_attack(instrument: String, direction: int) -> void:
 	weapon_cooling_down = true
 	match instrument:
 		"baton":
+			$BatonAttack.play()
 			$BatonArea/BatonAtack.disabled = false
 			$BatonArea/BatonAtack/BatonTimer.start()
 			play_animation("baton_attack")
 			smear.play("smear")
 			attack_animation = true
 		"drum":
+			$DrumAttack.play()
 			$DrumKnockback/DrumTimer.start()
 			$DrumKnockback/CollisionShape2D.disabled = false
 			play_animation("drum_attack")
@@ -423,6 +433,7 @@ func use_attack(instrument: String, direction: int) -> void:
 			$"Reed Timer".start()
 		"violin":
 			# place violin functionality here
+			$ViolinAttack.play()
 			$ViolinArea/ViolinAttackTop.disabled = false
 			$ViolinArea/ViolinAttackBottom.disabled = false
 			$ViolinArea/ViolinTimer.start()
@@ -489,6 +500,7 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 		if randf() < 0.1:
 			# Critical strike! maybe play diff noise?
 			crit_label.visible = true
+			$CritAttack.play()
 			body.take_damage(2*damage, hit_dir)
 		else:
 			# Regular damage :(
