@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="6_ytim7"]
 [ext_resource type="PackedScene" uid="uid://ys8uycg700nt" path="res://entities/enemies/bat/bat.tscn" id="7_07b6s"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="8_7mogx"]
-[ext_resource type="PackedScene" uid="uid://va3v00ta5dpc" path="res://entities/enemies/spider/spider_web_start.tscn" id="9_y0akr"]
+[ext_resource type="PackedScene" uid="uid://c4aeoqgffqsbq" path="res://entities/enemies/spider/spider_web_start.tscn" id="9_y0akr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_54s3i"]
 texture = ExtResource("3_j3tsy")
