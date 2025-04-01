@@ -5,34 +5,52 @@ const GRAVITY_ACCELERATION = 980.0
 
 # Bear movement and behavior configuration
 # --------------------------------------
-@export var direction: int = -1									# Initial movement direction (-1 = left, 1 = right)
-@export var speed: float = 40.0									# Normal walking speed when patrolling
-@export var chase_speed: float = 75.0							# Increased speed when actively chasing the player
-@export var chase_distance: float = 150.0						# Maximum distance at which bear can detect and chase player
-@export var attack_distance: float = 60.0						# Close distance at which bear switches to attack mode
-@export var hp: float = 60.0										# Bear's health points - how much damage it can take before dying
-@export var avoid_falls: bool = true								# Whether the bear should stop at platform edges
-@export var idle_telegraph_duration: float = 1.2					# How long to play the idle animation telegraph (seconds)
+@export var direction: int = -1 # Initial movement direction (-1 = left, 1 = right)
+@export var speed: float = 40.0 # Normal walking speed when patrolling
+@export var chase_speed: float = 75.0 # Increased speed when actively chasing the player
+@export var chase_distance: float = 150.0 # Maximum distance at which bear can detect and chase player
+@export var attack_distance: float = 60.0 # Close distance at which bear switches to attack mode
+@export var hp: float = 60.0 # Bear's health points - how much damage it can take before dying
+@export var avoid_falls: bool = true # Whether the bear should stop at platform edges
+@export var idle_telegraph_duration: float = 1.2 # How long to play the idle animation telegraph (seconds)
+
+# Patrol area configuration
+# --------------------------------------
+@export var restrict_to_area: bool = true # Whether to restrict the bear to a set patrol area
+@export var patrol_range: float = 100.0 # Distance bear can move left/right from its starting position
+@export var return_to_center: bool = true # Whether bear should return to center when not chasing
 
 # Node references for easy access
 # --------------------------------------
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var raycast: RayCast2D = $RayCast2D						# Used for edge detection
-@onready var hitbox: Area2D = $Hitbox         					# Used for attacking the player
+@onready var raycast: RayCast2D = $RayCast2D # Used for edge detection
+@onready var hitbox: Area2D = $Hitbox # Used for attacking the player
 
 # State tracking variables
 # --------------------------------------
-var player = null                 								# Reference to the player character
-var stopped: bool = false         								# Whether bear is in idle state during patrol
-var knocked_back: bool = false    								# Whether bear is currently in knockback state
-var spinning: bool = false        								# Used during death animation
-var is_chasing: bool = false      								# Whether bear is actively chasing player
-var is_attacking: bool = false    								# Whether bear is in attack mode
-var has_telegraphed: bool = false 								# Whether bear has ever played the telegraph
-var is_telegraphing: bool = false 								# Whether bear is currently telegraphing
-var telegraph_timer: float = 0.0  								# Timer for current telegraph animation
+var player = null # Reference to the player character
+var stopped: bool = false # Whether bear is in idle state during patrol
+var knocked_back: bool = false # Whether bear is currently in knockback state
+var spinning: bool = false # Used during death animation
+var is_chasing: bool = false # Whether bear is actively chasing player
+var is_attacking: bool = false # Whether bear is in attack mode
+var has_telegraphed: bool = false # Whether bear has ever played the telegraph
+var is_telegraphing: bool = false # Whether bear is currently telegraphing
+var telegraph_timer: float = 0.0 # Timer for current telegraph animation
+
+# Patrol area variables
+# --------------------------------------
+var start_position: Vector2 # Starting position of the bear
+var left_boundary: float # Left boundary of patrol area
+var right_boundary: float # Right boundary of patrol area
+var returning_to_center: bool = false # Whether bear is currently returning to center
 
 func _ready():
+	# Store starting position for patrol boundaries
+	start_position = global_position
+	left_boundary = start_position.x - patrol_range
+	right_boundary = start_position.x + patrol_range
+	
 	# Setup required timers for bear behavior
 	# --------------------------------------
 	# Timer for random stopping during patrol
@@ -117,18 +135,19 @@ func _physics_process(delta):
 	# Handle player detection
 	var should_chase = false
 	var should_attack = false
+	var should_return = false
 	
 	if player:
 		var distance = global_position.distance_to(player.global_position)
 		
-		# Update direction to face player
+		# Update direction to face player only when in detection range
 		if distance < chase_distance:
 			direction = sign(player.global_position.x - global_position.x)
 			sprite.flip_h = (direction > 0)
 			
 			# Update raycast direction
-			if raycast and ((direction > 0 and raycast.position.x < 0) or 
-						   (direction < 0 and raycast.position.x > 0)):
+			if raycast and ((direction > 0 and raycast.position.x < 0) or
+			   (direction < 0 and raycast.position.x > 0)):
 				raycast.position.x *= -1
 			
 			# Determine state based on distance
@@ -137,22 +156,40 @@ func _physics_process(delta):
 			else:
 				should_chase = true
 	
+	# Check if bear should return to center when not chasing
+	if restrict_to_area and return_to_center and not should_chase and not should_attack and not is_attacking and not is_chasing:
+		var distance_to_center = abs(global_position.x - start_position.x)
+		if distance_to_center > 20:  # Small threshold to avoid jittering
+			returning_to_center = true
+			direction = sign(start_position.x - global_position.x)
+			sprite.flip_h = (direction > 0)
+		else:
+			returning_to_center = false
+	
 	# Check for edges
 	var will_fall = false
 	if avoid_falls and raycast and is_on_floor():
 		will_fall = not raycast.is_colliding()
-		
-		# Stop at edges when chasing or attacking
-		if will_fall and (should_chase or should_attack):
-			velocity.x = 0
-			sprite.play("idle")
-			move_and_slide()
-			return
+	
+	# Stop at edges when chasing or attacking
+	if will_fall and (should_chase or should_attack):
+		velocity.x = 0
+		sprite.play("idle")
+		move_and_slide()
+		return
+	
+	# Check patrol boundaries
+	var at_boundary = false
+	if restrict_to_area and not should_chase and not should_attack and not returning_to_center:
+		if (direction < 0 and global_position.x <= left_boundary) or (direction > 0 and global_position.x >= right_boundary):
+			at_boundary = true
+			flip()
 	
 	# Handle movement based on state
 	if should_attack:
 		is_attacking = true
 		is_chasing = false
+		returning_to_center = false
 		
 		if will_fall:
 			velocity.x = 0
@@ -187,6 +224,7 @@ func _physics_process(delta):
 		is_attacking = false
 		is_chasing = true
 		is_telegraphing = false
+		returning_to_center = false
 		
 		if will_fall:
 			velocity.x = 0
@@ -196,10 +234,26 @@ func _physics_process(delta):
 			sprite.speed_scale = 1.0
 			velocity.x = direction * chase_speed
 	
+	# Returning to center state
+	elif returning_to_center:
+		is_attacking = false
+		is_chasing = false
+		is_telegraphing = false
+		stopped = false
+		
+		if will_fall:
+			velocity.x = 0
+			sprite.play("idle")
+		else:
+			sprite.play("walk")
+			sprite.speed_scale = 0.8  # Slightly slower return
+			velocity.x = direction * speed * 0.8
+	
 	# Idle/stopped state
 	elif stopped:
 		is_attacking = false
 		is_chasing = false
+		returning_to_center = false
 		sprite.play("idle")
 		sprite.speed_scale = 1.0
 		velocity.x = 0
@@ -211,7 +265,7 @@ func _physics_process(delta):
 		is_telegraphing = false
 		
 		# Check for edges or walls during patrol
-		if raycast and ((not raycast.is_colliding() and is_on_floor()) or is_on_wall()):
+		if (raycast and ((not raycast.is_colliding() and is_on_floor()) or is_on_wall())) or at_boundary:
 			flip()
 		
 		sprite.play("walk")
@@ -296,3 +350,21 @@ func _process(delta):
 	# Death spinning animation
 	if spinning:
 		rotation_degrees += 360 * delta * 2
+		
+	# Draw patrol boundaries in editor only
+	if Engine.is_editor_hint() or OS.is_debug_build():
+		queue_redraw()
+
+# Draw debug visuals for patrol area in editor
+#func _draw():
+	#if Engine.is_editor_hint() or OS.is_debug_build():
+		#if restrict_to_area:
+			## Draw left boundary
+			#draw_line(to_local(Vector2(left_boundary, global_position.y - 50)), 
+					 #to_local(Vector2(left_boundary, global_position.y + 50)), 
+					 #Color.RED, 2.0)
+			#
+			## Draw right boundary
+			#draw_line(to_local(Vector2(right_boundary, global_position.y - 50)), 
+					 #to_local(Vector2(right_boundary, global_position.y + 50)), 
+					 #Color.RED, 2.0)
