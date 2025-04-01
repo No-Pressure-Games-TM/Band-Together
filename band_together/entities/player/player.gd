@@ -86,6 +86,7 @@ func _ready():
 	$BeachMarimba.volume_db = 0
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
+	add_to_group("player")
 
 func _draw():
 	# delete this before shipping

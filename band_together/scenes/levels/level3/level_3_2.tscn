@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://h1k6jfp0w7rn" path="res://Environment/cave tileset.png" id="3_j3tsy"]
 [ext_resource type="Script" path="res://scenes/test/fall_area.gd" id="4_3wq06"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="6_ytim7"]
-[ext_resource type="PackedScene" path="res://entities/enemies/bat/bat.tscn" id="7_07b6s"]
+[ext_resource type="PackedScene" uid="uid://ys8uycg700nt" path="res://entities/enemies/bat/bat.tscn" id="7_07b6s"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="8_7mogx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_54s3i"]
