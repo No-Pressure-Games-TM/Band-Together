@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://0qndnthytrpj"]
+
+[ext_resource type="Script" path="res://scenes/beginning.gd" id="1_fhww8"]
+[ext_resource type="Texture2D" uid="uid://snna5f5aemx5" path="res://Environment/beginning ship cut scene.PNG" id="2_g0s5t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmuve"]
+atlas = ExtResource("2_g0s5t")
+region = Rect2(0, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gkht"]
+atlas = ExtResource("2_g0s5t")
+region = Rect2(320, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtnol"]
+atlas = ExtResource("2_g0s5t")
+region = Rect2(640, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dmin"]
+atlas = ExtResource("2_g0s5t")
+region = Rect2(960, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e13w0"]
+atlas = ExtResource("2_g0s5t")
+region = Rect2(1280, 0, 320, 180)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ail7j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmuve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gkht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtnol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dmin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e13w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtnol")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="Beginning" type="Node2D"]
+script = ExtResource("1_fhww8")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ail7j")
+frame = 3
+frame_progress = 0.0380489
+centered = false

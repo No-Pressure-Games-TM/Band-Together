@@ -10,12 +10,22 @@
 "style": "",
 "suffix": ""
 },
-"default_portrait": "",
+"default_portrait": "arco",
 "description": "",
 "display_name": "Arco",
 "mirror": false,
 "nicknames": [""],
 "offset": Vector2(0, 0),
-"portraits": {},
+"portraits": {
+"arco": {
+"export_overrides": {
+"image": "\"res://assets/portraits/blue portrait.PNG\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
 "scale": 1.0
 }

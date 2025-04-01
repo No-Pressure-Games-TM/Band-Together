@@ -42,10 +42,6 @@ const reed_scene: PackedScene = preload("res://entities/player/reed.tscn")
 var direction: int = 0 
 var last_direction: int = 0
 
-# DEBUG - DELETE ME BEFORE RELEASE
-var path: PackedVector2Array = []
-var pathing: bool = false
-
 #region combat
 var damage: int = 15
 var weapon_cooling_down: bool = false
@@ -67,6 +63,7 @@ var attack_animation: bool = false
 var default_i_frame_timer: float = 1.3  # number of seconds to be invincible after being hit
 @onready var i_frame_timer: float = default_i_frame_timer
 var respawning: bool = false
+var parent_node
 
 #Signal for sax attack (creation of reed projectiles)
 #https://www.youtube.com/watch?v=7ijfcTN4g0Y
@@ -79,34 +76,24 @@ func _ready():
 	#camera.downwards_offset = downwards_offset
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
-	$BeachMarimba.play()
-	$BeachDrum.play()
-	$BeachSax.play()
-	$BeachString.play()
-	$BeachMarimba.volume_db = 0
-	if GameManager.drum_unlocked:
-		$BeachDrum.volume_db = 0
-	add_to_group("player")
-
-func _draw():
-	# delete this before shipping
-	if path.size() >= 2:
-		for i in range(path.size() -1):
-			draw_line(to_local(path[i]), to_local(path[i+1]), Color.RED, 30)
+	parent_node = get_parent()
+	if parent_node:
+		var parent_name = parent_node.name
+	
+		if parent_name == "Level31" or parent_name == "Level32" or parent_name == "Level3_3" or parent_name == "Level3End":
+			$Waltz.play()
+		else:
+			$BeachMarimba.play()
+			$BeachDrum.play()
+			$BeachSax.play()
+			$BeachString.play()
+			$BeachMarimba.volume_db = 0
+		if GameManager.drum_unlocked:
+			$BeachDrum.volume_db = 0
+		
 
 func _physics_process(delta):
-	if GameManager.in_dialogue:
-		play_animation("idle")  # Ensure the player stays in idle animation
-		return  # Skip all movement processing if in dialogue
-	
-	if GameManager.in_dialogue:
-		play_animation("idle")  # Ensure the player stays in idle animation
-		return  # Skip all movement processing if in dialogue
-	
-	# delete this pathing part before shipping
-	if pathing:
-		path.append(global_position)
-		queue_redraw()
+
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
 		
@@ -116,10 +103,8 @@ func _physics_process(delta):
 	if GameManager.sax_unlocked:
 		$BeachSax.volume_db = 0
 		
-		
 	#if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 		#respawn()	
-		
 		
 	if GameManager.in_dialogue == false and not respawning and not SceneTransition.transitioning:
 		# Added this if statement to remove control when in dialogue
@@ -196,14 +181,6 @@ func adjust_volumes() -> void:
 
 
 func check_input() -> void:
-	# DELETE THE NEXT 2 IF STATEMENTS BEFORE SHIPPING GAME
-	if Input.is_action_just_pressed("Path"):
-		pathing = true
-		print_debug("Pathing started")
-	if Input.is_action_just_pressed("StopPath"):
-		pathing = false
-		print_debug("Pathing stopped")
-		path.clear()
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
@@ -295,7 +272,6 @@ func jump(delta) -> void:
 	
 	## Dash
 	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing and dash_enabled:
-	elif GameManager.get_current_instrument() == "sax" and Input.is_action_just_pressed("Accept") and !is_charging and !is_dashing and dash_enabled:
 		#Start charging up a dash
 		print("DASH STARTING")
 		is_charging = true
@@ -308,10 +284,6 @@ func jump(delta) -> void:
 	## Jump Cutting
 	if Input.is_action_just_released("Accept") and velocity.y < -30 and cutting_enabled:
 		velocity.y = - 30
-
-func enable_dash() -> void:
-	dash_enabled = true
-	print("Dash enabled!")
 
 func enable_dash() -> void:
 	dash_enabled = true
@@ -439,12 +411,14 @@ func use_attack(instrument: String, direction: int) -> void:
 	weapon_cooling_down = true
 	match instrument:
 		"baton":
+			$BatonAttack.play()
 			$BatonArea/BatonAtack.disabled = false
 			$BatonArea/BatonAtack/BatonTimer.start()
 			play_animation("baton_attack")
 			smear.play("smear")
 			attack_animation = true
 		"drum":
+			$DrumAttack.play()
 			$DrumKnockback/DrumTimer.start()
 			$DrumKnockback/CollisionShape2D.disabled = false
 			play_animation("drum_attack")
@@ -459,6 +433,7 @@ func use_attack(instrument: String, direction: int) -> void:
 			$"Reed Timer".start()
 		"violin":
 			# place violin functionality here
+			$ViolinAttack.play()
 			$ViolinArea/ViolinAttackTop.disabled = false
 			$ViolinArea/ViolinAttackBottom.disabled = false
 			$ViolinArea/ViolinTimer.start()
@@ -525,6 +500,7 @@ func _on_baton_area_body_entered(body: Node2D) -> void:
 		if randf() < 0.1:
 			# Critical strike! maybe play diff noise?
 			crit_label.visible = true
+			$CritAttack.play()
 			body.take_damage(2*damage, hit_dir)
 		else:
 			# Regular damage :(
