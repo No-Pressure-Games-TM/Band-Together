@@ -1486,7 +1486,7 @@ scale = Vector2(1, 0.952034)
 
 [node name="Door" parent="." instance=ExtResource("9_oy1y0")]
 position = Vector2(3803, 57)
-destination_scene = "res://scenes/levels/level1/level_2_end.tscn"
+destination_scene = "res://scenes/levels/level2/level_2_end.tscn"
 
 [node name="JumpSpikes" type="Node" parent="."]
 
