@@ -1,0 +1,6 @@
+"Blasted storm. Hold on, everyone!"
+"Why'd we have to head to Paladi in this weather?"
+"Even if we got there in one piece, our instruments are gonna be so broken..."
+"Ah! My saxophone's flying!"
+"Forte, don't-"
+do GameManager.dialogic_signal_end()

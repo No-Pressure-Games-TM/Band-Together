@@ -4,6 +4,10 @@ extends Control
 
 func _ready():
 	AudioManager.play_music(AudioManager.music_player.stream)
+	if GameManager.new_game:
+		start_game_btn.text = "New Game"
+	else:
+		start_game_btn.text = "Continue"
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
@@ -26,8 +30,11 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_start_pressed() -> void:
-	#SceneTransition.change_scene(GameManager.furthest_level)
-	SceneTransition.change_scene("res://scenes/levels/level2/level2_1.tscn")
+	if GameManager.new_game:
+		SceneTransition.change_scene("res://scenes/beginning.tscn")
+	else:
+		SceneTransition.change_scene(GameManager.furthest_level)
+	#SceneTransition.change_scene("res://scenes/levels/level2/level2_1.tscn")
 	#SceneTransition.change_scene("res://scenes/test/test_walljump.tscn")
 	
 func _on_options_pressed() -> void:
@@ -47,4 +54,5 @@ func _on_reset_game_pressed():
 	GameManager.current_instrument = 0  # back to baton
 	UI.lives = -1  # Reset lives
 	UI.coins = 0  # Reset coins
+	GameManager.new_game = true
 	SceneTransition.change_scene(get_tree().current_scene.scene_file_path)

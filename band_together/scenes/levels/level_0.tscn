@@ -361,6 +361,7 @@ position = Vector2(0, 246)
 [node name="Door2" parent="SceneObjects" instance=ExtResource("7_js6hu")]
 z_index = -2
 position = Vector2(549, -79)
+destination_scene = "res://scenes/levels/level2/level2_1.tscn"
 
 [node name="Door3" parent="SceneObjects" instance=ExtResource("7_js6hu")]
 z_index = -2

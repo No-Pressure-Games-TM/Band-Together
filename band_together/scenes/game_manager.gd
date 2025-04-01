@@ -1,14 +1,15 @@
 extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
-var drum_unlocked: bool = true
-var sax_unlocked: bool = true
-var violin_unlocked: bool = true
+var drum_unlocked: bool = false
+var sax_unlocked: bool = false
+var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
 
 # rudimentary saving system in case players die
 var furthest_level: String = "res://scenes/levels/level_0.tscn"
 var last_ground_position: Vector2 = Vector2.ZERO
+var new_game: bool = true
 
 # dialogic
 var in_dialogue: bool = false
@@ -75,6 +76,26 @@ func dialogic_signal_end():
 			show_coins("1")
 		"findviolin":
 			show_coins("violin")
+		"findarco":
+			get_tree().current_scene.find_child("Arco").moving = true
+		"findbreve":
+			get_tree().current_scene.find_child("Breve").moving = true
+		"ending":
+			get_tree().current_scene.get_node("CanvasModulate/AnimationPlayer").play("fade_to_black")
+			await get_tree().create_timer(5).timeout
+			furthest_level = "res://scenes/levels/level_0.tscn"
+			SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
+			UI.get_node("CoinCount").visible = true
+			UI.get_node("CurrentWeapon").visible = true
+			UI.get_node("CoinIcon").visible = true
+			UI.get_node("Hearts").visible = true
+		"introcutscene":
+			SceneTransition.change_scene("res://scenes/levels/level_0.tscn")
+			new_game = false
+			UI.get_node("CoinCount").visible = true
+			UI.get_node("CurrentWeapon").visible = true
+			UI.get_node("CoinIcon").visible = true
+			UI.get_node("Hearts").visible = true
 	current_dialogue = ""
 	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	in_dialogue = false
