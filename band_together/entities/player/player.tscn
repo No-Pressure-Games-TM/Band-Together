@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=67 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="3_ipirm"]
@@ -21,6 +21,11 @@
 [ext_resource type="AudioStream" uid="uid://ljtfbhmtk8mp" path="res://audio/music/Beach Track! - Sax.wav" id="15_ms2uu"]
 [ext_resource type="AudioStream" uid="uid://ceh1gap8kgld1" path="res://audio/music/Beach Track! - Strings.wav" id="16_xcjgq"]
 [ext_resource type="AudioStream" uid="uid://d1sfa5qncfetn" path="res://audio/sfx/sax attack.wav" id="19_m4wco"]
+[ext_resource type="AudioStream" uid="uid://yk8fpf8minyk" path="res://audio/sfx/Waltz.wav" id="21_5rfoj"]
+[ext_resource type="AudioStream" uid="uid://np8hv1scl3r6" path="res://audio/sfx/batonwhoosh.wav" id="21_iciqu"]
+[ext_resource type="AudioStream" uid="uid://c0xgbtvjuwl53" path="res://audio/sfx/hit.wav" id="22_4et5o"]
+[ext_resource type="AudioStream" uid="uid://cd6sfaxvg7r84" path="res://audio/sfx/crit.wav" id="23_ww7p6"]
+[ext_resource type="AudioStream" uid="uid://b0y7su5n0kbn3" path="res://audio/sfx/violinattack.wav" id="24_2icu5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kco12"]
 size = Vector2(10, 30)
@@ -538,8 +543,27 @@ volume_db = -80.0
 stream = ExtResource("16_xcjgq")
 volume_db = -80.0
 
+[node name="Waltz" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_5rfoj")
+
+[node name="BatonAttack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_iciqu")
+
+[node name="DrumAttack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_4et5o")
+volume_db = -12.18
+
+[node name="CritAttack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_ww7p6")
+volume_db = -11.243
+
+[node name="ViolinAttack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("24_2icu5")
+volume_db = -10.306
+
 [node name="SaxAttack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_m4wco")
+volume_db = -10.306
 
 [node name="Line2D" type="Line2D" parent="."]
 width = 15.0
