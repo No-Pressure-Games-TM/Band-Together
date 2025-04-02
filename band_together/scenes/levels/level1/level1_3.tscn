@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://k4oxl1qa80ur"]
+[gd_scene load_steps=20 format=4 uid="uid://k4oxl1qa80ur"]
 
 [ext_resource type="Script" path="res://scenes/levels/level1/level_1_3.gd" id="1_5lgh0"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="2_553ov"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://bh2l3175lputt" path="res://entities/projectiles/coconut/coconut_spawner.tscn" id="10_gnhgq"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="11_sk0en"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="12_dkluk"]
+[ext_resource type="PackedScene" uid="uid://yqww0hejfkrq" path="res://entities/camera/offset_setter.tscn" id="14_wkllp"]
+[ext_resource type="PackedScene" uid="uid://bfv8wa65lj663" path="res://Environment/itemframe/item_frame.tscn" id="15_4mqvr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ejiu8"]
 texture = ExtResource("5_s1vyt")
@@ -281,16 +283,45 @@ position = Vector2(-208, -156)
 grow_time = 2.0
 
 [node name="CoconutSpawner2" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-370, -202)
-max_spawnrate = 0.05
-min_spawnrate = 0.25
-grow_time = 0.7
+position = Vector2(-488, -376)
+moving = true
+sliderange = 32.0
+grav_div = 20.0
+
+[node name="CoconutSpawner7" parent="." instance=ExtResource("10_gnhgq")]
+position = Vector2(-768, -376)
+moving = true
+sliderange = 20.0
+grav_div = 20.0
+
+[node name="CoconutSpawner8" parent="." instance=ExtResource("10_gnhgq")]
+position = Vector2(-856, -376)
+moving = true
+sliderange = 20.0
+grav_div = 20.0
+
+[node name="CoconutSpawner10" parent="." instance=ExtResource("10_gnhgq")]
+position = Vector2(-968, -376)
+moving = true
+sliderange = 32.0
+grav_div = 20.0
+
+[node name="CoconutSpawner11" parent="." instance=ExtResource("10_gnhgq")]
+position = Vector2(-1080, -376)
+moving = true
+sliderange = 32.0
+grav_div = 20.0
+
+[node name="CoconutSpawner6" parent="." instance=ExtResource("10_gnhgq")]
+position = Vector2(-640, -376)
+moving = true
+sliderange = 32.0
+grav_div = 20.0
 
 [node name="CoconutSpawner5" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-1296, -295)
+position = Vector2(-1296, -368)
 max_spawnrate = 0.05
 min_spawnrate = 0.05
-sliderange = 8.0
 
 [node name="CoconutSpawner3" parent="." instance=ExtResource("10_gnhgq")]
 position = Vector2(-365, -238)
@@ -303,78 +334,6 @@ position = Vector2(-359, -216)
 max_spawnrate = 0.4
 min_spawnrate = 0.5
 grow_time = 0.4
-
-[node name="CoconutSpawner7" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-821, -388)
-max_spawnrate = 0.4
-min_spawnrate = 0.6
-moving = true
-sliderange = 300.0
-slidespeed = -20.0
-
-[node name="CoconutSpawner8" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-808, -396)
-max_spawnrate = 0.4
-min_spawnrate = 0.6
-moving = true
-sliderange = 300.0
-slidespeed = 20.0
-
-[node name="CoconutSpawner10" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-1047, -323)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 128.0
-slidespeed = -10.0
-
-[node name="CoconutSpawner14" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-816, -419)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 128.0
-slidespeed = 6.0
-
-[node name="CoconutSpawner15" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-813, -442)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 128.0
-slidespeed = -15.0
-
-[node name="CoconutSpawner16" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-812, -431)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 100.0
-slidespeed = 15.0
-
-[node name="CoconutSpawner11" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-1042, -339)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 128.0
-slidespeed = 20.0
-
-[node name="CoconutSpawner12" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-573, -324)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 128.0
-slidespeed = 20.0
-
-[node name="CoconutSpawner13" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-574, -339)
-max_spawnrate = 0.4
-min_spawnrate = 0.7
-moving = true
-sliderange = 128.0
-slidespeed = -10.0
 
 [node name="Coins" type="Node" parent="."]
 
@@ -652,5 +611,36 @@ position = Vector2(-1352, -247)
 
 [node name="CoinPickup67" parent="." instance=ExtResource("11_sk0en")]
 position = Vector2(-1368, -247)
+
+[node name="OffsetSetter" parent="." instance=ExtResource("14_wkllp")]
+position = Vector2(-326, -152)
+scale = Vector2(1, 20)
+set_y_offset_to = -30
+
+[node name="OffsetSetter3" parent="." instance=ExtResource("14_wkllp")]
+position = Vector2(-672, -128)
+scale = Vector2(1, 20)
+
+[node name="OffsetSetter4" parent="." instance=ExtResource("14_wkllp")]
+position = Vector2(-744, -128)
+scale = Vector2(1, 20)
+set_y_offset_to = -30
+
+[node name="OffsetSetter5" parent="." instance=ExtResource("14_wkllp")]
+position = Vector2(-816, -144)
+scale = Vector2(1, 20)
+
+[node name="OffsetSetter6" parent="." instance=ExtResource("14_wkllp")]
+position = Vector2(-904, -144)
+scale = Vector2(1, 20)
+set_y_offset_to = -20
+
+[node name="OffsetSetter2" parent="." instance=ExtResource("14_wkllp")]
+position = Vector2(-289, -161)
+scale = Vector2(1, 20)
+
+[node name="ItemFrame" parent="." instance=ExtResource("15_4mqvr")]
+position = Vector2(-256, -80)
+show_drum = true
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

@@ -24,7 +24,7 @@ func _ready():
 	$AnimatedSprite2D.play()
 
 func _physics_process(delta):
-	if not chasing and not spinning:
+	if not chasing and not spinning and not knocked_back:
 		dir = target_pos - global_position
 		velocity = dir.normalized() * speed
 		if global_position.distance_to(target_pos) < 3.0:
@@ -55,7 +55,7 @@ func take_damage(amount, knockback_dir):
 		die(knockback_dir)
 	else:
 		knocked_back = true
-		velocity.x = knockback_dir * 50
+		velocity.x = knockback_dir * 100
 		$KnockbackTimer.start(0.2)
 		
 func die(knockback_dir):

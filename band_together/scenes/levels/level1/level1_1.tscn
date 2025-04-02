@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://c4oiwa65qnkwo"]
+[gd_scene load_steps=22 format=4 uid="uid://c4oiwa65qnkwo"]
 
 [ext_resource type="Script" path="res://scenes/levels/level1/level_1_1.gd" id="1_i2g3k"]
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="1_mpho6"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="12_b6rlu"]
 [ext_resource type="Script" path="res://assets/text_scripts/press_to_swap.gd" id="12_q1nk5"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="13_rcw31"]
+[ext_resource type="PackedScene" uid="uid://bfv8wa65lj663" path="res://Environment/itemframe/item_frame.tscn" id="16_xr2mm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_edxun"]
 texture = ExtResource("2_rugup")
@@ -570,6 +571,10 @@ position = Vector2(480, -40)
 [node name="Door" parent="." instance=ExtResource("13_rcw31")]
 position = Vector2(546, -351)
 destination_scene = "res://scenes/levels/level1/level1_2.tscn"
+
+[node name="ItemFrame" parent="." instance=ExtResource("16_xr2mm")]
+position = Vector2(200, 80)
+show_drum = true
 
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="SceneObjects/DrumPickup" to="SceneObjects/DrumPickup" method="_on_body_entered"]

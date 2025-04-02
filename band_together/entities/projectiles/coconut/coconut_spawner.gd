@@ -7,6 +7,7 @@ extends Node2D
 @export var moving: bool = false  # Enable to make it slide left and right!
 @export var sliderange: float = 50.0
 @export var slidespeed: float = 1
+@export var grav_div: float = 2
 
 var start_position: Vector2
 var time: float = 0
@@ -14,6 +15,7 @@ var time: float = 0
 func _ready():
 	start_position = position
 	$Timer.start()
+	time = randf_range(0, TAU)  # start at random position in the sine wave
 
 func _process(delta):
 	time += delta * slidespeed
@@ -25,7 +27,6 @@ func _on_timer_timeout():
 	var instance = coconut.instantiate()
 	instance.spawn_pos = global_position
 	instance.grow_time = grow_time
-	if moving:
-		instance.grav_div = 20
+	instance.grav_div = grav_div
 	get_tree().get_root().add_child.call_deferred(instance)
 	$Timer.start(grow_time + randf_range(max_spawnrate, min_spawnrate))

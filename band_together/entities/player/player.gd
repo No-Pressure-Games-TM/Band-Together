@@ -39,8 +39,7 @@ const reed_scene: PackedScene = preload("res://entities/player/reed.tscn")
 #endregion
 
 
-var direction: int = 0 
-var last_direction: int = 0
+var direction: int = 0
 
 #region combat
 var damage: int = 15
@@ -74,6 +73,7 @@ func _ready():
 	#camera.set_limits(bottom_limit, top_limit, right_limit, left_limit)
 	#camera.upwards_offset = upwards_offset
 	#camera.downwards_offset = downwards_offset
+	enable_dash()  # Added because dash was not working in any levels but 2-1
 	sprite.play("idle")  # This fixes the "Frozen sprite at start" bug
 	crit_label.visible = false
 	parent_node = get_parent()
@@ -94,7 +94,6 @@ func _ready():
 		
 
 func _physics_process(delta):
-
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
 		
@@ -160,7 +159,7 @@ func respawn() -> void:
 	dash_mult = 1
 	grav_div = 1
 	$DashChargeTimer.stop()
-	$DashExecuteTimer.stop()
+	stop_dashing()
 	attached_to_wall = false
 	respawning = true
 	camera.add_trauma(0.2)
@@ -301,7 +300,6 @@ func move_and_animate(delta) -> void:
 		return  # NO MOVING WHEN KNOCKED
 	
 	if direction != 0:
-		last_direction = direction
 		# Flip the sprite based on direction
 		if direction > 0:
 			sprite.flip_h = false  # Face right
@@ -321,12 +319,13 @@ func move_and_animate(delta) -> void:
 			smear.position.x = -29
 	
 	if is_dashing:
+		if not Input.is_action_pressed("Right") and not Input.is_action_pressed("Left"):
+			stop_dashing()
 		# no need to use move_toward so they can turn on a dime
-		velocity.x = last_direction * speed * dash_mult
+		velocity.x = direction * speed * dash_mult
 		if is_on_wall() and sign(velocity.x) == -get_wall_normal().x:
 			# stop dashing when hit a wall
-			$DashExecuteTimer.stop()
-			$DashExecuteTimer.emit_signal("timeout")
+			stop_dashing()
 	elif direction and not attached_to_wall and moving_allowed:
 		if sign(velocity.x) != direction:
 			# Stronger deceleration if turning around or in air
@@ -450,6 +449,15 @@ func pause_jumpcutting():
 	await get_tree().create_timer(0.4).timeout
 	cutting_enabled = true
 
+func toggle_double_jump(is_enabled: bool) -> void:
+	no_doublejump_zone = !is_enabled
+	
+func stop_dashing() -> void:
+	#dash over, return to normal movement and fall speeds
+	dash_mult = 1
+	grav_div = 1
+	is_dashing = false
+
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
 	dash_mult = 2
@@ -457,14 +465,7 @@ func _on_dash_charge_timer_timeout() -> void:
 	speed = 100  # Reset after slowing down previously
 	is_charging = false
 	is_dashing = true
-	$DashExecuteTimer.start()
 	$SaxDash.play()
-	
-func _on_dash_execute_timer_timeout() -> void:
-	#dash over, return to normal movement and fall speeds
-	dash_mult = 1
-	grav_div = 1
-	is_dashing = false
 
 #Re-disables the attack hitbox after the agreed upon duration
 func _on_drum_timer_timeout() -> void:
@@ -476,23 +477,6 @@ func _on_baton_timer_timeout() -> void:
 	$BatonArea/BatonAtack.disabled = true
 	attack_animation = false
 	smear.stop()
-
-### Consequence for enemies hitting the DRUM attack hitbox
-## Commented out to remove drum damage
-#func _on_drum_area_body_entered(body: Node2D) -> void:
-	## Note that drum does 1/2 the damage of baton
-	#if body.is_in_group("enemy") and body.has_method("take_damage"):
-		#var hit_dir = sign(body.position.x - position.x)
-		#if randf() < 0.1:
-			## Critical strike! maybe play diff noise?
-			#crit_label.visible = true
-			#body.take_damage(damage, hit_dir)
-		#else:
-			## Regular damage :(
-			#body.take_damage(damage/2, hit_dir)
-		#
-		#camera.apply_shake(5)
-		#velocity.x += -hit_dir * 100  # knock the player back a tiny bit too
 
 ## Consequence for enemies hitting the BATON hitbox
 func _on_baton_area_body_entered(body: Node2D) -> void:
