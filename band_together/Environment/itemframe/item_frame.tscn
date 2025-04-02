@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfv8wa65lj663"]
+
+[ext_resource type="Texture2D" uid="uid://crv7sajvdyok1" path="res://assets/portraits/item_frame.png" id="1_1g61f"]
+[ext_resource type="Texture2D" uid="uid://l8164h285v6j" path="res://assets/portraits/drum.png" id="2_664xh"]
+[ext_resource type="Script" path="res://Environment/itemframe/item_frame.gd" id="2_ht8pi"]
+[ext_resource type="Texture2D" uid="uid://bqpuadd0cdidg" path="res://assets/portraits/baton.png" id="3_iyqll"]
+[ext_resource type="Texture2D" uid="uid://bi1ytnk42eeah" path="res://assets/portraits/saxophone item.PNG" id="5_y64m5"]
+[ext_resource type="Texture2D" uid="uid://csig5wrj0hij3" path="res://assets/portraits/violin item.PNG" id="6_uw23l"]
+
+[node name="ItemFrame" type="Sprite2D"]
+z_index = 10
+texture = ExtResource("1_1g61f")
+script = ExtResource("2_ht8pi")
+
+[node name="Baton" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_iyqll")
+
+[node name="Drum" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_664xh")
+
+[node name="Sax" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("5_y64m5")
+
+[node name="Violin" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_uw23l")

@@ -10,6 +10,7 @@ func _ready():
 		$SceneObjects/PressToSwap.visible = true
 		# Change camera bounds
 		cam.limit_right = 592
+		GameManager.show_coins("1")  # show the part 2 coins
 		$SceneObjects/DrumPickup.queue_free()  # Remove drum from the game cuz it's picked up
 		
 

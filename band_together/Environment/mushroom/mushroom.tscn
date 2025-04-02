@@ -3,9 +3,8 @@
 [ext_resource type="Script" path="res://Environment/mushroom/mushroom.gd" id="1_k6brm"]
 [ext_resource type="Texture2D" uid="uid://dvx14a50ma5ss" path="res://Environment/mushroom/assets/big mushroom.png" id="2_g7182"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h5xyd"]
-radius = 7.0
-height = 34.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlbk1"]
+size = Vector2(15, 32)
 
 [sub_resource type="Animation" id="Animation_fdwg1"]
 length = 0.001
@@ -48,7 +47,7 @@ _data = {
 size = Vector2(8, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nk7v3"]
-size = Vector2(32.5, 50)
+size = Vector2(26, 74)
 
 [node name="MushroomHead" type="Node2D"]
 script = ExtResource("1_k6brm")
@@ -64,8 +63,9 @@ collision_layer = 4
 collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Area2D"]
+position = Vector2(5.62467e-06, -0.499992)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_h5xyd")
+shape = SubResource("RectangleShape2D_tlbk1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Head"]
 libraries = {
@@ -92,7 +92,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoDoubleJumps"]
-position = Vector2(-0.25, -20)
+position = Vector2(0, -32)
 shape = SubResource("RectangleShape2D_nk7v3")
 
 [connection signal="body_entered" from="Head/Area2D" to="." method="_on_area_2d_body_entered"]

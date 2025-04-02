@@ -94,7 +94,6 @@ func _ready():
 		
 
 func _physics_process(delta):
-
 	if GameManager.drum_unlocked:
 		$BeachDrum.volume_db = 0
 		
@@ -267,6 +266,7 @@ func jump(delta) -> void:
 			
 	## Double Jump - Added check for if drum unlocked
 	elif Input.is_action_just_pressed("Accept") and !is_on_floor() and double_jump_count == 0 and GameManager.get_current_instrument() == "drum" and !no_doublejump_zone:
+		print("no doublejump zone: "+str(no_doublejump_zone))
 		velocity.y = jump_velocity
 		double_jump_count += 1
 		$DrumJump.play()
@@ -450,6 +450,9 @@ func pause_jumpcutting():
 	await get_tree().create_timer(0.4).timeout
 	cutting_enabled = true
 
+func toggle_double_jump(is_enabled: bool) -> void:
+	no_doublejump_zone = !is_enabled
+
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player
 	dash_mult = 2
@@ -476,23 +479,6 @@ func _on_baton_timer_timeout() -> void:
 	$BatonArea/BatonAtack.disabled = true
 	attack_animation = false
 	smear.stop()
-
-### Consequence for enemies hitting the DRUM attack hitbox
-## Commented out to remove drum damage
-#func _on_drum_area_body_entered(body: Node2D) -> void:
-	## Note that drum does 1/2 the damage of baton
-	#if body.is_in_group("enemy") and body.has_method("take_damage"):
-		#var hit_dir = sign(body.position.x - position.x)
-		#if randf() < 0.1:
-			## Critical strike! maybe play diff noise?
-			#crit_label.visible = true
-			#body.take_damage(damage, hit_dir)
-		#else:
-			## Regular damage :(
-			#body.take_damage(damage/2, hit_dir)
-		#
-		#camera.apply_shake(5)
-		#velocity.x += -hit_dir * 100  # knock the player back a tiny bit too
 
 ## Consequence for enemies hitting the BATON hitbox
 func _on_baton_area_body_entered(body: Node2D) -> void:

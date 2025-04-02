@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b00i485c1lqvr"]
+[gd_scene load_steps=14 format=4 uid="uid://b00i485c1lqvr"]
 
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="1_oesnm"]
 [ext_resource type="PackedScene" uid="uid://biul7qy05yj0l" path="res://scenes/levels/cave_parallax.tscn" id="2_gk5jv"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ys8uycg700nt" path="res://entities/enemies/bat/bat.tscn" id="7_07b6s"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="8_7mogx"]
 [ext_resource type="PackedScene" uid="uid://c4aeoqgffqsbq" path="res://entities/enemies/spider/spider_web_start.tscn" id="9_y0akr"]
+[ext_resource type="PackedScene" uid="uid://bfv8wa65lj663" path="res://Environment/itemframe/item_frame.tscn" id="10_jt2cd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_54s3i"]
 texture = ExtResource("3_j3tsy")
@@ -896,5 +897,13 @@ position = Vector2(849, -102)
 
 [node name="SpiderWebStart8" parent="." instance=ExtResource("9_y0akr")]
 position = Vector2(597, -838)
+
+[node name="ItemFrame" parent="." instance=ExtResource("10_jt2cd")]
+position = Vector2(112, -80)
+
+[node name="CaveTileset" type="Sprite2D" parent="ItemFrame"]
+texture = ExtResource("3_j3tsy")
+region_enabled = true
+region_rect = Rect2(129, 52, 13, 12)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

@@ -586,7 +586,7 @@ rotation = -1.5708
 is_falling_spike = false
 
 [node name="Spike16" parent="Spikes" instance=ExtResource("8_pop3m")]
-position = Vector2(80, 161)
+position = Vector2(80, 160)
 
 [node name="Spike17" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(94, 162)
