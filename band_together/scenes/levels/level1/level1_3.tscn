@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://k4oxl1qa80ur"]
+[gd_scene load_steps=20 format=4 uid="uid://k4oxl1qa80ur"]
 
 [ext_resource type="Script" path="res://scenes/levels/level1/level_1_3.gd" id="1_5lgh0"]
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="2_553ov"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="11_sk0en"]
 [ext_resource type="PackedScene" uid="uid://bvur20x1mukp3" path="res://entities/enemies/rocks/rock.tscn" id="12_dkluk"]
 [ext_resource type="PackedScene" uid="uid://yqww0hejfkrq" path="res://entities/camera/offset_setter.tscn" id="14_wkllp"]
+[ext_resource type="PackedScene" uid="uid://bfv8wa65lj663" path="res://Environment/itemframe/item_frame.tscn" id="15_4mqvr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ejiu8"]
 texture = ExtResource("5_s1vyt")
@@ -318,7 +319,7 @@ sliderange = 32.0
 grav_div = 20.0
 
 [node name="CoconutSpawner5" parent="." instance=ExtResource("10_gnhgq")]
-position = Vector2(-1296, -295)
+position = Vector2(-1296, -368)
 max_spawnrate = 0.05
 min_spawnrate = 0.05
 
@@ -637,5 +638,9 @@ set_y_offset_to = -20
 [node name="OffsetSetter2" parent="." instance=ExtResource("14_wkllp")]
 position = Vector2(-289, -161)
 scale = Vector2(1, 20)
+
+[node name="ItemFrame" parent="." instance=ExtResource("15_4mqvr")]
+position = Vector2(-256, -80)
+show_drum = true
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

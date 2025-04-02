@@ -498,10 +498,6 @@ wait_time = 0.25
 [node name="Reed Timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="DashExecuteTimer" type="Timer" parent="."]
-wait_time = 1.2
-one_shot = true
-
 [node name="CritText" type="Label" parent="."]
 visible = false
 z_index = 5
@@ -593,4 +589,3 @@ collide_with_areas = true
 [connection signal="timeout" from="DashChargeTimer" to="." method="_on_dash_charge_timer_timeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="Reed Timer" to="." method="_on_reed_timer_timeout"]
-[connection signal="timeout" from="DashExecuteTimer" to="." method="_on_dash_execute_timer_timeout"]

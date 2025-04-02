@@ -578,12 +578,10 @@ rotation = -1.5708
 [node name="Spike14" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1609, 163)
 rotation = -1.5708
-is_falling_spike = false
 
 [node name="Spike15" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1609, 176)
 rotation = -1.5708
-is_falling_spike = false
 
 [node name="Spike16" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(80, 160)
@@ -614,62 +612,50 @@ rotation = 3.14159
 [node name="Spike23" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1609, 139)
 rotation = -1.5708
-is_falling_spike = false
 
 [node name="Spike24" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1609, 152)
 rotation = -1.5708
-is_falling_spike = false
 
 [node name="Spike25" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1609, 115)
 rotation = -1.5708
-is_falling_spike = false
 
 [node name="Spike26" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1609, 128)
 rotation = -1.5708
-is_falling_spike = false
 
 [node name="Spike28" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1609, 103)
 rotation = -1.5708
-is_falling_spike = false
 
 [node name="Spike27" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1529, 165)
 rotation = 1.5708
-is_falling_spike = false
 
 [node name="Spike29" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1529, 178)
 rotation = 1.5708
-is_falling_spike = false
 
 [node name="Spike30" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1529, 141)
 rotation = 1.5708
-is_falling_spike = false
 
 [node name="Spike31" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1529, 154)
 rotation = 1.5708
-is_falling_spike = false
 
 [node name="Spike32" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1529, 117)
 rotation = 1.5708
-is_falling_spike = false
 
 [node name="Spike33" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1529, 130)
 rotation = 1.5708
-is_falling_spike = false
 
 [node name="Spike34" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1529, 105)
 rotation = 1.5708
-is_falling_spike = false
 
 [node name="Spike35" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1435, 84)
@@ -1486,7 +1472,7 @@ scale = Vector2(1, 0.952034)
 
 [node name="Door" parent="." instance=ExtResource("9_oy1y0")]
 position = Vector2(3803, 57)
-destination_scene = "res://scenes/levels/level1/level_2_end.tscn"
+destination_scene = "res://scenes/levels/level2/level_2_end.tscn"
 
 [node name="JumpSpikes" type="Node" parent="."]
 

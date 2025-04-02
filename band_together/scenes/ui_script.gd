@@ -32,7 +32,7 @@ func reset() -> void:
 		process_mode = PROCESS_MODE_DISABLED
 		self.visible = false
 	else:
-		process_mode = PROCESS_MODE_INHERIT  # Changed this from ALWAYS, change back if issues
+		process_mode = PROCESS_MODE_ALWAYS  # Changed this from ALWAYS, change back if issues
 		self.visible = true
 		if lives <= 0:
 			coins = 0  # Reset coins on death
@@ -44,16 +44,6 @@ func reset() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:	
-	# Pause screen logic
-	var esc_pressed = Input.is_action_just_pressed("Pause")
-	
-	if (esc_pressed):
-		resume_btn.grab_focus()
-		if GameManager.in_dialogue == true:
-			Dialogic.Text.hide_textbox()
-		get_tree().paused = true
-		pause_panel.show()
-	
 	match GameManager.get_current_instrument():
 		"baton":
 			current_weapon_display.texture = baton
@@ -79,6 +69,18 @@ func _input(event: InputEvent) -> void:
 		if current_focused is Button:
 			current_focused.emit_signal("pressed")  # Manually trigger button press
 			get_viewport().set_input_as_handled()
+	
+	if event.is_action_pressed("Pause"):
+		if pause_panel.visible:
+			_on_resume_pressed()  # unpause
+			get_viewport().set_input_as_handled()
+		else:
+			resume_btn.grab_focus()
+			if GameManager.in_dialogue == true:
+				Dialogic.Text.hide_textbox()
+			get_tree().paused = true
+			pause_panel.show()
+			get_viewport().set_input_as_handled()
 
 func _on_resume_pressed() -> void:
 	await get_tree().create_timer(0.05).timeout  # This is because player was jumping when unpausing
@@ -92,6 +94,8 @@ func _on_main_menu_pressed() -> void:
 	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	get_tree().paused = false
 	pause_panel.hide()
+	if GameManager.in_dialogue:
+		Dialogic.end_timeline()
 	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
 
 func decrease_health():

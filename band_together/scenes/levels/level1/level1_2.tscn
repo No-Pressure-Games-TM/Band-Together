@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://3p6qwyqkvjao"]
+[gd_scene load_steps=19 format=4 uid="uid://3p6qwyqkvjao"]
 
 [ext_resource type="Texture2D" uid="uid://7nmwi83e07ao" path="res://Environment/beach_tileset.png" id="1_5f51l"]
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="2_2kmip"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bgxhe1p407hp6" path="res://Environment/door/door.tscn" id="10_0tka1"]
 [ext_resource type="PackedScene" uid="uid://f860pnqtg4hh" path="res://scenes/levels/beach_parallax.tscn" id="11_olo7a"]
 [ext_resource type="PackedScene" uid="uid://cg1hsl8xxl51f" path="res://entities/coins/coin_pickup.tscn" id="12_3rs7t"]
+[ext_resource type="PackedScene" uid="uid://bfv8wa65lj663" path="res://Environment/itemframe/item_frame.tscn" id="14_55u5j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_edxun"]
 texture = ExtResource("1_5f51l")
@@ -693,5 +694,9 @@ position = Vector2(510, -268)
 
 [node name="Rock4" parent="." instance=ExtResource("5_xrwjy")]
 position = Vector2(499, -263)
+
+[node name="ItemFrame" parent="." instance=ExtResource("14_55u5j")]
+position = Vector2(32, -160)
+show_drum = true
 
 [connection signal="body_entered" from="SceneObjects/Area2D" to="SceneObjects/Area2D" method="_on_body_entered"]
