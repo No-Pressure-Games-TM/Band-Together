@@ -132,7 +132,7 @@ size = Vector2(7, 16)
 script = ExtResource("1_ixlj2")
 
 [node name="Player" parent="." instance=ExtResource("1_icqny")]
-position = Vector2(864, 136)
+position = Vector2(40, 136)
 
 [node name="Camera" parent="." instance=ExtResource("2_07p6q")]
 position = Vector2(160.993, 2.36489)
@@ -145,7 +145,7 @@ tile_map_data = PackedByteArray("AAAAAP//AAACAAEAAAABAP//AAADAAEAAAACAP//AAADAAE
 tile_set = SubResource("TileSet_rxavp")
 
 [node name="ForestParallax" parent="." instance=ExtResource("3_gos3q")]
-position = Vector2(64, -8)
+position = Vector2(16, 24)
 
 [node name="SaxCoins" type="Node" parent="."]
 
@@ -200,7 +200,7 @@ offset_top = 160.0
 offset_right = 542.0
 offset_bottom = 208.0
 text = "Use the Sax to
-hit the flower. "
+aim for the flower. "
 fit_content = true
 autowrap_mode = 0
 
