@@ -1,8 +1,8 @@
 allegro: That's a saxophone...
+breve: That saxophone looks heavy! You probably won't be able to jump while carrying it.
 breve: There's no doubt about it. Forte was here.
 allegro: Forte was always the most upbeat in the band, always joking around and laughing with everyone.
 allegro: Rowdy and energetic, always ready to dash to and fro. That’s the Forte I know.
 breve: Sometimes it could be a bit much, but being all over the place suits him.
 allegro: We should keep an eye out while we’re dashing around with this saxophone.
-breve: That saxophone looks heavy! You probably won't be able to jump while carrying it, but it has other advantages...
 do GameManager.dialogic_signal_end()
