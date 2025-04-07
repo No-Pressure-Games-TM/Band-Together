@@ -24,18 +24,19 @@ func _process(_delta: float) -> void:
 func _on_scene_changed(scene: Node) -> void:
 	if scene.get_parent() == get_tree().root:
 		
-		$Cave/Baton.stop()
-		$Cave/Drum.stop()
-		$Cave/Sax.stop()
-		$Cave/Violin.stop()
-		$Beach/Baton.stop()
-		$Beach/Drum.stop()
-		$Beach/Sax.stop()
-		$Beach/Violin.stop()
-		$Forest/Baton.stop()
-		$Forest/Drum.stop()
-		$Forest/Sax.stop()
-		$Forest/Violin.stop()
+		if scene.name in INTERFACE_THEME_SCENES or scene.name in BEACH_SCENES or scene.name in CAVE_SCENES or scene.name in FOREST_SCENES:
+			$Cave/Baton.stop()
+			$Cave/Drum.stop()
+			$Cave/Sax.stop()
+			$Cave/Violin.stop()
+			$Beach/Baton.stop()
+			$Beach/Drum.stop()
+			$Beach/Sax.stop()
+			$Beach/Violin.stop()
+			$Forest/Baton.stop()
+			$Forest/Drum.stop()
+			$Forest/Sax.stop()
+			$Forest/Violin.stop()
 		if scene.name in INTERFACE_THEME_SCENES:
 		
 			
