@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=62 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="3_ipirm"]
@@ -16,12 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://2yaqpmw67k24" path="res://entities/player/assets/allegro wall hang.PNG" id="8_bs0tv"]
 [ext_resource type="Texture2D" uid="uid://dciq4l8a58eed" path="res://entities/player/assets/saxophone attack.PNG" id="9_bvmgo"]
 [ext_resource type="Texture2D" uid="uid://d3p8yy8ndlq7u" path="res://Environment/spikes/spike.PNG" id="13_eb55c"]
-[ext_resource type="AudioStream" uid="uid://lovsd56qf0we" path="res://audio/music/Beach Track! - Marimba.wav" id="13_qk1gk"]
-[ext_resource type="AudioStream" uid="uid://wtx0lf8qg43q" path="res://scenes/levels/Beach Track! - Drums.wav" id="14_e0w5o"]
-[ext_resource type="AudioStream" uid="uid://ljtfbhmtk8mp" path="res://audio/music/Beach Track! - Sax.wav" id="15_ms2uu"]
-[ext_resource type="AudioStream" uid="uid://ceh1gap8kgld1" path="res://audio/music/Beach Track! - Strings.wav" id="16_xcjgq"]
 [ext_resource type="AudioStream" uid="uid://d1sfa5qncfetn" path="res://audio/sfx/sax attack.wav" id="19_m4wco"]
-[ext_resource type="AudioStream" uid="uid://yk8fpf8minyk" path="res://audio/sfx/Waltz.wav" id="21_5rfoj"]
 [ext_resource type="AudioStream" uid="uid://np8hv1scl3r6" path="res://audio/sfx/batonwhoosh.wav" id="21_iciqu"]
 [ext_resource type="AudioStream" uid="uid://c0xgbtvjuwl53" path="res://audio/sfx/hit.wav" id="22_4et5o"]
 [ext_resource type="AudioStream" uid="uid://cd6sfaxvg7r84" path="res://audio/sfx/crit.wav" id="23_ww7p6"]
@@ -522,25 +517,6 @@ volume_db = -3.5
 
 [node name="ViolinJump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_3mujn")
-
-[node name="BeachMarimba" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("13_qk1gk")
-volume_db = -80.0
-
-[node name="BeachDrum" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("14_e0w5o")
-volume_db = -80.0
-
-[node name="BeachSax" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_ms2uu")
-volume_db = -80.0
-
-[node name="BeachString" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("16_xcjgq")
-volume_db = -80.0
-
-[node name="Waltz" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("21_5rfoj")
 
 [node name="BatonAttack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_iciqu")

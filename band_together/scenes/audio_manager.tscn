@@ -1,10 +1,69 @@
-[gd_scene load_steps=3 format=3 uid="uid://2tqhgcdgjybu"]
+[gd_scene load_steps=15 format=3 uid="uid://2tqhgcdgjybu"]
 
 [ext_resource type="Script" path="res://scenes/audio_manager.gd" id="1_g0xkg"]
 [ext_resource type="AudioStream" uid="uid://hgsuy3y2isq2" path="res://audio/music/interface_theme.wav" id="1_ne2b1"]
+[ext_resource type="AudioStream" uid="uid://iyb62pq8oygw" path="res://audio/music/Beach/beach_baton.wav" id="3_aougl"]
+[ext_resource type="AudioStream" uid="uid://da8kt4rbdusqm" path="res://audio/music/Beach/beach_sax.wav" id="4_sf6sn"]
+[ext_resource type="AudioStream" uid="uid://bo361l0n41i6o" path="res://audio/music/Beach/beach_drum.wav" id="5_868ti"]
+[ext_resource type="AudioStream" uid="uid://b64fmj6ns60cu" path="res://audio/music/Beach/beach_violin.wav" id="6_qdrmh"]
+[ext_resource type="AudioStream" uid="uid://cx80n70ar1snc" path="res://audio/music/Forest/forest_baton.wav" id="7_fipsf"]
+[ext_resource type="AudioStream" uid="uid://suttg5a7do27" path="res://audio/music/Forest/forest_sax.wav" id="8_rufq8"]
+[ext_resource type="AudioStream" uid="uid://csmycwb8bdby6" path="res://audio/music/Forest/forest_drum.wav" id="9_kiv70"]
+[ext_resource type="AudioStream" uid="uid://bca5j7phnfftd" path="res://audio/music/Forest/forest_violin.wav" id="10_5qmtb"]
+[ext_resource type="AudioStream" uid="uid://cedknfrkwneuu" path="res://audio/music/Cave/cave_baton.wav" id="11_m3s65"]
+[ext_resource type="AudioStream" uid="uid://bwwj8onyn8ovj" path="res://audio/music/Cave/cave_sax.wav" id="12_ai03r"]
+[ext_resource type="AudioStream" uid="uid://bs8qb7iqvid03" path="res://audio/music/Cave/cave_drum.wav" id="13_ggq1s"]
+[ext_resource type="AudioStream" uid="uid://bp1yyqkgwkn00" path="res://audio/music/Cave/cave_violin.wav" id="14_wxvj6"]
 
 [node name="AudioManager" type="Node2D"]
 script = ExtResource("1_g0xkg")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_ne2b1")
+
+[node name="Beach" type="Node2D" parent="."]
+
+[node name="Baton" type="AudioStreamPlayer" parent="Beach"]
+stream = ExtResource("3_aougl")
+volume_db = 10.0
+
+[node name="Sax" type="AudioStreamPlayer" parent="Beach"]
+stream = ExtResource("4_sf6sn")
+volume_db = 10.0
+
+[node name="Drum" type="AudioStreamPlayer" parent="Beach"]
+stream = ExtResource("5_868ti")
+volume_db = 10.0
+
+[node name="Violin" type="AudioStreamPlayer" parent="Beach"]
+stream = ExtResource("6_qdrmh")
+volume_db = 10.0
+
+[node name="Forest" type="Node2D" parent="."]
+
+[node name="Baton" type="AudioStreamPlayer" parent="Forest"]
+stream = ExtResource("7_fipsf")
+
+[node name="Sax" type="AudioStreamPlayer" parent="Forest"]
+stream = ExtResource("8_rufq8")
+
+[node name="Drum" type="AudioStreamPlayer" parent="Forest"]
+stream = ExtResource("9_kiv70")
+
+[node name="Violin" type="AudioStreamPlayer" parent="Forest"]
+stream = ExtResource("10_5qmtb")
+
+[node name="Cave" type="Node2D" parent="."]
+
+[node name="Baton" type="AudioStreamPlayer" parent="Cave"]
+stream = ExtResource("11_m3s65")
+
+[node name="Sax" type="AudioStreamPlayer" parent="Cave"]
+stream = ExtResource("12_ai03r")
+volume_db = 10.0
+
+[node name="Drum" type="AudioStreamPlayer" parent="Cave"]
+stream = ExtResource("13_ggq1s")
+
+[node name="Violin" type="AudioStreamPlayer" parent="Cave"]
+stream = ExtResource("14_wxvj6")

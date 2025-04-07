@@ -79,30 +79,11 @@ func _ready():
 	parent_node = get_parent()
 	if parent_node:
 		var parent_name = parent_node.name
-	
-		if parent_name == "Level31" or parent_name == "Level32" or parent_name == "Level3_3" or parent_name == "Level3End":
-			$Waltz.play()
-		else:
-			$BeachMarimba.play()
-			$BeachDrum.play()
-			$BeachSax.play()
-			$BeachString.play()
-			$BeachMarimba.volume_db = 0
-		if GameManager.drum_unlocked:
-			$BeachDrum.volume_db = 0
 	add_to_group("player")
 		
 
 func _physics_process(delta):
-	if GameManager.drum_unlocked:
-		$BeachDrum.volume_db = 0
-		
-	if GameManager.violin_unlocked:
-		$BeachString.volume_db = 0
-		
-	if GameManager.sax_unlocked:
-		$BeachSax.volume_db = 0
-		
+	
 	#if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 		#respawn()	
 		
@@ -168,28 +149,18 @@ func respawn() -> void:
 	global_position = GameManager.get_last_ground_position()  # Retrieve last safe position
 	respawning = false
 	velocity = Vector2.ZERO
-	
-func adjust_volumes() -> void:
-	if GameManager.get_current_instrument() == "drum":
-		$BeachDrum.volume_db = 5
-		$BeachMarimba.volume_db = 0
-	
-	if GameManager.get_current_instrument() == "baton":
-		if GameManager.drum_unlocked:
-			$BeachDrum.volume_db = 0
-		$BeachMarimba.volume_db = 5
 
 
 func check_input() -> void:
 	if Input.is_action_just_pressed("CycleL"):
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
-		adjust_volumes()
+		AudioManager.adjust_volumes()
 	
 	if Input.is_action_just_pressed("CycleR"):
 		GameManager.set_current_instrument(1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
-		adjust_volumes()
+		AudioManager.adjust_volumes()
 			
 	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:
