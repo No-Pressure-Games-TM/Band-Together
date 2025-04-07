@@ -1053,7 +1053,10 @@ position = Vector2(391, 83)
 
 [node name="Bear" parent="Bears" instance=ExtResource("11_pej3m")]
 z_index = 1
-position = Vector2(2832, 208)
+position = Vector2(2696, 192)
+scale = Vector2(2, 2)
+chase_distance = 50.0
+patrol_range = 20.0
 
 [node name="Bear2" parent="Bears" instance=ExtResource("11_pej3m")]
 position = Vector2(720, 581)

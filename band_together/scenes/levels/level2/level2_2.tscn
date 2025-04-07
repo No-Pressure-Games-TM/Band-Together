@@ -502,11 +502,7 @@ position = Vector2(126, 67)
 
 [node name="Spike17" parent="Spikes" instance=ExtResource("8_pop3m")]
 z_index = 1
-position = Vector2(116, 67)
-
-[node name="Spike39" parent="Spikes" instance=ExtResource("8_pop3m")]
-z_index = 1
-position = Vector2(104, 67)
+position = Vector2(114, 67)
 
 [node name="Spike54" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1639, 86)
@@ -854,10 +850,6 @@ scale = Vector2(1, 0.952034)
 position = Vector2(1888, 68)
 scale = Vector2(1, 0.952034)
 
-[node name="Door" parent="." instance=ExtResource("9_oy1y0")]
-position = Vector2(2032, 60)
-destination_scene = "res://scenes/levels/level2/level_2_3.tscn"
-
 [node name="Crabs" type="Node" parent="."]
 
 [node name="Crab2" parent="Crabs" instance=ExtResource("17_hvpxp")]
@@ -867,5 +859,9 @@ position = Vector2(2090, 428)
 [node name="Crab3" parent="Crabs" instance=ExtResource("17_hvpxp")]
 z_index = 1
 position = Vector2(2155, 428)
+
+[node name="Door" parent="." instance=ExtResource("9_oy1y0")]
+position = Vector2(2032, 60)
+destination_scene = "res://scenes/levels/level2/level2_3.tscn"
 
 [connection signal="body_entered" from="DashTipTrigger" to="DashTipTrigger" method="_on_body_entered"]
