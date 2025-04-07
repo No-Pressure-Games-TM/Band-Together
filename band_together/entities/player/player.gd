@@ -186,11 +186,13 @@ func check_input() -> void:
 		GameManager.set_current_instrument(-1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
 		adjust_volumes()
+		AudioManager.adjust_volumes()
 	
 	if Input.is_action_just_pressed("CycleR"):
 		GameManager.set_current_instrument(1)
 		print_debug("Set instrument to " + GameManager.get_current_instrument())
 		adjust_volumes()
+		AudioManager.adjust_volumes()
 			
 	## When the player presses the action button, it enables the current weapon's hitbox and sets a timer that keeps it active for 0.15 seconds		
 	if Input.is_action_just_pressed("Decline") and !weapon_cooling_down:

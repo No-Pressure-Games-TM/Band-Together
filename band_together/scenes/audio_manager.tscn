@@ -25,15 +25,19 @@ stream = ExtResource("1_ne2b1")
 
 [node name="Baton" type="AudioStreamPlayer2D" parent="Beach"]
 stream = ExtResource("3_aougl")
+volume_db = 10.0
 
 [node name="Sax" type="AudioStreamPlayer2D" parent="Beach"]
 stream = ExtResource("4_sf6sn")
+volume_db = 10.0
 
 [node name="Drum" type="AudioStreamPlayer2D" parent="Beach"]
 stream = ExtResource("5_868ti")
+volume_db = 10.0
 
 [node name="Violin" type="AudioStreamPlayer2D" parent="Beach"]
 stream = ExtResource("6_qdrmh")
+volume_db = 10.0
 
 [node name="Forest" type="Node2D" parent="."]
 
@@ -56,6 +60,7 @@ stream = ExtResource("11_m3s65")
 
 [node name="Sax" type="AudioStreamPlayer2D" parent="Cave"]
 stream = ExtResource("12_ai03r")
+volume_db = 10.0
 
 [node name="Drum" type="AudioStreamPlayer2D" parent="Cave"]
 stream = ExtResource("13_ggq1s")
