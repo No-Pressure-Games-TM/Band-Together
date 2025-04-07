@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://chmdbpxvcc4i8"]
+[gd_scene load_steps=56 format=3 uid="uid://chmdbpxvcc4i8"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_mms2d"]
 [ext_resource type="Shader" path="res://entities/enemies/hitflash.gdshader" id="3_ipirm"]
@@ -10,12 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://cgr6iicy2glm5" path="res://entities/player/assets/drum attack.PNG" id="6_lgbf4"]
 [ext_resource type="AudioStream" uid="uid://baga0cnj2pr06" path="res://audio/sfx/double_drump.wav" id="7_6icqt"]
 [ext_resource type="Texture2D" uid="uid://bcbuffgbqgav3" path="res://entities/player/assets/allegro jumping.png" id="7_48w6e"]
-[ext_resource type="Texture2D" uid="uid://cnlkdv5kjdria" path="res://entities/player/assets/temp-smear.png" id="7_ynu3v"]
 [ext_resource type="AudioStream" uid="uid://dauu0hcu7dqm0" path="res://audio/sfx/violin_wall_jump.wav" id="8_3mujn"]
-[ext_resource type="Texture2D" uid="uid://c33vr716yilr7" path="res://entities/player/assets/temp-drumwave.png" id="8_8bo1n"]
 [ext_resource type="Texture2D" uid="uid://2yaqpmw67k24" path="res://entities/player/assets/allegro wall hang.PNG" id="8_bs0tv"]
 [ext_resource type="Texture2D" uid="uid://dciq4l8a58eed" path="res://entities/player/assets/saxophone attack.PNG" id="9_bvmgo"]
-[ext_resource type="Texture2D" uid="uid://d3p8yy8ndlq7u" path="res://Environment/spikes/spike.PNG" id="13_eb55c"]
+[ext_resource type="Texture2D" uid="uid://dv7thg3eyupk3" path="res://entities/player/assets/sword smear.PNG" id="10_a0kgg"]
+[ext_resource type="Texture2D" uid="uid://e76rka8hl581" path="res://entities/player/assets/drum particle.PNG" id="11_adlnf"]
+[ext_resource type="Texture2D" uid="uid://dmrvimmclp5e1" path="res://entities/player/assets/violin hat thing.PNG" id="12_6v1ix"]
 [ext_resource type="AudioStream" uid="uid://d1sfa5qncfetn" path="res://audio/sfx/sax attack.wav" id="19_m4wco"]
 [ext_resource type="AudioStream" uid="uid://np8hv1scl3r6" path="res://audio/sfx/batonwhoosh.wav" id="21_iciqu"]
 [ext_resource type="AudioStream" uid="uid://c0xgbtvjuwl53" path="res://audio/sfx/hit.wav" id="22_4et5o"]
@@ -325,58 +325,22 @@ _data = {
 "flash": SubResource("Animation_568ff")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ccnvu"]
-atlas = ExtResource("7_ynu3v")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6l52e"]
-atlas = ExtResource("7_ynu3v")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ocsu"]
-atlas = ExtResource("7_ynu3v")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uespa"]
-atlas = ExtResource("7_ynu3v")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_37u6b"]
-atlas = ExtResource("7_ynu3v")
-region = Rect2(128, 0, 32, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_8nlni"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ccnvu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6l52e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8ocsu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uespa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_37u6b")
+"texture": ExtResource("10_a0kgg")
 }],
 "loop": true,
 "name": &"smear",
-"speed": 40.0
+"speed": 1.0
 }]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ktx0c"]
-atlas = ExtResource("13_eb55c")
-region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2f7bc"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ktx0c")
+"texture": ExtResource("12_6v1ix")
 }],
 "loop": true,
 "name": &"default",
@@ -412,8 +376,7 @@ libraries = {
 
 [node name="SwordSmear" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
 visible = false
-position = Vector2(29, 3)
-scale = Vector2(0.205315, 0.869607)
+position = Vector2(17, 4)
 sprite_frames = SubResource("SpriteFrames_8nlni")
 animation = &"smear"
 frame_progress = 0.481864
@@ -421,21 +384,18 @@ frame_progress = 0.481864
 [node name="DrumWave" type="Sprite2D" parent="AnimatedSprite2D"]
 visible = false
 z_index = -3
-texture = ExtResource("8_8bo1n")
+texture = ExtResource("11_adlnf")
 
 [node name="ViolinSpike" type="Node2D" parent="AnimatedSprite2D"]
 visible = false
-modulate = Color(0.84003, 0, 0.232698, 1)
 
 [node name="TopSpike" type="AnimatedSprite2D" parent="AnimatedSprite2D/ViolinSpike"]
 position = Vector2(-1.5, -25)
-scale = Vector2(0.8125, 1.875)
 sprite_frames = SubResource("SpriteFrames_2f7bc")
 
 [node name="BotSpike" type="AnimatedSprite2D" parent="AnimatedSprite2D/ViolinSpike"]
 position = Vector2(-1, 31)
 rotation = 3.14159
-scale = Vector2(0.8125, 1.875)
 sprite_frames = SubResource("SpriteFrames_2f7bc")
 
 [node name="DrumKnockback" type="Area2D" parent="."]

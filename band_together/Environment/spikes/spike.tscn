@@ -5,13 +5,13 @@
 
 [node name="Spike" type="Area2D"]
 collision_layer = 4
-collision_mask = 10
+collision_mask = 2
 script = ExtResource("1_mwvfn")
 
 [node name="Spike" type="Sprite2D" parent="."]
 texture = ExtResource("2_8ircr")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-1, -9, -5, 8, 5, 8, 0, -9)
+polygon = PackedVector2Array(-1, -6, -5, 8, 5, 8, 0, -6)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

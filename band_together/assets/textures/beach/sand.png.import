@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwdldovox83y4"
-path="res://.godot/imported/4 fixed.png-d35d653f0ac874e90219871bb9c4dffb.ctex"
+uid="uid://x0nyvacbpl4h"
+path="res://.godot/imported/sand.png-13743726baf03283545f66361b1a5e9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/beach/4 fixed.png"
-dest_files=["res://.godot/imported/4 fixed.png-d35d653f0ac874e90219871bb9c4dffb.ctex"]
+source_file="res://assets/textures/beach/sand.png"
+dest_files=["res://.godot/imported/sand.png-13743726baf03283545f66361b1a5e9a.ctex"]
 
 [params]
 
