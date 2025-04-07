@@ -274,20 +274,20 @@ func move_and_animate(delta) -> void:
 		# Flip the sprite based on direction
 		if direction > 0:
 			sprite.flip_h = false  # Face right
-			$CollisionShape2D.position.x = -3
+			sprite.position.x = 0
 			$BatonArea.scale.x = 1
-			$HoleDetector.position.x = 1
-			$HoleDetector2.position.x = -7
-			smear.scale.x = 0.2
-			smear.position.x = 29
+			$BatonArea.position.x = 0
+			smear.position.x = 17
+			smear.flip_h = false
+			$AnimatedSprite2D/ViolinSpike.position.x = -1
 		elif direction < 0:
 			sprite.flip_h = true # Face left
-			$CollisionShape2D.position.x = 3
+			sprite.position.x = -6  # move the sprite left to match collision box
 			$BatonArea.scale.x = -1
-			$HoleDetector.position.x = -1
-			$HoleDetector2.position.x = 7
-			smear.scale.x = -0.2
-			smear.position.x = -29
+			$BatonArea.position.x = -6
+			smear.position.x = -17
+			smear.flip_h = true
+			$AnimatedSprite2D/ViolinSpike.position.x = 3
 	
 	if is_dashing:
 		if not Input.is_action_pressed("Right") and not Input.is_action_pressed("Left"):

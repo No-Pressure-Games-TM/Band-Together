@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx4gaol8fpn6k"
-path="res://.godot/imported/3 fixed.png-2ed0c502cc40f771ce0a40db999e2ad2.ctex"
+uid="uid://yitl5ttuapar"
+path="res://.godot/imported/midground 1.png-795f093d115ef8d286686340b071bdb9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/beach/3 fixed.png"
-dest_files=["res://.godot/imported/3 fixed.png-2ed0c502cc40f771ce0a40db999e2ad2.ctex"]
+source_file="res://assets/textures/forest/midground 1.png"
+dest_files=["res://.godot/imported/midground 1.png-795f093d115ef8d286686340b071bdb9.ctex"]
 
 [params]
 

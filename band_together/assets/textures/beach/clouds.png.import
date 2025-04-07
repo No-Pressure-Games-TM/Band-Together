@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hb27tlmaqa53"
-path="res://.godot/imported/5 fixed.png-f75d2d53c486548381f6b59e904deac7.ctex"
+uid="uid://bnp36fg03atmg"
+path="res://.godot/imported/clouds.png-37efa0e27225fe3803b5524fe1eb94db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/beach/5 fixed.png"
-dest_files=["res://.godot/imported/5 fixed.png-f75d2d53c486548381f6b59e904deac7.ctex"]
+source_file="res://assets/textures/beach/clouds.png"
+dest_files=["res://.godot/imported/clouds.png-37efa0e27225fe3803b5524fe1eb94db.ctex"]
 
 [params]
 

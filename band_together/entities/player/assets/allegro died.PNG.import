@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch2mf7g1ct40b"
-path="res://.godot/imported/2 fixed.png-2510873be81f1b5daa1f1332fe9e05bd.ctex"
+uid="uid://0d7xuwwj1rc1"
+path="res://.godot/imported/allegro died.PNG-d728d305990ee1cebf08a1755b054582.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/beach/2 fixed.png"
-dest_files=["res://.godot/imported/2 fixed.png-2510873be81f1b5daa1f1332fe9e05bd.ctex"]
+source_file="res://entities/player/assets/allegro died.PNG"
+dest_files=["res://.godot/imported/allegro died.PNG-d728d305990ee1cebf08a1755b054582.ctex"]
 
 [params]
 

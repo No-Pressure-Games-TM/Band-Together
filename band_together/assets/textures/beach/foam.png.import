@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ruixbjv2ev1d"
-path="res://.godot/imported/1 fixed.png-b3dc25f986489c2d509c4bc2475426a1.ctex"
+uid="uid://e6qufo8rf61r"
+path="res://.godot/imported/foam.png-bc6d01613ffbaaad22b58bf3112b5263.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/beach/1 fixed.png"
-dest_files=["res://.godot/imported/1 fixed.png-b3dc25f986489c2d509c4bc2475426a1.ctex"]
+source_file="res://assets/textures/beach/foam.png"
+dest_files=["res://.godot/imported/foam.png-bc6d01613ffbaaad22b58bf3112b5263.ctex"]
 
 [params]
 

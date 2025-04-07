@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnlkdv5kjdria"
-path="res://.godot/imported/temp-smear.png-d2729e000c0f584922dc0e397537b1b6.ctex"
+uid="uid://e76rka8hl581"
+path="res://.godot/imported/drum particle.PNG-8b1426fe82fd8203648acf025045f18b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/assets/temp-smear.png"
-dest_files=["res://.godot/imported/temp-smear.png-d2729e000c0f584922dc0e397537b1b6.ctex"]
+source_file="res://entities/player/assets/drum particle.PNG"
+dest_files=["res://.godot/imported/drum particle.PNG-8b1426fe82fd8203648acf025045f18b.ctex"]
 
 [params]
 

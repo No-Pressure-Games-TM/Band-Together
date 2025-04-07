@@ -2,7 +2,7 @@ extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
 var drum_unlocked: bool = true
-var sax_unlocked: bool = false
+var sax_unlocked: bool = true
 var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
 
