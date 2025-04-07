@@ -4,9 +4,11 @@ extends Node2D
 @onready var vine1: Vine = $Level2_1_Vine
 @onready var vine2: Vine = $Level2_1_Vine2
 @onready var door: Area2D = $Door
+@onready var player: CharacterBody2D = $Player
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	player.dash_enabled = false
 	# Connect vines to retract when the flower is hit
 	if flower and vine1 and vine2:
 		for vine in [vine1, vine2]:
