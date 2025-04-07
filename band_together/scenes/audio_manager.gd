@@ -2,7 +2,7 @@ extends Node2D
 
 var INTERFACE_THEME_SCENES: Array[String] = ["MainMenu", "Pause", "GameOver", "Win"]  
 const FADE_DURATION: float = 1.0  # Duration of fade in seconds
-var BEACH_SCENES: Array[String] = ["Level11", "Level12", "Level13" , "Level1End"]
+var BEACH_SCENES: Array[String] = ["Level11", "Level12", "Level13" , "Level1End", "Level0"]
 var FOREST_SCENES: Array[String] = ["Level21", "Level22", "Level23" , "Level2End"]
 var CAVE_SCENES: Array[String] = ["Level31", "Level32", "Level3_3", "Level3End"]
 
