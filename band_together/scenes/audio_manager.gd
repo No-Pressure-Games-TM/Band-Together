@@ -2,6 +2,9 @@ extends Node2D
 
 var INTERFACE_THEME_SCENES: Array[String] = ["MainMenu", "Pause", "GameOver", "Win"]  
 const FADE_DURATION: float = 1.0  # Duration of fade in seconds
+var BEACH_SCENES: Array[String] = ["Level11", "Level12", "Level13" , "Level1End"]
+var FOREST_SCENES: Array[String] = ["Level21", "Level22", "Level23" , "Level2End"]
+var CAVE_SCENES: Array[String] = ["Level31", "Level32", "Level3_3", "Level3End"]
 
 @onready var music_player: AudioStreamPlayer2D = $MusicPlayer
 @onready var tween: Tween
@@ -21,10 +24,40 @@ func _process(_delta: float) -> void:
 func _on_scene_changed(scene: Node) -> void:
 	if scene.get_parent() == get_tree().root:
 		if scene.name in INTERFACE_THEME_SCENES:
+			$Cave/Baton.stop()
+			$Cave/Drum.stop()
+			$Cave/Sax.stop()
+			$Cave/Violin.stop()
+			$Beach/Baton.stop()
+			$Beach/Drum.stop()
+			$Beach/Sax.stop()
+			$Beach/Violin.stop()
+			$Forest/Baton.stop()
+			$Forest/Drum.stop()
+			$Forest/Sax.stop()
+			$Forest/Violin.stop()
+			
 			if current_music != music_player.stream:
 				play_music(music_player.stream)
 		else:
 			stop_music()
+			#not an interface, do the music gavens way :3
+			if scene.name in CAVE_SCENES:
+				$Cave/Baton.play()
+				$Cave/Drum.play()
+				$Cave/Sax.play()
+				$Cave/Violin.play()
+			if scene.name in BEACH_SCENES:
+				$Beach/Baton.play()
+				$Beach/Drum.play()
+				$Beach/Sax.play()
+				$Beach/Violin.play()
+			if scene.name in FOREST_SCENES:
+				$Forest/Baton.play()
+				$Forest/Drum.play()
+				$Forest/Sax.play()
+				$Forest/Violin.play()
+			
 			
 			
 # Global functions that can be used across scenes to control music

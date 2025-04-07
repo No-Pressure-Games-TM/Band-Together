@@ -79,7 +79,7 @@ func _ready():
 	parent_node = get_parent()
 	if parent_node:
 		var parent_name = parent_node.name
-	
+		'''
 		if parent_name == "Level31" or parent_name == "Level32" or parent_name == "Level3_3" or parent_name == "Level3End":
 			$Waltz.play()
 		else:
@@ -90,6 +90,7 @@ func _ready():
 			$BeachMarimba.volume_db = 0
 		if GameManager.drum_unlocked:
 			$BeachDrum.volume_db = 0
+			'''
 	add_to_group("player")
 		
 
