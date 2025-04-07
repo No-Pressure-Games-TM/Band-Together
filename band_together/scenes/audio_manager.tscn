@@ -8,3 +8,33 @@ script = ExtResource("1_g0xkg")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_ne2b1")
+
+[node name="Beach" type="Node2D" parent="."]
+
+[node name="Baton" type="AudioStreamPlayer2D" parent="Beach"]
+
+[node name="Sax" type="AudioStreamPlayer2D" parent="Beach"]
+
+[node name="Drum" type="AudioStreamPlayer2D" parent="Beach"]
+
+[node name="Violin" type="AudioStreamPlayer2D" parent="Beach"]
+
+[node name="Forest" type="Node2D" parent="."]
+
+[node name="Baton" type="AudioStreamPlayer2D" parent="Forest"]
+
+[node name="Sax" type="AudioStreamPlayer2D" parent="Forest"]
+
+[node name="Drum" type="AudioStreamPlayer2D" parent="Forest"]
+
+[node name="Violin" type="AudioStreamPlayer2D" parent="Forest"]
+
+[node name="Cave" type="Node2D" parent="."]
+
+[node name="Baton" type="AudioStreamPlayer2D" parent="Cave"]
+
+[node name="Sax" type="AudioStreamPlayer2D" parent="Cave"]
+
+[node name="Drum" type="AudioStreamPlayer2D" parent="Cave"]
+
+[node name="Violin" type="AudioStreamPlayer2D" parent="Cave"]

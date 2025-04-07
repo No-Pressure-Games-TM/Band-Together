@@ -30,7 +30,7 @@ directories/dch_directory={
 "allegro": "res://allegro.dch",
 "arco": "res://dialogic timelines/arco.dch",
 "breve": "res://dialogic timelines/breve.dch",
-"dialogic timelines/Arco": "res://dialogic timelines/arco.dch",
+"dialogic timelines/Arco": "res://dialogic timelines/Arco.dch",
 "forte": "res://dialogic timelines/forte.dch",
 "ghost": "res://ghost.dch"
 }
