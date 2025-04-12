@@ -100,9 +100,20 @@ func _on_main_menu_pressed() -> void:
 
 func decrease_health():
 	lives -= 1
+	$DamageSound.play()
 	# Show only the number of hearts equal to 'lives', hide the rest
 	for i in range(len(hearts)):
 		hearts[i].visible = i < lives
+	
+	if coins >= 50 and lives < 3:
+		# get a new life! Currently bonus hearts not implemented
+		lives += 1
+		coins -= 50  # subtract coins
+		for i in range(len(hearts)):
+			hearts[i].visible = i < lives
+		$HealSound.play()
+		$CoinCount.text = "x%s" % coins
+		
 		
 	if (lives == 0):
 		print("Game Over.\n")
@@ -123,12 +134,14 @@ func _on_reset_pressed():
 
 func get_coin():
 	coins += 1
+	$CoinSound.play()
 	if coins >= 50 and lives < 3:
 		# get a new life! Currently bonus hearts not implemented
 		lives += 1
 		coins -= 50  # subtract coins
 		for i in range(len(hearts)):
 			hearts[i].visible = i < lives
-		# Play a "healing" sound here!
+		$HealSound.play()
+		$CoinCount.text = "x%s" % coins
 	$CoinCount.text = "x%s" % coins
 		

@@ -14,7 +14,11 @@ func _input(event: InputEvent) -> void:
 		return  # Ignore mouse movement for this
 		
 	var current_focused = get_viewport().gui_get_focus_owner()
-	if current_focused == null or not current_focused is Button:
+	if $CreditsPanel.visible == true:
+		release_focus()
+		$CreditsPanel/CreditsText.grab_focus()
+		$CreditsPanel/CreditsText.grab_click_focus()
+	elif current_focused == null or not current_focused is Button:
 		# No button is focused. Grab focus
 		start_game_btn.grab_focus()
 	
@@ -24,6 +28,10 @@ func _input(event: InputEvent) -> void:
 		var focused = get_viewport().gui_get_focus_owner()
 		if focused is Button:
 			focused.emit_signal("pressed")  # Manually trigger button press
+	
+	elif event.is_action_pressed("ui_cancel"):
+		$CreditsPanel.visible = false
+		$VBoxContainer.visible = true  # LOL I got frustrated with focus stuff and just added this and it worked so you can't click them behind the credits anymore
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -56,3 +64,9 @@ func _on_reset_game_pressed():
 	UI.coins = 0  # Reset coins
 	GameManager.new_game = true
 	SceneTransition.change_scene(get_tree().current_scene.scene_file_path)
+
+
+func _on_credits_pressed():
+	$CreditsPanel.visible = true
+	$CreditsPanel/CreditsText.grab_focus()
+	$VBoxContainer.visible = false  # LOL I got frustrated with focus stuff and just added this and it worked so you can't click them behind the credits anymore
