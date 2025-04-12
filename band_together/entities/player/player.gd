@@ -428,6 +428,8 @@ func stop_dashing() -> void:
 	dash_mult = 1
 	grav_div = 1
 	is_dashing = false
+	$SaxDash.stop()
+	
 
 func _on_dash_charge_timer_timeout() -> void:
 	#start the dash, increase the speed of the player

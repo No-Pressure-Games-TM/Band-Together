@@ -3,7 +3,8 @@ extends Control
 @onready var start_game_btn: Button = $VBoxContainer/StartGame
 
 func _ready():
-	AudioManager.play_music(AudioManager.music_player.stream)
+	#AudioManager.play_music(AudioManager.music_player.stream)
+	AudioManager._on_scene_changed(null)
 	if GameManager.new_game:
 		start_game_btn.text = "New Game"
 	else:

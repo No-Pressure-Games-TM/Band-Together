@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://2tqhgcdgjybu"]
+[gd_scene load_steps=17 format=3 uid="uid://2tqhgcdgjybu"]
 
 [ext_resource type="Script" path="res://scenes/audio_manager.gd" id="1_g0xkg"]
-[ext_resource type="AudioStream" uid="uid://hgsuy3y2isq2" path="res://audio/music/interface_theme.wav" id="1_ne2b1"]
+[ext_resource type="AudioStream" uid="uid://c0rcvmlnbihb1" path="res://audio/music/interface_theme.wav" id="1_ne2b1"]
 [ext_resource type="AudioStream" uid="uid://iyb62pq8oygw" path="res://audio/music/Beach/beach_baton.wav" id="3_aougl"]
 [ext_resource type="AudioStream" uid="uid://da8kt4rbdusqm" path="res://audio/music/Beach/beach_sax.wav" id="4_sf6sn"]
 [ext_resource type="AudioStream" uid="uid://bo361l0n41i6o" path="res://audio/music/Beach/beach_drum.wav" id="5_868ti"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://bs8qb7iqvid03" path="res://audio/music/Cave/cave_drum.wav" id="13_ggq1s"]
 [ext_resource type="AudioStream" uid="uid://bp1yyqkgwkn00" path="res://audio/music/Cave/cave_violin.wav" id="14_wxvj6"]
 [ext_resource type="AudioStream" uid="uid://bto5hpgqe7dwu" path="res://audio/music/StormAtSea.mp3" id="15_18nds"]
+[ext_resource type="AudioStream" uid="uid://bwst8rp757eg8" path="res://audio/music/title_screen.wav" id="16_4d0s6"]
 
 [node name="AudioManager" type="Node2D"]
 script = ExtResource("1_g0xkg")
@@ -73,3 +74,6 @@ stream = ExtResource("14_wxvj6")
 
 [node name="IntroCutscene" type="AudioStreamPlayer" parent="Cutscenes"]
 stream = ExtResource("15_18nds")
+
+[node name="TitleTheme" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_4d0s6")
