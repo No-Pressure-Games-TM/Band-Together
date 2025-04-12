@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cwhaajrnohhnq"]
+[gd_scene load_steps=10 format=3 uid="uid://cwhaajrnohhnq"]
 
 [ext_resource type="Script" path="res://scenes/interfaces/main_menu/main_menu.gd" id="1_35m0h"]
 [ext_resource type="Texture2D" uid="uid://ievits8s3uy" path="res://assets/backgrounds/main_menu_bg.png" id="2_a7y77"]
 [ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="2_fewg4"]
+[ext_resource type="Script" path="res://scenes/interfaces/main_menu/credits_panel.gd" id="3_8r0xu"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ubkg"]
 texture = ExtResource("2_a7y77")
@@ -82,6 +83,88 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_5ubkg")
+
+[node name="CreditsPanel" type="Panel" parent="."]
+visible = false
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("3_8r0xu")
+
+[node name="CreditsBG" type="ColorRect" parent="CreditsPanel"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0.119764, 0.0557895, 0.212927, 1)
+
+[node name="CreditsText" type="RichTextLabel" parent="CreditsPanel"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+focus_mode = 2
+bbcode_enabled = true
+text = "[center]
+BAND TOGETHER
+A musical 2D-Platformer by No Pressure Games!
+
+
+STORY:
+Gabrielle Tian
+
+ART:
+Peri Glimm
+
+AUDIO:
+Gaven Barnes
+Gabrielle Tian
+
+PROGRAMMING:
+Gaven Barnes
+Helen Gezahegn
+Jonathan Fjeld
+
+EXECUTIVE PRODUCER:
+Jamie Powers
+
+
+EXTERNAL TOOLS:
+Aseprite
+Resprite
+Ableton Live
+Reaper
+jsfxr
+
+
+OUTSOURCED ASSETS:
+VST: LABS by Spitfire Audio
+Grape Soda by jeti - https://www.dafont.com/grapesoda-2.font
+StormAtSea by KevinT1001 (Freesound Community) - https://pixabay.com/sound-effects/stormatseamp3-14744/
+Gems / Coins Free by La Red Games - https://laredgames.itch.io/gems-coins-free
+
+All outsourced assets are free for commercial purpose.
+
+
+SPECIAL THANKS:
+Playtesters and classmates in INT D 450 W2025
+Eric Kaltman and Dave Goel
+Evan Higgs and Nora (cat)
+Amelia Gezahegn
+Dabi Kim and Anne Fjeld
+Shadow the Hedgehog
+Everyone who playtested and supported us!
+
+
+THANKS FOR PLAYING!
+(Press ESC / Gamepad B to close)
+
+
+
+ "
 
 [node name="GameName" type="Label" parent="."]
 layout_mode = 1
@@ -167,6 +250,21 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Reset Game"
 
+[node name="Credits" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_fonts/font = ExtResource("2_fewg4")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
+text = "Credits"
+
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -185,4 +283,5 @@ text = "Quit"
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/Reset Game" to="." method="_on_reset_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_exit_pressed"]

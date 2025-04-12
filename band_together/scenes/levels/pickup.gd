@@ -54,7 +54,6 @@ func _on_body_entered(body):
 		
 		elif is_in_group("coin"):
 			UI.get_coin()
-			# play a sound here
 			queue_free()
 		
 		elif name == "DashTipTrigger":

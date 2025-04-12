@@ -19,12 +19,6 @@ var current_music: AudioStream
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	get_tree().connect("node_added", Callable(self, "_on_scene_changed"))
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	#if music_player.volume_db != -80:
-		#music_player.volume_db = -80  # Mute music for testing lol
-	pass
 	
 func _on_scene_changed(scene: Node) -> void:
 	adjust_volumes()
@@ -44,8 +38,6 @@ func _on_scene_changed(scene: Node) -> void:
 			$Forest/Sax.stop()
 			$Forest/Violin.stop()
 		if scene.name in INTERFACE_THEME_SCENES:
-		
-			
 			if current_music != music_player.stream:
 				play_music(music_player.stream)
 		else:

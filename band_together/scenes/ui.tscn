@@ -1,10 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfmjew60pcpy"]
+[gd_scene load_steps=18 format=3 uid="uid://dfmjew60pcpy"]
 
 [ext_resource type="Script" path="res://scenes/ui_script.gd" id="1_kp52i"]
 [ext_resource type="Texture2D" uid="uid://dnldkpuhl5sx6" path="res://assets/arrow-left.png" id="2_2runv"]
 [ext_resource type="Texture2D" uid="uid://bxvgfvjhveo77" path="res://assets/health/music note heart.PNG" id="3_wxx78"]
 [ext_resource type="Texture2D" uid="uid://bqpuadd0cdidg" path="res://assets/portraits/baton.png" id="4_5fklh"]
 [ext_resource type="Texture2D" uid="uid://ciwd014dller2" path="res://entities/coins/MonedaP.png" id="5_fynjt"]
+[ext_resource type="AudioStream" uid="uid://dsmhgq5k2hhfe" path="res://audio/sfx/coin.wav" id="6_j7rlr"]
+[ext_resource type="AudioStream" uid="uid://os2ocvbbnnlq" path="res://audio/sfx/heal.wav" id="7_wcc2y"]
+[ext_resource type="AudioStream" uid="uid://ec1eu6ma4bn3" path="res://audio/sfx/damage.wav" id="8_74hw7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfj8y"]
 content_margin_left = 0.0
@@ -312,6 +315,17 @@ offset_bottom = 58.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 text = "x0"
+
+[node name="CoinSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_j7rlr")
+volume_db = -5.0
+
+[node name="HealSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wcc2y")
+
+[node name="DamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_74hw7")
+volume_db = -5.0
 
 [connection signal="pressed" from="PausePanel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PausePanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]

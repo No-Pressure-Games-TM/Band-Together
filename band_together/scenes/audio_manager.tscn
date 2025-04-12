@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://2tqhgcdgjybu"]
+[gd_scene load_steps=16 format=3 uid="uid://2tqhgcdgjybu"]
 
 [ext_resource type="Script" path="res://scenes/audio_manager.gd" id="1_g0xkg"]
 [ext_resource type="AudioStream" uid="uid://hgsuy3y2isq2" path="res://audio/music/interface_theme.wav" id="1_ne2b1"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://bwwj8onyn8ovj" path="res://audio/music/Cave/cave_sax.wav" id="12_ai03r"]
 [ext_resource type="AudioStream" uid="uid://bs8qb7iqvid03" path="res://audio/music/Cave/cave_drum.wav" id="13_ggq1s"]
 [ext_resource type="AudioStream" uid="uid://bp1yyqkgwkn00" path="res://audio/music/Cave/cave_violin.wav" id="14_wxvj6"]
+[ext_resource type="AudioStream" uid="uid://bto5hpgqe7dwu" path="res://audio/music/StormAtSea.mp3" id="15_18nds"]
 
 [node name="AudioManager" type="Node2D"]
 script = ExtResource("1_g0xkg")
@@ -67,3 +68,8 @@ stream = ExtResource("13_ggq1s")
 
 [node name="Violin" type="AudioStreamPlayer" parent="Cave"]
 stream = ExtResource("14_wxvj6")
+
+[node name="Cutscenes" type="Node2D" parent="."]
+
+[node name="IntroCutscene" type="AudioStreamPlayer" parent="Cutscenes"]
+stream = ExtResource("15_18nds")
