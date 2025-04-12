@@ -1,8 +1,10 @@
 extends Node2D
 
-var INTERFACE_THEME_SCENES: Array[String] = ["MainMenu", "Pause", "GameOver", "Win"]  
+var INTERFACE_THEME_SCENES: Array[String] = ["GameOver"] 
+var TITLE_THEME_SCENES: Array[String] = ["MainMenu"]
+var BEGINNING_CUTSCENE: Array[String] = ["Beginning"]
 const FADE_DURATION: float = 1.0  # Duration of fade in seconds
-var BEACH_SCENES: Array[String] = ["Level11", "Level12", "Level13" , "Level1End", "Level0"]
+var BEACH_SCENES: Array[String] = ["Level11", "Level12", "Level13" , "Level1End", "Level0", "Ending"]
 var FOREST_SCENES: Array[String] = ["Level21", "Level22", "Level23" , "Level2End"]
 var CAVE_SCENES: Array[String] = ["Level31", "Level32", "Level3_3", "Level3End"]
 
@@ -21,10 +23,15 @@ func _ready() -> void:
 	get_tree().connect("node_added", Callable(self, "_on_scene_changed"))
 	
 func _on_scene_changed(scene: Node) -> void:
+	#When first booting up game
+	if scene == null:
+		$TitleTheme.play()
+		return
+		
 	adjust_volumes()
 	if scene.get_parent() == get_tree().root:
 		
-		if scene.name in INTERFACE_THEME_SCENES or scene.name in BEACH_SCENES or scene.name in CAVE_SCENES or scene.name in FOREST_SCENES:
+		if scene.name in BEGINNING_CUTSCENE or scene.name in TITLE_THEME_SCENES or scene.name in INTERFACE_THEME_SCENES or scene.name in BEACH_SCENES or scene.name in CAVE_SCENES or scene.name in FOREST_SCENES:
 			$Cave/Baton.stop()
 			$Cave/Drum.stop()
 			$Cave/Sax.stop()
@@ -37,9 +44,17 @@ func _on_scene_changed(scene: Node) -> void:
 			$Forest/Drum.stop()
 			$Forest/Sax.stop()
 			$Forest/Violin.stop()
+			$Cutscenes/IntroCutscene.stop()
+			$TitleTheme.stop()
 		if scene.name in INTERFACE_THEME_SCENES:
 			if current_music != music_player.stream:
 				play_music(music_player.stream)
+		elif scene.name == "MainMenu":
+			stop_music()
+			$TitleTheme.play()
+		elif scene.name == "Beginning":
+			stop_music()
+			$Cutscenes/IntroCutscene.play()
 		else:
 			stop_music()
 			#not an interface, do the music gavens way :3
