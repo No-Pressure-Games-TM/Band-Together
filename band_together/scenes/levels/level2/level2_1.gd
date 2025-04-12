@@ -9,6 +9,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player.dash_enabled = false
+	GameManager.sax_unlocked = false
 	# Connect vines to retract when the flower is hit
 	if flower and vine1 and vine2:
 		for vine in [vine1, vine2]:
