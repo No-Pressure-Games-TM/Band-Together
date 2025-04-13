@@ -13,6 +13,7 @@ const GRAVITY_ACCELERATION = 980.0
 @export var hp: float = 60.0 # Bear's health points - how much damage it can take before dying
 @export var avoid_falls: bool = true # Whether the bear should stop at platform edges
 @export var idle_telegraph_duration: float = 1.2 # How long to play the idle animation telegraph (seconds)
+var direction_change_timer: float = 0.0 # Timer to limit direction changes
 
 # Patrol area configuration
 # --------------------------------------
@@ -119,6 +120,7 @@ func _find_player():
 
 # Main physics update
 func _physics_process(delta):
+	direction_change_timer -= delta
 	# Try to find player if not found yet
 	if not player and Engine.get_frames_drawn() % 60 == 0:
 		_find_player()
@@ -142,8 +144,12 @@ func _physics_process(delta):
 		
 		# Update direction to face player only when in detection range
 		if distance < chase_distance:
-			direction = sign(player.global_position.x - global_position.x)
-			sprite.flip_h = (direction > 0)
+			if direction_change_timer <= 0:
+				var new_direction = sign(player.global_position.x - global_position.x)
+				if new_direction != direction:
+					direction = new_direction
+					sprite.flip_h = (direction > 0)
+					direction_change_timer = 0.5  # Only allow direction changes every 0.5 seconds
 			
 			# Update raycast direction
 			if raycast and ((direction > 0 and raycast.position.x < 0) or
