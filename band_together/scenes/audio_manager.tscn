@@ -74,6 +74,7 @@ stream = ExtResource("14_wxvj6")
 
 [node name="IntroCutscene" type="AudioStreamPlayer" parent="Cutscenes"]
 stream = ExtResource("15_18nds")
+volume_db = -13.0
 
 [node name="TitleTheme" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_4d0s6")

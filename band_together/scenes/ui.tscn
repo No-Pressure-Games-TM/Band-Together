@@ -325,7 +325,7 @@ stream = ExtResource("7_wcc2y")
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_74hw7")
-volume_db = -5.0
+volume_db = -7.0
 
 [connection signal="pressed" from="PausePanel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PausePanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
