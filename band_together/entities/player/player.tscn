@@ -483,7 +483,7 @@ stream = ExtResource("21_iciqu")
 
 [node name="DrumAttack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_4et5o")
-volume_db = -12.18
+volume_db = 6.0
 
 [node name="CritAttack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("23_ww7p6")

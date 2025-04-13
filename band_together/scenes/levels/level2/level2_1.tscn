@@ -172,14 +172,6 @@ position = Vector2(186, 102)
 [node name="CoinPickup7" parent="SaxCoins" instance=ExtResource("10_ruicq")]
 position = Vector2(207, 137)
 
-[node name="CoinPickup8" parent="SaxCoins" instance=ExtResource("10_ruicq")]
-visible = false
-position = Vector2(230, 116)
-
-[node name="CoinPickup9" parent="SaxCoins" instance=ExtResource("10_ruicq")]
-visible = false
-position = Vector2(253, 137)
-
 [node name="SaxPickup" type="Area2D" parent="."]
 position = Vector2(269, 129)
 collision_layer = 0

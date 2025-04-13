@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scenes/ui_script.gd" id="1_kp52i"]
 [ext_resource type="Texture2D" uid="uid://dnldkpuhl5sx6" path="res://assets/arrow-left.png" id="2_2runv"]
-[ext_resource type="Texture2D" uid="uid://bxvgfvjhveo77" path="res://assets/health/music note heart.PNG" id="3_wxx78"]
+[ext_resource type="Texture2D" uid="uid://cidds3ashxaa6" path="res://assets/health/red music note.png" id="3_aaele"]
 [ext_resource type="Texture2D" uid="uid://bqpuadd0cdidg" path="res://assets/portraits/baton.png" id="4_5fklh"]
-[ext_resource type="Texture2D" uid="uid://ciwd014dller2" path="res://entities/coins/MonedaP.png" id="5_fynjt"]
+[ext_resource type="Texture2D" uid="uid://bn6aaeh207mxo" path="res://entities/coins/music note coins.png" id="5_26j84"]
 [ext_resource type="AudioStream" uid="uid://dsmhgq5k2hhfe" path="res://audio/sfx/coin.wav" id="6_j7rlr"]
 [ext_resource type="AudioStream" uid="uid://os2ocvbbnnlq" path="res://audio/sfx/heal.wav" id="7_wcc2y"]
 [ext_resource type="AudioStream" uid="uid://ec1eu6ma4bn3" path="res://audio/sfx/damage.wav" id="8_74hw7"]
@@ -145,8 +145,8 @@ shadow_size = 1
 shadow_offset = Vector2(0, 2)
 anti_aliasing_size = 0.01
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8xhfx"]
-atlas = ExtResource("5_fynjt")
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p5v6"]
+atlas = ExtResource("5_26j84")
 region = Rect2(0, 0, 16, 16)
 
 [node name="UI" type="CanvasLayer"]
@@ -270,19 +270,19 @@ alignment = 2
 [node name="Heart" type="TextureRect" parent="Hearts/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("3_wxx78")
+texture = ExtResource("3_aaele")
 expand_mode = 2
 
 [node name="Heart2" type="TextureRect" parent="Hearts/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("3_wxx78")
+texture = ExtResource("3_aaele")
 expand_mode = 2
 
 [node name="Heart3" type="TextureRect" parent="Hearts/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("3_wxx78")
+texture = ExtResource("3_aaele")
 expand_mode = 2
 
 [node name="CurrentWeapon" type="TextureRect" parent="."]
@@ -305,7 +305,7 @@ offset_left = 272.0
 offset_top = 24.0
 offset_right = 288.0
 offset_bottom = 40.0
-texture = SubResource("AtlasTexture_8xhfx")
+texture = SubResource("AtlasTexture_7p5v6")
 
 [node name="CoinCount" type="RichTextLabel" parent="."]
 offset_left = 289.0
