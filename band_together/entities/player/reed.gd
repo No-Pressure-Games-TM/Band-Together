@@ -8,11 +8,6 @@ var direction: int = 1
 var angle: float = 0
 @onready var despawn_timer: float = 4.0  # despawn after 4 seconds to reduce lag
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	$Sprite2D.flip_h = direction > 0
-	pass # Replace with function body.
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#pass

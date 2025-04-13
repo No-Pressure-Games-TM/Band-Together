@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxvgfvjhveo77"
-path="res://.godot/imported/music note heart.PNG-3227e7cd4df87da8f6eeeea679960148.ctex"
+uid="uid://cidds3ashxaa6"
+path="res://.godot/imported/red music note.png-c3ecb077b38c8a1dd80de921fffd8e6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/health/music note heart.PNG"
-dest_files=["res://.godot/imported/music note heart.PNG-3227e7cd4df87da8f6eeeea679960148.ctex"]
+source_file="res://assets/health/red music note.png"
+dest_files=["res://.godot/imported/red music note.png-c3ecb077b38c8a1dd80de921fffd8e6c.ctex"]
 
 [params]
 
