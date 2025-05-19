@@ -1,11 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://id0acxrk2y0w"]
+[gd_scene load_steps=6 format=4 uid="uid://id0acxrk2y0w"]
 
 [ext_resource type="Texture2D" uid="uid://da6a4a38e1tul" path="res://Environment/Tiles-DELETE.png" id="1_wrvxf"]
 [ext_resource type="PackedScene" uid="uid://chmdbpxvcc4i8" path="res://entities/player/player.tscn" id="2_148ad"]
-[ext_resource type="PackedScene" uid="uid://cgv4mrgji2pi" path="res://Environment/mushroom/mushroom_stem.tscn" id="5_jwyvv"]
-[ext_resource type="PackedScene" uid="uid://dmwgtnu46pacq" path="res://Environment/mushroom/mushroom.tscn" id="6_0xx0i"]
-[ext_resource type="PackedScene" uid="uid://bb4kc7nf21ki5" path="res://entities/enemies/crab/crab.tscn" id="7_4xtrx"]
-[ext_resource type="PackedScene" uid="uid://bh2l3175lputt" path="res://entities/projectiles/coconut/coconut_spawner.tscn" id="7_oprbn"]
+[ext_resource type="PackedScene" uid="uid://c5uad3lvhkmr6" path="res://entities/camera/camera.tscn" id="4_2g4dw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yw07a"]
 texture = ExtResource("1_wrvxf")
@@ -130,37 +127,12 @@ sources/1 = SubResource("TileSetAtlasSource_yw07a")
 [node name="TestJon" type="Node2D"]
 
 [node name="Ground" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAQAAQABAAAAAAAAAAUAAQABAAEAAAACAAQAAQACAAAAAAACAAUAAQACAAEAAAADAAQAAQACAAAAAAADAAUAAQACAAEAAAAGAAQAAQACAAAAAAAGAAUAAQACAAEAAAAHAAQAAQACAAAAAAAHAAUAAQACAAEAAAAIAAQAAQACAAAAAAAIAAUAAQACAAEAAAAJAAQAAQACAAAAAAAJAAUAAQACAAEAAAABAAQAAQACAAAAAAABAAUAAQACAAEAAAAEAAYAAQACAAIAAAAFAAYAAQACAAIAAAAKAAUAAQACAAEAAAALAAUAAQACAAEAAAAMAAUAAQACAAEAAAANAAUAAQACAAEAAAAOAAUAAQACAAEAAAAPAAUAAQACAAEAAAANAAEAAQACAAAAAAAOAAEAAQAAAAUAAAAPAAEAAQACAAEAAAAOAAAAAQAAAAQAAAAPAAAAAQACAAAAAAAQAAAAAQACAAAAAAAQAAEAAQACAAEAAAARAAAAAQACAAAAAAARAAEAAQACAAEAAAASAAAAAQACAAAAAAASAAEAAQACAAEAAAATAAAAAQACAAAAAAATAAEAAQACAAEAAAAOAP7/AQAAAAQAAAAOAP//AQAAAAUAAAAGAAAAAQACAAQAAAAHAAAAAQACAAQAAAAKAAQAAQACAAQAAAAKAAMAAQACAAQAAAAKAAIAAQACAAQAAAAKAAEAAQACAAQAAAAKAAAAAQACAAQAAAAKAP//AQACAAQAAAAKAP7/AQACAAQAAAAKAP3/AQACAAQAAAAKAPz/AQACAAQAAAA=")
+tile_map_data = PackedByteArray("AAAAAAUAAQABAAEAAAACAAUAAQACAAEAAAADAAUAAQACAAEAAAAIAAUAAQABAAEAAAAJAAUAAQACAAEAAAABAAUAAQACAAEAAAAEAAYAAQACAAIAAAAFAAYAAQADAAIAAAAKAAUAAQACAAEAAAALAAUAAQACAAEAAAAMAAUAAQADAAEAAAAEAAUAAQACAAEAAAADAAYAAQACAAQAAAACAAYAAQACAAQAAAABAAYAAQACAAQAAAAAAAYAAQABAAIAAAAFAAUAAQADAAEAAAAIAAYAAQABAAIAAAAJAAYAAQACAAQAAAAKAAYAAQACAAQAAAALAAYAAQACAAQAAAAMAAYAAQADAAIAAAAIAAcAAQABAAIAAAAIAAgAAQABAAIAAAAIAAkAAQABAAIAAAAIAAoAAQABAAIAAAAFAAcAAQADAAIAAAAFAAgAAQADAAIAAAAFAAkAAQADAAIAAAAFAAoAAQADAAIAAAAFAAsAAQACAAEAAAAIAAsAAQACAAEAAAAIAAwAAQABAAIAAAAIAA0AAQABAAIAAAAIAA4AAQABAAIAAAAIAA8AAQABAAIAAAAIABAAAQABAAIAAAAFAAwAAQADAAIAAAAFAA0AAQADAAIAAAAFAA4AAQADAAIAAAAFAA8AAQADAAIAAAAFABAAAQADAAIAAAAFABEAAQACAAEAAAAGABEAAQACAAEAAAAHABEAAQACAAEAAAAIABEAAQACAAEAAAA=")
 tile_set = SubResource("TileSet_dcilm")
 
 [node name="Player" parent="." instance=ExtResource("2_148ad")]
 position = Vector2(26, 137)
 scale = Vector2(0.68558, 0.601599)
-left_limit = 0
-bottom_limit = 192
 
-[node name="Crab7" parent="." instance=ExtResource("7_4xtrx")]
-position = Vector2(513, 2)
-
-[node name="Crab8" parent="." instance=ExtResource("7_4xtrx")]
-position = Vector2(578, 4)
-
-[node name="Crab9" parent="." instance=ExtResource("7_4xtrx")]
-position = Vector2(542, -10)
-
-[node name="Crab10" parent="." instance=ExtResource("7_4xtrx")]
-position = Vector2(607, -21)
-
-[node name="MushroomStem" parent="." instance=ExtResource("5_jwyvv")]
-position = Vector2(149, 176)
-
-[node name="MushroomStem2" parent="." instance=ExtResource("5_jwyvv")]
-position = Vector2(149, 144)
-
-[node name="MushroomHead2" parent="." instance=ExtResource("6_0xx0i")]
-position = Vector2(107, 124)
-
-[node name="CoconutSpawner" parent="." instance=ExtResource("7_oprbn")]
-position = Vector2(61, 83)
-max_spawnrate = 0.1
-min_spawnrate = 0.1
+[node name="Camera" parent="." instance=ExtResource("4_2g4dw")]
+position = Vector2(64, 73)

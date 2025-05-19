@@ -6,8 +6,8 @@ extends CharacterBody2D
 
 #region Physics
 @export var speed: float = 100.0               # Player's movespeed
-@export var acceleration: float = 800.0        # The rate at which speeds up from 0
-@export var deceleration: float = 1200.0
+@export var acceleration: float = 300.0        # The rate at which speeds up from 0
+@export var deceleration: float = 1000.0
 @export var jump_velocity: float = -325.0      # Player's jump velocity
 @export var jump_buffer: float = 0.2            # Jump buffer
 @export var coyote_time: float = 0.2             # Coyote time
@@ -83,7 +83,6 @@ func _ready():
 		
 
 func _physics_process(delta):
-	
 	#if global_position.y > 1000:  # TODO: Refractor to calculate WorldBoundary. If the player falls out of the world boundary, respawn
 		#respawn()	
 		
@@ -201,16 +200,16 @@ func gravity(delta) -> void:
 			# Prevent underflow
 			coyote_time_counter -= delta
 			coyote_time_wall_counter -= delta   # Fix triple jump bug
-		velocity += get_gravity() * delta
+		velocity.y = min(velocity.y + get_gravity().y * delta, 500)
 		#if the player is falling, and is either charging their dash or dashing, slow their descent
 		if velocity.y > 0 and (is_charging or is_dashing):
 			velocity.y /= grav_div
 	elif velocity.y > 0:
-		velocity += get_gravity() * delta * 1.5  # Faster falling (feels good)
+		velocity.y = min(velocity.y + get_gravity().y * delta * 1.5, 500)  # Faster falling (feels good)
 	else:
 		coyote_time_counter -= delta
 		coyote_time_wall_counter -= delta
-		velocity += get_gravity() * delta  # We are in the air, regular gravity
+		velocity.y = min(velocity.y + get_gravity().y * delta, 500)  # We are in the air, regular gravity
 
 func jump(delta) -> void:
 	if Input.is_action_just_pressed("Accept"):

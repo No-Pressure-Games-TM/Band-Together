@@ -16,15 +16,15 @@ var not_allowed_scenes: Array[String] = ["GameOver", "Win", "MainMenu"]
 var default_lives: int = 3  # This allows us to add more hearts if we want!
 var lives: int
 var coins: int = 0
+var startcoins: int
 
 func _ready():
 	lives = default_lives
-	reset()  # This is only called once. The first time anything in the game loads.
+	reset()
 
 func reset() -> void:
 	# This is replacing the ready() function. An autoloaded scene persists across
 	# scene changes, so this function needs to be called every time a scene changes
-	print("scene name: " +get_tree().current_scene.name)
 	var scene_name: String = get_tree().current_scene.name
 	if scene_name in not_allowed_scenes:
 		print("NOT ALLOWED SCENE! NO PAUSING")
@@ -40,6 +40,8 @@ func reset() -> void:
 			lives = default_lives
 			for heart in hearts:
 				heart.show()
+		startcoins = coins
+		refresh()
 		print("\nScene changed. \nLives: ", lives)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -96,6 +98,7 @@ func _on_main_menu_pressed() -> void:
 	pause_panel.hide()
 	if GameManager.in_dialogue:
 		Dialogic.end_timeline()
+	coins = startcoins  # coins were not resetting properly on reset or death
 	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
 
 func decrease_health():
@@ -117,6 +120,7 @@ func decrease_health():
 		
 	if (lives == 0):
 		print("Game Over.\n")
+		coins = startcoins  # coins were not resetting properly on reset or death
 		SceneTransition.change_scene("res://scenes/interfaces/game_over/game_over.tscn")
 	else: 
 		print("Lives: ", lives)
@@ -130,6 +134,7 @@ func _on_reset_pressed():
 	if current_scene.name == "Level11":
 		GameManager.drum_unlocked = false  # Reset drum unlocked state if this level
 		GameManager.current_instrument = 0  # Reset to baton
+	coins = startcoins  # coins were not resetting properly on reset or death
 	SceneTransition.change_scene(current_scene.scene_file_path)
 
 func get_coin():
@@ -144,4 +149,9 @@ func get_coin():
 		$HealSound.play()
 		$CoinCount.text = "x%s" % coins
 	$CoinCount.text = "x%s" % coins
-		
+	
+func refresh():
+	# I made this function because hearts and coins looked wrong with save system
+	for i in range(len(hearts)):
+		hearts[i].visible = i < lives
+	$CoinCount.text = "x%s" % coins
