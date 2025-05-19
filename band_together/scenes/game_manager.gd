@@ -15,6 +15,46 @@ var new_game: bool = true
 var in_dialogue: bool = false
 var current_dialogue: String = ""
 
+## NEW SAVING SYSTEM
+# https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html
+func save_game():
+	var save_data: Dictionary = {
+		"drum_unlocked" : drum_unlocked,
+		"sax_unlocked": sax_unlocked,
+		"violin_unlocked": violin_unlocked,
+		"current_health" : UI.lives,
+		"current_money" : UI.coins,
+		"current_room" : furthest_level,
+		"is_new_game" : new_game
+	}
+	var save_file : FileAccess = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+	var json_string : String = JSON.stringify(save_data)
+	save_file.store_line(json_string)
+	
+func load_game():
+	if not FileAccess.file_exists("user://savegame.save"):
+		return  # nothing to load, no save yet
+	
+	var save_file : FileAccess = FileAccess.open("user://savegame.save", FileAccess.READ)
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+		
+		var json = JSON.new()
+		
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+			
+		var save_data = json.data
+		drum_unlocked = save_data["drum_unlocked"]
+		sax_unlocked = save_data["sax_unlocked"]
+		violin_unlocked = save_data["violin_unlocked"]
+		UI.lives = save_data["current_health"]
+		UI.coins = save_data["current_money"]
+		furthest_level = save_data["current_room"]
+		new_game = save_data["is_new_game"]
+
 func show_coins(code: String):
 	# Show all pickups with the given code
 	for coin in get_tree().get_nodes_in_group("coin"):
@@ -92,8 +132,8 @@ func dialogic_signal_end():
 			UI.get_node("CoinIcon").visible = true
 			UI.get_node("Hearts").visible = true
 		"introcutscene":
-			SceneTransition.change_scene("res://scenes/levels/level_0.tscn")
 			new_game = false
+			SceneTransition.change_scene("res://scenes/levels/level_0.tscn")
 			UI.get_node("CoinCount").visible = true
 			UI.get_node("CurrentWeapon").visible = true
 			UI.get_node("CoinIcon").visible = true

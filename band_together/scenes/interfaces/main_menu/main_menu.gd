@@ -5,6 +5,9 @@ extends Control
 func _ready():
 	#AudioManager.play_music(AudioManager.music_player.stream)
 	AudioManager._on_scene_changed(null)
+	print_debug("loading...")
+	await GameManager.load_game()
+	print_debug("loaded!")
 	if GameManager.new_game:
 		start_game_btn.text = "New Game"
 	else:
@@ -64,6 +67,9 @@ func _on_reset_game_pressed():
 	UI.lives = -1  # Reset lives
 	UI.coins = 0  # Reset coins
 	GameManager.new_game = true
+	print_debug("starting save")
+	await GameManager.save_game()
+	print_debug("save finished")
 	SceneTransition.change_scene(get_tree().current_scene.scene_file_path)
 
 
