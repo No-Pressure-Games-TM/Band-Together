@@ -1,7 +1,7 @@
 extends Node2D
 
 var INTERFACE_THEME_SCENES: Array[String] = ["GameOver"] 
-var TITLE_THEME_SCENES: Array[String] = ["MainMenu"]
+var TITLE_THEME_SCENES: Array[String] = ["MainMenu", "SettingsMenu"]
 var BEGINNING_CUTSCENE: Array[String] = ["Beginning"]
 const FADE_DURATION: float = 1.0  # Duration of fade in seconds
 var BEACH_SCENES: Array[String] = ["Level11", "Level12", "Level13" , "Level1End", "Level0", "Ending"]

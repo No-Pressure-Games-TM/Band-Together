@@ -255,10 +255,10 @@ position = Vector2(513, 145)
 door_dialogue = "door1"
 
 [node name="PressToMove" type="RichTextLabel" parent="SceneObjects"]
-offset_left = -187.0
-offset_top = 79.0
-offset_right = 1.0
-offset_bottom = 151.0
+offset_left = -184.0
+offset_top = 80.0
+offset_right = 4.0
+offset_bottom = 152.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 text = "Press O O to move.

@@ -5,10 +5,18 @@ extends Control
 func _ready():
 	#AudioManager.play_music(AudioManager.music_player.stream)
 	AudioManager._on_scene_changed(null)
+	print_debug("loading...")
+	await GameManager.load_game()
+	print_debug("loaded!")
 	if GameManager.new_game:
 		start_game_btn.text = "New Game"
 	else:
 		start_game_btn.text = "Continue"
+	
+	# This next part fixes the bug where player gets stuck when quitting during dialogues
+	# I really hope this doesn't create more bugs lol
+	GameManager.in_dialogue = false
+	GameManager.current_instrument = 0
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
@@ -47,7 +55,7 @@ func _on_start_pressed() -> void:
 	#SceneTransition.change_scene("res://scenes/test/test_walljump.tscn")
 	
 func _on_options_pressed() -> void:
-	print("Settings pressed")
+	SceneTransition.change_scene("res://scenes/interfaces/main_menu/settings_menu.tscn")
 
 
 func _on_exit_pressed() -> void:
@@ -64,6 +72,9 @@ func _on_reset_game_pressed():
 	UI.lives = -1  # Reset lives
 	UI.coins = 0  # Reset coins
 	GameManager.new_game = true
+	print_debug("starting save")
+	await GameManager.save_game()
+	print_debug("save finished")
 	SceneTransition.change_scene(get_tree().current_scene.scene_file_path)
 
 

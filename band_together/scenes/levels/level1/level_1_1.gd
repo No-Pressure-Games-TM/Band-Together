@@ -12,7 +12,6 @@ func _ready():
 		cam.limit_right = 592
 		GameManager.show_coins("1")  # show the part 2 coins
 		$SceneObjects/DrumPickup.queue_free()  # Remove drum from the game cuz it's picked up
-		
 
 
 #func _on_player_shoot(pos: Vector2, facing_left, angle) -> void:

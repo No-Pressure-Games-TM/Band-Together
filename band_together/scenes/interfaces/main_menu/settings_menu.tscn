@@ -1,0 +1,193 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjdy5g6glkdii"]
+
+[ext_resource type="Script" path="res://scenes/interfaces/main_menu/settings_menu.gd" id="1_t6voa"]
+[ext_resource type="Texture2D" uid="uid://ievits8s3uy" path="res://assets/backgrounds/main_menu_bg.png" id="2_j71ee"]
+[ext_resource type="FontFile" uid="uid://b7uqtstc70wd8" path="res://assets/GrapeSoda.ttf" id="4_ofx32"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ubkg"]
+texture = ExtResource("2_j71ee")
+modulate_color = Color(0.460347, 0.460347, 0.460347, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yywy"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.507384, 0.669107, 0.516096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f0yxt"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0.176471, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fy76"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 13
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+anti_aliasing_size = 0.01
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t6voa")
+
+[node name="Background" type="Panel" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_5ubkg")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -290.0
+offset_top = -33.0
+offset_right = 291.0
+offset_bottom = 67.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("4_ofx32")
+theme_override_font_sizes/font_size = 32
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -45.0
+offset_right = 50.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Reset Game" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
+text = "Reset Progress"
+
+[node name="AreYouSureTimer" type="Timer" parent="VBoxContainer/Reset Game"]
+wait_time = 10.0
+one_shot = true
+
+[node name="Resolution" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="VBoxContainer/Resolution"]
+layout_mode = 2
+text = "Resolution"
+
+[node name="ResoDropdown" type="OptionButton" parent="VBoxContainer/Resolution"]
+layout_mode = 2
+item_count = 5
+popup/item_0/text = "640x360"
+popup/item_1/text = "1280x720"
+popup/item_1/id = 1
+popup/item_2/text = "1920x1080"
+popup/item_2/id = 2
+popup/item_3/text = "2560x1440"
+popup/item_3/id = 3
+popup/item_4/text = "3840x2160"
+popup/item_4/id = 4
+
+[node name="WindowMode" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="VBoxContainer/WindowMode"]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WMDropdown" type="OptionButton" parent="VBoxContainer/WindowMode"]
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_1/text = "Borderless"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+
+[node name="Return" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
+text = "Save And Return"
+
+[connection signal="pressed" from="VBoxContainer/Reset Game" to="." method="_on_reset_game_pressed"]
+[connection signal="timeout" from="VBoxContainer/Reset Game/AreYouSureTimer" to="." method="_on_are_you_sure_timer_timeout"]
+[connection signal="item_selected" from="VBoxContainer/Resolution/ResoDropdown" to="." method="_on_reso_dropdown_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/WindowMode/WMDropdown" to="." method="_on_wm_dropdown_item_selected"]
+[connection signal="pressed" from="VBoxContainer/Return" to="." method="_on_return_pressed"]

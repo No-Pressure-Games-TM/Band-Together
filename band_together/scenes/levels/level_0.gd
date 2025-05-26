@@ -16,4 +16,3 @@ func _ready():
 		# No instruments unlocked. Play intro dialogue and don't move player
 		GameManager.start_dialogue("prologue")
 		GameManager.show_coins("1")
-	
