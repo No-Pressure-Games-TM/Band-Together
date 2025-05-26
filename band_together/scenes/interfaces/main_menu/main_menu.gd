@@ -12,6 +12,11 @@ func _ready():
 		start_game_btn.text = "New Game"
 	else:
 		start_game_btn.text = "Continue"
+	
+	# This next part fixes the bug where player gets stuck when quitting during dialogues
+	# I really hope this doesn't create more bugs lol
+	GameManager.in_dialogue = false
+	GameManager.current_instrument = 0
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
@@ -50,7 +55,7 @@ func _on_start_pressed() -> void:
 	#SceneTransition.change_scene("res://scenes/test/test_walljump.tscn")
 	
 func _on_options_pressed() -> void:
-	print("Settings pressed")
+	SceneTransition.change_scene("res://scenes/interfaces/main_menu/settings_menu.tscn")
 
 
 func _on_exit_pressed() -> void:

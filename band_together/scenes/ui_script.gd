@@ -12,7 +12,7 @@ var sax = preload("res://assets/portraits/saxophone item.PNG")
 var violin = preload("res://assets/portraits/violin item.PNG")
 #endregion
 
-var not_allowed_scenes: Array[String] = ["GameOver", "Win", "MainMenu"]
+var not_allowed_scenes: Array[String] = ["GameOver", "Win", "MainMenu", "SettingsMenu"]
 var default_lives: int = 3  # This allows us to add more hearts if we want!
 var lives: int
 var coins: int = 0

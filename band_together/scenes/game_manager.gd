@@ -15,6 +15,11 @@ var new_game: bool = true
 var in_dialogue: bool = false
 var current_dialogue: String = ""
 
+# saved settings (default values)
+var res_x: int = 1920  # horizontal resolution
+var res_y: int = 1080  # vertical resolution
+var screen_mode: int = 1  # 0,1,2 == windowed,borderless,fullscreen
+
 ## NEW SAVING SYSTEM
 # https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html
 func save_game():
@@ -25,7 +30,10 @@ func save_game():
 		"current_health" : UI.lives,
 		"current_money" : UI.coins,
 		"current_room" : furthest_level,
-		"is_new_game" : new_game
+		"is_new_game" : new_game,
+		"res_x" : res_x,
+		"res_y" : res_y,
+		"screen_mode" : screen_mode
 	}
 	var save_file : FileAccess = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	var json_string : String = JSON.stringify(save_data)
@@ -54,6 +62,9 @@ func load_game():
 		UI.coins = save_data["current_money"]
 		furthest_level = save_data["current_room"]
 		new_game = save_data["is_new_game"]
+		res_x = save_data["res_x"]
+		res_y = save_data["res_y"]
+		screen_mode = save_data["screen_mode"]
 
 func show_coins(code: String):
 	# Show all pickups with the given code
@@ -141,3 +152,21 @@ func dialogic_signal_end():
 	current_dialogue = ""
 	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	in_dialogue = false
+
+## Leaving this here in case I ever want to try to make it work, sad :(
+#func update_font() -> void:
+	#var font: Font
+	#if ez_font:
+		#font = load("res://assets/Swansea.ttf")
+	#else:
+		#font = load("res://assets/GrapeSoda.ttf")
+	#ProjectSettings.set_setting("gui/theme/custom_font", font)
+	#if get_tree().root.theme == null:
+		#get_tree().root.theme = Theme.new()
+	#var updated_theme = get_tree().root.theme.duplicate()
+	#updated_theme.default_font = font
+	## Thanks for this next part, chatgpt <3
+	#var control_classes = ["Label", "Button", "CheckButton", "OptionButton", "RichTextLabel", "LineEdit"]
+	#for node_name in control_classes:
+		#updated_theme.set_font("font", node_name, font)
+	#get_tree().root.theme = updated_theme

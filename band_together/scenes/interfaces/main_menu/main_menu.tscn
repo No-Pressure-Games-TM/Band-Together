@@ -192,10 +192,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -37.0
-offset_right = 46.0
-offset_bottom = 19.0
+offset_left = -50.0
+offset_top = -45.0
+offset_right = 50.0
+offset_bottom = 31.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
@@ -209,7 +209,6 @@ theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_fonts/font = ExtResource("2_fewg4")
 theme_override_font_sizes/font_size = 0
 theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
@@ -217,38 +216,34 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_hyb1m")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Start Game"
 
-[node name="Settings" type="Button" parent="VBoxContainer"]
+[node name="Reset Game" type="Button" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
-focus_neighbor_top = NodePath("../StartGame")
-focus_neighbor_bottom = NodePath("../Quit")
 theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_fonts/font = ExtResource("2_fewg4")
-theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
-theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
-text = "Settings"
-
-[node name="Reset Game" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
-theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
-theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_fonts/font = ExtResource("2_fewg4")
 theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Reset Game"
+
+[node name="Settings" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
+theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
+theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
+text = "Settings"
 
 [node name="Credits" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -258,7 +253,6 @@ theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_fonts/font = ExtResource("2_fewg4")
 theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
@@ -273,7 +267,6 @@ theme_override_colors/font_hover_color = Color(0, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.231931, 0.360225, 0.146435, 1)
 theme_override_colors/font_focus_color = Color(0, 0.176642, 1.08294e-07, 1)
 theme_override_colors/font_color = Color(0, 0.176471, 0, 1)
-theme_override_fonts/font = ExtResource("2_fewg4")
 theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
@@ -281,7 +274,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Quit"
 
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/Reset Game" to="." method="_on_reset_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_exit_pressed"]
