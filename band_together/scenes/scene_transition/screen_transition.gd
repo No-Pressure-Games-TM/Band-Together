@@ -10,7 +10,10 @@ func _ready() -> void:
 	pass
 
 func change_scene(target_scene: String):
-	 # A higher value ensures it's rendered on top of other scenes/nodes
+	Engine.time_scale = 1  # Stops game from being weird if quit during hitfreeze, may cause other issues!!
+	UI.increment_speedrun_timer = false
+	await GameManager.save_game()  # Save before transitioning (whoops)
+	# A higher value ensures it's rendered on top of other scenes/nodes
 	transitioning = true
 	canvas_layer.layer = 10 
 	var old_scene = get_tree().current_scene
@@ -21,11 +24,12 @@ func change_scene(target_scene: String):
 	
 	while get_tree().current_scene == null or get_tree().current_scene == old_scene:
 		await get_tree().process_frame  # Wait 1 frame for assignment
-	await GameManager.save_game()
+	
 	UI.reset()
 	animation_player.play("transition_out")
 	await animation_player.animation_finished
 	transitioning = false
+	# Do not need to turn the speedrun timer back on. That is handled by UI.reset()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

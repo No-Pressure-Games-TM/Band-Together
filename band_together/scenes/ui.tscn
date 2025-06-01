@@ -327,6 +327,21 @@ stream = ExtResource("7_wcc2y")
 stream = ExtResource("8_74hw7")
 volume_db = -7.0
 
+[node name="SpeedrunTimer" type="HBoxContainer" parent="."]
+offset_left = 8.225
+offset_right = 143.31
+offset_bottom = 25.45
+theme_override_constants/separation = 0
+
+[node name="BestTime" type="Label" parent="SpeedrunTimer"]
+layout_mode = 2
+text = "00:00"
+
+[node name="BestTimeMS" type="Label" parent="SpeedrunTimer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.698039)
+text = ".000"
+
 [connection signal="pressed" from="PausePanel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PausePanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="PausePanel/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]

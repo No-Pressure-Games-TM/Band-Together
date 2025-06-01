@@ -107,14 +107,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -45.0
-offset_right = 50.0
-offset_bottom = 51.0
+offset_left = -95.5
+offset_top = -55.765
+offset_right = 95.5
+offset_bottom = 77.235
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 1
 
 [node name="Reset Game" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -172,6 +172,14 @@ popup/item_1/id = 1
 popup/item_2/text = "Fullscreen"
 popup/item_2/id = 2
 
+[node name="EasyMode" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "Easy Mode (0 damage)"
+
+[node name="Speedrun Mode" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "Speedrun Timer"
+
 [node name="Return" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -184,10 +192,12 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6yywy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
-text = "Save And Return"
+text = "Return"
 
 [connection signal="pressed" from="VBoxContainer/Reset Game" to="." method="_on_reset_game_pressed"]
 [connection signal="timeout" from="VBoxContainer/Reset Game/AreYouSureTimer" to="." method="_on_are_you_sure_timer_timeout"]
 [connection signal="item_selected" from="VBoxContainer/Resolution/ResoDropdown" to="." method="_on_reso_dropdown_item_selected"]
 [connection signal="item_selected" from="VBoxContainer/WindowMode/WMDropdown" to="." method="_on_wm_dropdown_item_selected"]
+[connection signal="toggled" from="VBoxContainer/EasyMode" to="." method="_on_easy_mode_toggled"]
+[connection signal="toggled" from="VBoxContainer/Speedrun Mode" to="." method="_on_speedrun_mode_toggled"]
 [connection signal="pressed" from="VBoxContainer/Return" to="." method="_on_return_pressed"]

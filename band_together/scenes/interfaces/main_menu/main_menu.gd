@@ -8,10 +8,27 @@ func _ready():
 	print_debug("loading...")
 	await GameManager.load_game()
 	print_debug("loaded!")
+	
+	# Set window visual settings
+	GameManager.set_screen_resolution()
+	GameManager.set_screen_mode()
+	
+	
 	if GameManager.new_game:
 		start_game_btn.text = "New Game"
 	else:
 		start_game_btn.text = "Continue"
+	if GameManager.speedrun_mode:
+		$SpeedrunTimer.visible = true
+		if GameManager.best_time >= 3600:
+			# Longer than an hour
+			$SpeedrunTimer/BestTime.text = "%02d:%02d:%02d" % GameManager.get_time(GameManager.best_time)
+		else:
+			$SpeedrunTimer/BestTime.text = "%02d:%02d" % [GameManager.get_time(GameManager.best_time)[1], GameManager.get_time(GameManager.best_time)[2]]
+		var ms = "%.3f" % snapped(GameManager.best_time-int(GameManager.best_time), 0.001)
+		$SpeedrunTimer/BestTimeMS.text = ms.substr(1)
+	else:
+		$SpeedrunTimer.visible = false
 	
 	# This next part fixes the bug where player gets stuck when quitting during dialogues
 	# I really hope this doesn't create more bugs lol
