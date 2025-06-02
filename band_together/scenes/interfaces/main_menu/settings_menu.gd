@@ -5,26 +5,26 @@ extends Control
 @onready var return_btn: Button = $VBoxContainer/Return
 @onready var reset_btn: Button = $"VBoxContainer/Reset Game"
 @onready var r_u_sure_timer: Timer = $"VBoxContainer/Reset Game/AreYouSureTimer"
+@onready var easy_mode_button: CheckButton = $VBoxContainer/EasyMode
+@onready var speedrun_mode_button: CheckButton = $"VBoxContainer/Speedrun Mode"
 
 func _ready():
 	AudioManager._on_scene_changed(null)
-	print_debug("loading...")
-	await GameManager.load_game()
-	print_debug("loaded!")
+	# I don't think we need the game to load upon opening settings
+	#print_debug("loading...")
+	#await GameManager.load_game()
+	#print_debug("loaded!")
 	set_dropdown_text()
+	easy_mode_button.button_pressed = GameManager.easy_mode
+	speedrun_mode_button.button_pressed = GameManager.speedrun_mode
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		return  # Ignore mouse movement for this
-		#
-	#var current_focused = get_viewport().gui_get_focus_owner()
-	#if $CreditsPanel.visible == true:
-		#release_focus()
-		#$CreditsPanel/CreditsText.grab_focus()
-		#$CreditsPanel/CreditsText.grab_click_focus()
-	#elif current_focused == null or not current_focused is Button:
-		## No button is focused. Grab focus
-		##start_game_btn.grab_focus()
+	var current_focused = get_viewport().gui_get_focus_owner()
+	if current_focused == null or not current_focused is Button:
+		# No button is focused. Grab focus
+		reset_btn.grab_focus()
 	
 	# Helped create with ChatGPT
 	# Check if Accept action is pressed and trigger the focused button
@@ -32,10 +32,6 @@ func _input(event: InputEvent) -> void:
 		var focused = get_viewport().gui_get_focus_owner()
 		if focused is Button:
 			focused.emit_signal("pressed")  # Manually trigger button press
-	
-	elif event.is_action_pressed("ui_cancel"):
-		$CreditsPanel.visible = false
-		$VBoxContainer.visible = true  # LOL I got frustrated with focus stuff and just added this and it worked so you can't click them behind the credits anymore
 		
 func set_dropdown_text() -> void:
 	match GameManager.res_x:
@@ -77,6 +73,7 @@ func _on_reset_game_pressed():
 		UI.lives = -1  # Reset lives
 		UI.coins = 0  # Reset coins
 		GameManager.new_game = true
+		GameManager.current_time = 0.0
 		print_debug("starting save")
 		await GameManager.save_game()
 		print_debug("save finished")
@@ -87,22 +84,15 @@ func _on_reso_dropdown_item_selected(index):
 	var chosen_res: PackedStringArray = resolution_dropdown.get_item_text(index).split("x")
 	var x: int = int(chosen_res[0])
 	var y: int = int(chosen_res[1])
-	DisplayServer.window_set_size(Vector2(x, y))
-	get_window().move_to_center()
 	GameManager.res_x = x  # for saving
 	GameManager.res_y = y
+	GameManager.set_screen_resolution()
+	GameManager.save_game()
 	
 func _on_wm_dropdown_item_selected(index):
-	match index:
-		0:  # Windowed
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		1:  # Borderless
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-		2:  # Fullscreen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	GameManager.screen_mode = index
+	GameManager.set_screen_mode()
+	GameManager.save_game()
 
 func _on_return_pressed():
 	# Changing scenes saves the game
@@ -110,3 +100,18 @@ func _on_return_pressed():
 
 func _on_are_you_sure_timer_timeout():
 	reset_btn.text = "Reset Progress"
+
+
+func _on_easy_mode_toggled(toggled_on):
+	if toggled_on:
+		GameManager.easy_mode = true
+	else:
+		GameManager.easy_mode = false
+	GameManager.save_game()
+
+func _on_speedrun_mode_toggled(toggled_on):
+	if toggled_on:
+		GameManager.speedrun_mode = true
+	else:
+		GameManager.speedrun_mode = false
+	GameManager.save_game()

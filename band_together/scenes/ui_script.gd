@@ -17,6 +17,7 @@ var default_lives: int = 3  # This allows us to add more hearts if we want!
 var lives: int
 var coins: int = 0
 var startcoins: int
+var increment_speedrun_timer = false
 
 func _ready():
 	lives = default_lives
@@ -27,12 +28,14 @@ func reset() -> void:
 	# scene changes, so this function needs to be called every time a scene changes
 	var scene_name: String = get_tree().current_scene.name
 	if scene_name in not_allowed_scenes:
+		increment_speedrun_timer = false  # For speedrun timer reasons!
 		print("NOT ALLOWED SCENE! NO PAUSING")
 		# https://docs.godotengine.org/en/stable/tutorials/scripting/pausing_games.html#process-modes
 		process_mode = PROCESS_MODE_DISABLED
 		self.visible = false
 	else:
 		process_mode = PROCESS_MODE_ALWAYS  # Changed this from ALWAYS, change back if issues
+		increment_speedrun_timer = true  # For speedrun timer reasons!
 		self.visible = true
 		if lives <= 0:
 			coins = 0  # Reset coins on death
@@ -55,6 +58,20 @@ func _process(_delta: float) -> void:
 			current_weapon_display.texture = sax
 		"violin":
 			current_weapon_display.texture = violin
+	# Increment the speedrun clock every frame
+	if increment_speedrun_timer:
+		GameManager.current_time += _delta
+	if GameManager.speedrun_mode:
+		$SpeedrunTimer.visible = true
+		if GameManager.best_time >= 3600:
+			# Longer than an hour
+			$SpeedrunTimer/BestTime.text = "%02d:%02d:%02d" % GameManager.get_time(GameManager.current_time)
+		else:
+			$SpeedrunTimer/BestTime.text = "%02d:%02d" % [GameManager.get_time(GameManager.current_time)[1], GameManager.get_time(GameManager.current_time)[2]]
+		var ms = "%.3f" % snapped(GameManager.best_time-int(GameManager.best_time), 0.001)
+		$SpeedrunTimer/BestTimeMS.text = ms.substr(1)
+	else:
+		$SpeedrunTimer.visible = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
@@ -77,6 +94,7 @@ func _input(event: InputEvent) -> void:
 			_on_resume_pressed()  # unpause
 			get_viewport().set_input_as_handled()
 		else:
+			increment_speedrun_timer = false  # For speedrun timer reasons!
 			resume_btn.grab_focus()
 			if GameManager.in_dialogue == true:
 				Dialogic.Text.hide_textbox()
@@ -86,6 +104,7 @@ func _input(event: InputEvent) -> void:
 
 func _on_resume_pressed() -> void:
 	await get_tree().create_timer(0.05).timeout  # This is because player was jumping when unpausing
+	increment_speedrun_timer = true  # For speedrun timer reasons!
 	pause_panel.hide()
 	get_tree().paused = false
 	if GameManager.in_dialogue == true:
@@ -102,8 +121,12 @@ func _on_main_menu_pressed() -> void:
 	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
 
 func decrease_health():
-	lives -= 1
 	$DamageSound.play()
+	
+	if not GameManager.easy_mode:
+		# Only decreate health if not in easy mode
+		lives -= 1
+	
 	# Show only the number of hearts equal to 'lives', hide the rest
 	for i in range(len(hearts)):
 		hearts[i].visible = i < lives

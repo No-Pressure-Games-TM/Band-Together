@@ -273,6 +273,33 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_f0yxt")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7fy76")
 text = "Quit"
 
+[node name="SpeedrunTimer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -40.0
+offset_right = 66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="BestTimeTitle" type="Label" parent="SpeedrunTimer"]
+layout_mode = 2
+text = "Fastest Run: "
+
+[node name="BestTime" type="Label" parent="SpeedrunTimer"]
+layout_mode = 2
+text = "00:00"
+
+[node name="BestTimeMS" type="Label" parent="SpeedrunTimer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.486275)
+text = ".000"
+
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Reset Game" to="." method="_on_reset_game_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_options_pressed"]

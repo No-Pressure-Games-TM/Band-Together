@@ -20,6 +20,12 @@ var res_x: int = 1920  # horizontal resolution
 var res_y: int = 1080  # vertical resolution
 var screen_mode: int = 1  # 0,1,2 == windowed,borderless,fullscreen
 
+# fun modes
+var speedrun_mode: bool = false
+var current_time: float = 0.0
+var best_time: float = 0.0
+var easy_mode: bool = false
+
 ## NEW SAVING SYSTEM
 # https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html
 func save_game():
@@ -33,7 +39,11 @@ func save_game():
 		"is_new_game" : new_game,
 		"res_x" : res_x,
 		"res_y" : res_y,
-		"screen_mode" : screen_mode
+		"screen_mode" : screen_mode,
+		"speedrun_mode" : speedrun_mode,
+		"easy_mode" : easy_mode,
+		"current_time" : current_time,
+		"best_time" : best_time
 	}
 	var save_file : FileAccess = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	var json_string : String = JSON.stringify(save_data)
@@ -65,6 +75,10 @@ func load_game():
 		res_x = save_data["res_x"]
 		res_y = save_data["res_y"]
 		screen_mode = save_data["screen_mode"]
+		speedrun_mode = save_data["speedrun_mode"]
+		easy_mode = save_data["easy_mode"]
+		current_time = save_data["current_time"]
+		best_time = save_data["best_time"]
 
 func show_coins(code: String):
 	# Show all pickups with the given code
@@ -104,6 +118,28 @@ func is_instrument_unlocked(index: int) -> bool:
 			print_debug("is_instrument_unlocked: index greater than 3 or less than 0. How did you even get here?")
 			return false
 
+func get_time(seconds: float):
+	# Note that int() truncates so it rounds down (ignore decimals)
+	var hours = int(seconds/3600)
+	var mins = int((seconds/60))%60
+	var secs = int(seconds)%60
+	return [hours, mins, secs]
+	
+func set_screen_mode():
+	match screen_mode:
+		0:  # Windowed
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+		1:  # Borderless
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+		2:  # Fullscreen
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+func set_screen_resolution():
+	DisplayServer.window_set_size(Vector2(res_x, res_y))
+	get_window().move_to_center()
+
 func save_ground_position(pos: Vector2) -> void:
 	last_ground_position = pos
 
@@ -134,6 +170,9 @@ func dialogic_signal_end():
 		"findbreve":
 			get_tree().current_scene.find_child("Breve").moving = true
 		"ending":
+			UI.increment_speedrun_timer = false
+			if current_time < best_time:
+				best_time = current_time  # RUN OVER BABYYY
 			get_tree().current_scene.get_node("CanvasModulate/AnimationPlayer").play("fade_to_black")
 			await get_tree().create_timer(5).timeout
 			furthest_level = "res://scenes/levels/level_0.tscn"
