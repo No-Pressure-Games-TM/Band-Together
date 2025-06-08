@@ -3,18 +3,18 @@ allegro: Arco?
 forte: Aaaaarco!
 arco: It’s… Allegro? And—
 arco: Ghosts?!
-arco: Holy Amadeus protect us.
+arco: Holy Amadeus protect us, deliver us from the spirits that haunt us—
 allegro: Arco, calm down. It’s alright. These spirits are Breve and Forte.
 breve: More importantly, Arco, have you seen yourself?
 arco: No, why would I—
 arco: …ah.
 allegro: Can you remember what happened?
 arco: I didn’t even know I died. I saw a cove in the distance with a ship, so I ran to take a look, and here we are now.
-arco: It might have been the stalactites. It’s hard to tell.
-forte: Well, at least the band’s all together again!
+arco: It might have been the stalactites. It’s hard to tell in here.
+forte: Well, at least the band’s together again!
 breve: Not even death could separate us.
 arco: Indeed.
 allegro: Welcome back, Arco.
 arco: I never thought I left, but I’m glad to be back!
-arco: Now, Allegro. You should go see to that ship quick, so we don’t end up as a band entirely made of ghosts.
+arco: Now, Allegro. I can guide you over to where the ship is. Let’s get out of this place.
 do GameManager.dialogic_signal_end()

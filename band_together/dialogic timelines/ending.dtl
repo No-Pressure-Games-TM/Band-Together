@@ -1,26 +1,21 @@
 allegro: Here it is… our passage off this island.
-allegro: There’s no one here, either. It’s just completely abandoned.
-allegro: Arco, how did you know something like this would be here?
-arco: I didn’t!
-arco: It seemed like as good a place to look as any.
-allegro: …Well, thank you for finding it for us.
-allegro: Let’s get back on the seas while the skies are clear.
-forte: Aye aye, captain!
-breve: You seem more chipper than earlier.
-allegro: Yeah, well…
-allegro: I still don’t know how I feel about the whole lot of you being dead.
-allegro: But at the same time, I know you’re still with me.
-allegro: It’s… oddly comforting.
-arco: Aww, Allegro.
-forte: If my ectoplasm could reach you I’d give you a big hug!
-allegro: In any case, will the three of you still come with me to… wherever I’m going?
-breve: I don’t see why not.
-forte: As long as we can keep hearing your music—and our instruments—I’m sure we’ll stick around!
-arco: Yes, there is no reason we should leave you alone, unless you would prefer it.
-allegro: Thank you. All of you.
-forte: As long as you don’t leave us behind, either!
-allegro: I won’t, I promise.
-allegro: Whether hell or high water, the four of us will go and bring music to this world together.
-breve: Well spoken.
-allegro: Now, on to a new shore.
+forte: Let’s take a look around!
+allegro: There’s no one here. It’s just completely abandoned. How weird.
+breve: Well, no use looking a gift horse in the mouth, right?
+breve: Even if there were pirates around, what could they possibly do to us?
+breve: Three of us are dead, and Allegro’s got the power of all our instruments!
+arco: I think we’re forgetting something.
+allegro: What's that?
+arco: Allegro, do you even know how to get this thing moving?
+allegro: …that is a problem, isn’t it.
+forte: Ah, I’m sure we’ll be fiiiiine! If Allegro was the only one to survive the island, Allegro will be the one to get us all out!
+breve: What’s the plan, Allegro?
+allegro: Let’s see…
+allegro: We figure out how to get this thing moving together, we find our way to civilization again...
+allegro: and then we go see if there’s anyone that can revive the three of you.
+allegro: Sound good to all of you?
+arco: It all seems rather vague, doesn’t it?
+forte: Hey, better than all of us dying on this island without doing anything!
+breve: Let’s do it. We’ll help you as best you can, Allegro.
+allegro: Alright. In that case, let’s get out of here.
 do GameManager.dialogic_signal_end()

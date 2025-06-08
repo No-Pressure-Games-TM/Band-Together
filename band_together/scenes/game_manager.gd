@@ -1,30 +1,30 @@
 extends Node
 
 var instruments_list: Array[String] = ["baton", "drum", "sax", "violin"]
-var drum_unlocked: bool = false
-var sax_unlocked: bool = false
-var violin_unlocked: bool = false
+@onready var drum_unlocked: bool = false
+@onready var sax_unlocked: bool = false
+@onready var violin_unlocked: bool = false
 var current_instrument: int = 0  # Array index of instruments_list
 
 # rudimentary saving system in case players die
-var furthest_level: String = "res://scenes/levels/level_0.tscn"
+@onready var furthest_level: String = "res://scenes/levels/level_0.tscn"
 var last_ground_position: Vector2 = Vector2.ZERO
-var new_game: bool = true
+@onready var new_game: bool = true
 
 # dialogic
 var in_dialogue: bool = false
 var current_dialogue: String = ""
 
 # saved settings (default values)
-var res_x: int = 1920  # horizontal resolution
-var res_y: int = 1080  # vertical resolution
-var screen_mode: int = 1  # 0,1,2 == windowed,borderless,fullscreen
+@onready var res_x: int = 1920  # horizontal resolution
+@onready var res_y: int = 1080  # vertical resolution
+@onready var screen_mode: int = 1  # 0,1,2 == windowed,borderless,fullscreen
 
 # fun modes
-var speedrun_mode: bool = false
-var current_time: float = 0.0
-var best_time: float = 0.0
-var easy_mode: bool = false
+@onready var speedrun_mode: bool = false
+@onready var current_time: float = 0.0
+@onready var best_time: float = -1.0
+@onready var easy_mode: bool = false
 
 ## NEW SAVING SYSTEM
 # https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html
@@ -155,6 +155,7 @@ func start_dialogue(dialogue_name: String):
 func dialogic_signal_end():
 	# This is where we choose what happens at the end of dialogs
 	# Only need to add a case if you want something to happen at end of dialogue
+	var do_breve_finaltime : bool = false
 	match current_dialogue:
 		"door1":
 			furthest_level = "res://scenes/levels/level1/level1_1.tscn"
@@ -171,16 +172,24 @@ func dialogic_signal_end():
 			get_tree().current_scene.find_child("Breve").moving = true
 		"ending":
 			UI.increment_speedrun_timer = false
-			if current_time < best_time:
+			if current_time < best_time or best_time == -1.0:
 				best_time = current_time  # RUN OVER BABYYY
 			get_tree().current_scene.get_node("CanvasModulate/AnimationPlayer").play("fade_to_black")
 			await get_tree().create_timer(5).timeout
-			furthest_level = "res://scenes/levels/level_0.tscn"
-			SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
+			if not speedrun_mode:
+				UI.get_node("CoinCount").visible = true
+				UI.get_node("CurrentWeapon").visible = true
+				UI.get_node("CoinIcon").visible = true
+				UI.get_node("Hearts").visible = true
+				reset_game()
+			else:
+				do_breve_finaltime = true
+		"breve_finaltime":
 			UI.get_node("CoinCount").visible = true
 			UI.get_node("CurrentWeapon").visible = true
 			UI.get_node("CoinIcon").visible = true
 			UI.get_node("Hearts").visible = true
+			reset_game()
 		"introcutscene":
 			new_game = false
 			SceneTransition.change_scene("res://scenes/levels/level_0.tscn")
@@ -191,6 +200,25 @@ func dialogic_signal_end():
 	current_dialogue = ""
 	await get_tree().create_timer(0.05).timeout  # Slight delay to stop jumping
 	in_dialogue = false
+	if do_breve_finaltime:
+		start_dialogue("breve_finaltime")
+
+func reset_game():
+	# Reset levels progress
+	furthest_level = "res://scenes/levels/level_0.tscn"
+	# Reset instruments progress
+	drum_unlocked = false
+	sax_unlocked = false
+	violin_unlocked = false
+	current_instrument = 0  # back to baton
+	UI.lives = -1  # Reset lives
+	UI.coins = 0  # Reset coins
+	new_game = true
+	current_time = 0.0
+	print_debug("starting save")
+	await GameManager.save_game()
+	print_debug("save finished")
+	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
 
 ## Leaving this here in case I ever want to try to make it work, sad :(
 #func update_font() -> void:

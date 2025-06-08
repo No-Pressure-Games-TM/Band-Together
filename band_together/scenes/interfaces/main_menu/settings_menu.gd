@@ -63,22 +63,7 @@ func _on_reset_game_pressed():
 		reset_btn.text = "RESET (FOR REAL!)"
 		r_u_sure_timer.start(10)
 	elif reset_btn.text == "RESET (FOR REAL!)":
-		# Reset levels progress
-		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
-		# Reset instruments progress
-		GameManager.drum_unlocked = false
-		GameManager.sax_unlocked = false
-		GameManager.violin_unlocked = false
-		GameManager.current_instrument = 0  # back to baton
-		UI.lives = -1  # Reset lives
-		UI.coins = 0  # Reset coins
-		GameManager.new_game = true
-		GameManager.current_time = 0.0
-		print_debug("starting save")
-		await GameManager.save_game()
-		print_debug("save finished")
-		SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
-
+		GameManager.reset_game()
 
 func _on_reso_dropdown_item_selected(index):
 	var chosen_res: PackedStringArray = resolution_dropdown.get_item_text(index).split("x")

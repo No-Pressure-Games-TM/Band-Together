@@ -10,9 +10,10 @@ func _ready():
 	print_debug("loaded!")
 	
 	# Set window visual settings
-	GameManager.set_screen_resolution()
-	GameManager.set_screen_mode()
-	
+	if FileAccess.file_exists("user://savegame.save"):
+		# Save game file exists to pull data from. If not, do not call this (use defaults)
+		GameManager.set_screen_resolution()
+		GameManager.set_screen_mode()
 	
 	if GameManager.new_game:
 		start_game_btn.text = "New Game"
@@ -20,13 +21,18 @@ func _ready():
 		start_game_btn.text = "Continue"
 	if GameManager.speedrun_mode:
 		$SpeedrunTimer.visible = true
-		if GameManager.best_time >= 3600:
+		if GameManager.best_time == -1.0:
+			# Not gotten a best time yet
+			$SpeedrunTimer/BestTime.text = "--:--"
+			$SpeedrunTimer/BestTimeMS.text = ".---"
+		elif GameManager.best_time >= 3600:
 			# Longer than an hour
 			$SpeedrunTimer/BestTime.text = "%02d:%02d:%02d" % GameManager.get_time(GameManager.best_time)
 		else:
 			$SpeedrunTimer/BestTime.text = "%02d:%02d" % [GameManager.get_time(GameManager.best_time)[1], GameManager.get_time(GameManager.best_time)[2]]
-		var ms = "%.3f" % snapped(GameManager.best_time-int(GameManager.best_time), 0.001)
-		$SpeedrunTimer/BestTimeMS.text = ms.substr(1)
+		if GameManager.best_time != -1.0:
+			var ms = "%.3f" % snapped(GameManager.best_time-int(GameManager.best_time), 0.001)
+			$SpeedrunTimer/BestTimeMS.text = ms.substr(1)
 	else:
 		$SpeedrunTimer.visible = false
 	
@@ -58,10 +64,6 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_cancel"):
 		$CreditsPanel.visible = false
 		$VBoxContainer.visible = true  # LOL I got frustrated with focus stuff and just added this and it worked so you can't click them behind the credits anymore
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
 
 func _on_start_pressed() -> void:
 	if GameManager.new_game:
@@ -73,7 +75,6 @@ func _on_start_pressed() -> void:
 	
 func _on_options_pressed() -> void:
 	SceneTransition.change_scene("res://scenes/interfaces/main_menu/settings_menu.tscn")
-
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
@@ -93,7 +94,6 @@ func _on_reset_game_pressed():
 	await GameManager.save_game()
 	print_debug("save finished")
 	SceneTransition.change_scene(get_tree().current_scene.scene_file_path)
-
 
 func _on_credits_pressed():
 	$CreditsPanel.visible = true
