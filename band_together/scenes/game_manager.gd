@@ -72,9 +72,9 @@ func load_game():
 		UI.coins = save_data["current_money"]
 		furthest_level = save_data["current_room"]
 		new_game = save_data["is_new_game"]
-		res_x = save_data["res_x"]
-		res_y = save_data["res_y"]
-		screen_mode = save_data["screen_mode"]
+		var screen_size = DisplayServer.screen_get_size()
+		res_x = clamp(save_data["res_x"], 640, screen_size.x)
+		res_y = clamp(save_data["res_y"], 480, screen_size.y)
 		speedrun_mode = save_data["speedrun_mode"]
 		easy_mode = save_data["easy_mode"]
 		current_time = save_data["current_time"]
@@ -137,7 +137,10 @@ func set_screen_mode():
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 func set_screen_resolution():
-	DisplayServer.window_set_size(Vector2(res_x, res_y))
+	var screen_size = DisplayServer.screen_get_size()
+	var clamped_x = min(res_x, screen_size.x)
+	var clamped_y = min(res_y, screen_size.y)
+	DisplayServer.window_set_size(Vector2(clamped_x, clamped_y))
 	get_window().move_to_center()
 
 func save_ground_position(pos: Vector2) -> void:

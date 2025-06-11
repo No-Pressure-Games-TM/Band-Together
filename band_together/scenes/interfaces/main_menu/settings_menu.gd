@@ -47,7 +47,7 @@ func set_dropdown_text() -> void:
 			resolution_dropdown.select(4)
 	
 	# Prevent players from sizing larger than their monitor
-	var player_res_x: int = DisplayServer.screen_get_size()[0]  # x resolution of user's monitor
+	var player_res_x: int = DisplayServer.screen_get_size().x  # x resolution of user's monitor
 	if player_res_x < 3840:
 		resolution_dropdown.remove_item(4)
 	if player_res_x < 2560:

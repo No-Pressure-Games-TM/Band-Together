@@ -15,6 +15,16 @@ func _ready():
 		GameManager.set_screen_resolution()
 		GameManager.set_screen_mode()
 	
+	var window_size = DisplayServer.window_get_size()
+	var screen_size = DisplayServer.screen_get_size()
+	if window_size.x < 400 or window_size.y < 300 or window_size.x > screen_size.x or window_size.y > screen_size.y:
+		# Reset to safe default (thanks chatgpt
+		GameManager.res_x = 1280
+		GameManager.res_y = 720
+		GameManager.screen_mode = 0
+		GameManager.set_screen_resolution()
+		GameManager.set_screen_mode()
+	
 	if GameManager.new_game:
 		start_game_btn.text = "New Game"
 	else:
