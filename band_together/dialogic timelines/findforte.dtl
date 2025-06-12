@@ -1,20 +1,27 @@
 breve: AAH! Is that a ghost?!
 allegro: Breve, you’re a ghost too.
-breve: Ah. Right. Ahem.
+breve: Ah.
+breve: Right.
+breve: Ahem.
 allegro: I found you not long after I picked up your drum, so maybe…
 allegro: Forte, is that you?
-forte: Allegro? And that one behind you—
-forte: Breve?!
-breve: It is good to see you again, Forte, even in these unfortunate circumstances.
+forte: Allegro? And that one behind you—is that Breve?!
 forte: I thought I would be the only one to kick the bucket on this lil’ island, but you too, huh?
 allegro: What happened, Forte?
-forte: I’m not sure! It’s all a little hazy.
-forte: Arco and I split paths. I went to explore the forest, while Arco said she saw a nearby cave. I was running around, and, well I guess the forest got to me, huh!
-allegro: You seem… very casual about the fact that you’re dead.
-forte: I mean, y’know, I can’t really do anything about it, yeah?
-forte: Besides, it would be funny if I haunted you forever! Hehehe.
-allegro: Classic Forte. It’s good to have you back, kind of.
-allegro: But we should find Arco now. Forte, you said she was going to look in a cave, right?
-forte: That was the plan!
-allegro: Then that’s where we’ll look next.
+forte: Okay, listen up!
+forte: Arco and I split up to search more of the island faster. I went to explore the forest, while Arco said she saw a nearby cave. 
+forte: And while I was in this forest—
+breve: Did the bear maul you?
+forte: How dare you think I would lose against a bear!
+forte: But yeah, you’re right, the bear killed me.
+forte: Moving on, we should find Arco now, shouldn’t we?
+allegro: Yeah. Let’s find her and [i]then[/i] focus our efforts to finding a way off this island.
+allegro: You said she saw a cave, right? That’s where we’ll look next.
+if {GameManager.speedrun_mode} == true:
+	if {GameManager.current_time} > 3600:
+		breve: Hey! You found Forte in {GameManager.get_time(GameManager.current_time)[0]} hours and {GameManager.get_time(GameManager.current_time)[1]} minutes!
+		breve: His saxophone goes much faster than my drums, so hopefully you can use our instruments together to go even faster!
+	else:
+		breve: Hey! You found Forte in {GameManager.get_time(GameManager.current_time)[1]} minutes!
+		breve: His saxophone goes much faster than my drums, so hopefully you can use our instruments together to go even faster!
 do GameManager.dialogic_signal_end()

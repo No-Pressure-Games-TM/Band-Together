@@ -47,7 +47,7 @@ func set_dropdown_text() -> void:
 			resolution_dropdown.select(4)
 	
 	# Prevent players from sizing larger than their monitor
-	var player_res_x: int = DisplayServer.screen_get_size()[0]  # x resolution of user's monitor
+	var player_res_x: int = DisplayServer.screen_get_size().x  # x resolution of user's monitor
 	if player_res_x < 3840:
 		resolution_dropdown.remove_item(4)
 	if player_res_x < 2560:
@@ -63,22 +63,7 @@ func _on_reset_game_pressed():
 		reset_btn.text = "RESET (FOR REAL!)"
 		r_u_sure_timer.start(10)
 	elif reset_btn.text == "RESET (FOR REAL!)":
-		# Reset levels progress
-		GameManager.furthest_level = "res://scenes/levels/level_0.tscn"
-		# Reset instruments progress
-		GameManager.drum_unlocked = false
-		GameManager.sax_unlocked = false
-		GameManager.violin_unlocked = false
-		GameManager.current_instrument = 0  # back to baton
-		UI.lives = -1  # Reset lives
-		UI.coins = 0  # Reset coins
-		GameManager.new_game = true
-		GameManager.current_time = 0.0
-		print_debug("starting save")
-		await GameManager.save_game()
-		print_debug("save finished")
-		SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
-
+		GameManager.reset_game()
 
 func _on_reso_dropdown_item_selected(index):
 	var chosen_res: PackedStringArray = resolution_dropdown.get_item_text(index).split("x")

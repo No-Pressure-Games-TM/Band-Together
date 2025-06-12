@@ -17,6 +17,7 @@ var default_lives: int = 3  # This allows us to add more hearts if we want!
 var lives: int
 var coins: int = 0
 var startcoins: int
+var starttime: float
 var increment_speedrun_timer = false
 
 func _ready():
@@ -44,6 +45,7 @@ func reset() -> void:
 			for heart in hearts:
 				heart.show()
 		startcoins = coins
+		starttime = GameManager.current_time
 		refresh()
 		print("\nScene changed. \nLives: ", lives)
 
@@ -68,7 +70,7 @@ func _process(_delta: float) -> void:
 			$SpeedrunTimer/BestTime.text = "%02d:%02d:%02d" % GameManager.get_time(GameManager.current_time)
 		else:
 			$SpeedrunTimer/BestTime.text = "%02d:%02d" % [GameManager.get_time(GameManager.current_time)[1], GameManager.get_time(GameManager.current_time)[2]]
-		var ms = "%.3f" % snapped(GameManager.best_time-int(GameManager.best_time), 0.001)
+		var ms = "%.3f" % snapped(GameManager.current_time-int(GameManager.current_time), 0.001)
 		$SpeedrunTimer/BestTimeMS.text = ms.substr(1)
 	else:
 		$SpeedrunTimer.visible = false
@@ -117,6 +119,7 @@ func _on_main_menu_pressed() -> void:
 	pause_panel.hide()
 	if GameManager.in_dialogue:
 		Dialogic.end_timeline()
+	GameManager.current_time = starttime  # Set the time back if they quit the level
 	coins = startcoins  # coins were not resetting properly on reset or death
 	SceneTransition.change_scene("res://scenes/interfaces/main_menu/main_menu.tscn")
 

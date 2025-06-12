@@ -1,28 +1,18 @@
 allegro: What is that? Some kind of spirit?
-breve: ..hhhh…. hh..
-allegro: Huh? I can hear something, somewhat.
-breve: h… ah… Allegro…
-allegro: It can speak? It knows my name, too.
-allegro: What kind of creature are you, spirit?
-breve: Me? I… don’t know.
-breve: Ah…? That… drum. That drum!
-breve: I… remember now.
-breve: I am… Breve. Drummer for the Band.
-allegro: Breve! What happened to you?
-breve: I’m… not sure. We all split up to get help, but… I must have died.
-breve: I think… Forte and Arco went further than me.
-breve: They were trying to find help.
-allegro: No… This can’t be!
-allegro: Why did they leave you behind? Why did they leave me behind?
-breve: They were only trying to help.
-allegro: But now you’re dead, and they both might be too!
-breve: Calm down, Allegro. There’s no use in raising your voice now; it’ll only alert the wildlife.
-breve: What’s done is done. You have to keep moving.
-breve: If you can find the others, you might be able to find a way to escape this island.
-allegro: You’re right… but I don’t want to leave you all alone here.
-breve: Don’t fret, Allegro. I will keep watching you, even if this spirit of mine fades away.
-breve: And while I am still here, I will help you as best I can.
-allegro: …
-allegro: Thank you, Breve.
-allegro: Let’s go find the other band members.
+breve: Oh, Allegro! It’s me, Breve.
+allegro: Breve?! Why are you a ghost?
+breve: That is a wonderful question. See, I got up not far from where you were sleeping and decided to look for Arco and Forte.
+breve: …Long story short, I was eaten by snails.
+allegro: Well, that’s no good.
+allegro: If I remember correctly, isn’t there some sort of magic at the Kingdom of Paladi that can resurrect people?
+allegro: Let’s find our friends, get off this island, and get you up and ready before the festival.
+breve: That sounds like a plan.
+breve: Oh, and feel free to keep using my drum. I’d be using it right now, but I am suffering from being a ghost.
+allegro: That is a great idea.
+if {GameManager.speedrun_mode} == true:
+	if {GameManager.current_time} > 3600:
+		breve: By the way, did you know it took you {GameManager.get_time(GameManager.current_time)[0]} hours and {GameManager.get_time(GameManager.current_time)[1]} minutes to get to me?
+		breve: Just in case you wanted to know. Good job!
+	else:
+		breve: By the way, did you know it took you {GameManager.get_time(GameManager.current_time)[1]} minutes to get to me? Just in case you wanted to know. Good job!
 do GameManager.dialogic_signal_end()
