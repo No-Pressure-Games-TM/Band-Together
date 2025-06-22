@@ -118,26 +118,8 @@ shape = SubResource("WorldBoundaryShape2D_3p2mr")
 position = Vector2(545, -335)
 destination_scene = "res://scenes/levels/level3/level_3_3.tscn"
 
-[node name="Bat" parent="." instance=ExtResource("7_07b6s")]
-position = Vector2(391, -475)
-scale = Vector2(2, 2)
-top_y = -864
-bot_y = 0
-left_x = 0
-right_x = 960
-wander_range = 600
-
 [node name="Bat2" parent="." instance=ExtResource("7_07b6s")]
 position = Vector2(451, -555)
-scale = Vector2(2, 2)
-top_y = -864
-bot_y = 0
-left_x = 0
-right_x = 960
-wander_range = 600
-
-[node name="Bat12" parent="." instance=ExtResource("7_07b6s")]
-position = Vector2(457, -259)
 scale = Vector2(2, 2)
 top_y = -864
 bot_y = 0
@@ -174,15 +156,6 @@ wander_range = 600
 
 [node name="Bat3" parent="." instance=ExtResource("7_07b6s")]
 position = Vector2(526, -462)
-scale = Vector2(2, 2)
-top_y = -864
-bot_y = 0
-left_x = 0
-right_x = 960
-wander_range = 600
-
-[node name="Bat4" parent="." instance=ExtResource("7_07b6s")]
-position = Vector2(277, -403)
 scale = Vector2(2, 2)
 top_y = -864
 bot_y = 0
@@ -253,15 +226,6 @@ left_x = 0
 right_x = 960
 wander_range = 600
 
-[node name="Bat7" parent="." instance=ExtResource("7_07b6s")]
-position = Vector2(680, -600)
-scale = Vector2(2, 2)
-top_y = -864
-bot_y = 0
-left_x = 0
-right_x = 960
-wander_range = 600
-
 [node name="Bat8" parent="." instance=ExtResource("7_07b6s")]
 position = Vector2(734, -795)
 scale = Vector2(2, 2)
@@ -282,15 +246,6 @@ wander_range = 600
 
 [node name="Bat10" parent="." instance=ExtResource("7_07b6s")]
 position = Vector2(599, -165)
-scale = Vector2(2, 2)
-top_y = -864
-bot_y = 0
-left_x = 0
-right_x = 960
-wander_range = 600
-
-[node name="Bat11" parent="." instance=ExtResource("7_07b6s")]
-position = Vector2(401, -151)
 scale = Vector2(2, 2)
 top_y = -864
 bot_y = 0
@@ -884,16 +839,16 @@ position = Vector2(60, -384)
 position = Vector2(573, -288)
 
 [node name="SpiderWebStart4" parent="." instance=ExtResource("9_y0akr")]
-position = Vector2(816, -385)
+position = Vector2(772, -384)
 
 [node name="SpiderWebStart5" parent="." instance=ExtResource("9_y0akr")]
-position = Vector2(705, -640)
+position = Vector2(660, -640)
 
 [node name="SpiderWebStart6" parent="." instance=ExtResource("9_y0akr")]
 position = Vector2(352, -736)
 
 [node name="SpiderWebStart7" parent="." instance=ExtResource("9_y0akr")]
-position = Vector2(849, -102)
+position = Vector2(860, -104)
 
 [node name="SpiderWebStart8" parent="." instance=ExtResource("9_y0akr")]
 position = Vector2(597, -838)
