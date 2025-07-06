@@ -363,12 +363,6 @@ scale = Vector2(1, 0.952034)
 
 [node name="Spikes" type="Node" parent="."]
 
-[node name="Spike" parent="Spikes" instance=ExtResource("8_pop3m")]
-position = Vector2(233, 212)
-
-[node name="Spike2" parent="Spikes" instance=ExtResource("8_pop3m")]
-position = Vector2(248, 212)
-
 [node name="Spike3" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(529, 211)
 
@@ -380,12 +374,6 @@ position = Vector2(402, 211)
 
 [node name="Spike6" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(387, 211)
-
-[node name="Spike7" parent="Spikes" instance=ExtResource("8_pop3m")]
-position = Vector2(543, 211)
-
-[node name="Spike8" parent="Spikes" instance=ExtResource("8_pop3m")]
-position = Vector2(558, 211)
 
 [node name="Spike9" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(572, 211)
@@ -495,14 +483,6 @@ scale = Vector2(0.75, 0.75)
 position = Vector2(1531, 105)
 rotation = 1.5708
 scale = Vector2(0.75, 0.75)
-
-[node name="Spike16" parent="Spikes" instance=ExtResource("8_pop3m")]
-z_index = 1
-position = Vector2(126, 67)
-
-[node name="Spike17" parent="Spikes" instance=ExtResource("8_pop3m")]
-z_index = 1
-position = Vector2(114, 67)
 
 [node name="Spike54" parent="Spikes" instance=ExtResource("8_pop3m")]
 position = Vector2(1639, 86)
@@ -759,7 +739,7 @@ position = Vector2(168, -5)
 position = Vector2(685, 135)
 
 [node name="SpiderWebStart4" parent="Spiders" instance=ExtResource("14_y5jen")]
-position = Vector2(1590, -8)
+position = Vector2(1728, -32)
 
 [node name="SpiderWebStart5" parent="Spiders" instance=ExtResource("14_y5jen")]
 position = Vector2(2515, 304)

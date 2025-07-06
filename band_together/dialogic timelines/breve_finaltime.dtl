@@ -1,4 +1,4 @@
 breve: Hey! Good job on beating the game!
-breve: Your total time was {GameManager.get_time(GameManager.best_time)[0]} hours, {GameManager.get_time(GameManager.best_time)[1]} minutes, and {GameManager.get_time(GameManager.best_time)[2]} seconds!
+breve: Your total time was {GameManager.get_time(GameManager.current_time)[0]} hours, {GameManager.get_time(GameManager.current_time)[1]} minutes, and {GameManager.get_time(GameManager.current_time)[2]} seconds!
 breve: Congratulations, and thanks for helping us Band Together!
 do GameManager.dialogic_signal_end()
